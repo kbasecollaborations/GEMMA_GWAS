@@ -4,6 +4,9 @@ import logging
 import os
 
 from installed_clients.KBaseReportClient import KBaseReport
+from GEMMA_GWAS.Util.VariationUtils import VariationUtils
+from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
+
 #END_HEADER
 
 
@@ -33,10 +36,15 @@ class GEMMA_GWAS:
     # be found
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
-        self.callback_url = os.environ['SDK_CALLBACK_URL']
-        self.shared_folder = config['scratch']
+        self.config = config
+        self.config['SDK_CALLBACK_URL'] = os.environ['SDK_CALLBACK_URL']
+        self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
+        self.config['test_data_dir'] = os.path.abspath('/kb/testdata')
+        # self.config['scratch'] is the tmp directory
+
         logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
                             level=logging.INFO)
+
         #END_CONSTRUCTOR
         pass
 
@@ -53,13 +61,20 @@ class GEMMA_GWAS:
         # ctx is the context object
         # return variables are: output
         #BEGIN run_GEMMA_GWAS
-        report = KBaseReport(self.callback_url)
+        self.config['ctx'] = ctx
+
+        variations = VariationUtils(self.config)
+        associations = AssociationUtils(self.config)
+
+        report = KBaseReport(self.config['SDK_CALLBACK_URL'])
+        report_msg = "The variation object: "+params['Variation']+"\nThe association object:"+params['Associations']+"\n"
         report_info = report.create({'report': {'objects_created':[],
-                                                'text_message': params['parameter_1']},
-                                                'workspace_name': params['workspace_name']})
+                                                'text_message': report_msg},
+                                                'workspace_name': params['output_ws']})
         output = {
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
+            'ws': params['output_ws']
         }
         #END run_GEMMA_GWAS
 

@@ -52,12 +52,15 @@ class GEMMA_GWASTest(unittest.TestCase):
             cls.wsClient.delete_workspace({'workspace': cls.wsName})
             print('Test workspace was deleted')
 
+    def getContext(self):
+        return self.__class__.ctx
+
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
     def test_plink_install(self):
         FNULL = open(os.devnull, 'w')
         plink = subprocess.check_call(['plink', '--help'],stdout=FNULL,stderr=subprocess.STDOUT)
         # if exit code 0, then binary returned output and did not fault
-        # otherwise CalledProcessError is raised 
+        # otherwise CalledProcessError is raised
         self.assertEqual(plink, 0)
         FNULL.close()
 
@@ -69,7 +72,20 @@ class GEMMA_GWASTest(unittest.TestCase):
         self.assertEqual(gemma, 0)
         FNULL.close()
 
-    def test_your_method(self):
+    def test_dummy_data(self):
+        """
+            Test if A. thaliana GWAS test data exists and is readable
+
+        """
+        test_data_dir = '/kb/deps/testdata/'
+        geno_test_data_zip = 'AtPolyDB.zip'
+        pheno_test_data = 'LFC_phenotype'
+
+        self.assertTrue(os.path.isdir(test_data_dir))
+        self.assertTrue(os.path.isfile(os.path.join(test_data_dir, geno_test_data_zip)))
+        self.assertTrue(os.path.isfile(os.path.join(test_data_dir, pheno_test_data)))
+
+    def test_GEMMA_GWAS(self):
         # Prepare test objects in workspace if needed using
         # self.getWsClient().save_objects({'workspace': self.getWsName(),
         #                                  'objects': []})
@@ -79,5 +95,9 @@ class GEMMA_GWASTest(unittest.TestCase):
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        ret = self.serviceImpl.run_GEMMA_GWAS(self.ctx, {'workspace_name': self.wsName,
-                                                             'parameter_1': 'Hello World!'})
+
+        ret = self.serviceImpl.run_GEMMA_GWAS(self.getContext(), {
+            'output_ws': self.wsName,
+            'Variation': '3/fake/1',
+            'Associations': '4/fake/2'
+        })
