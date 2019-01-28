@@ -1,0 +1,68 @@
+{
+    "ver": "0.0.1",
+    "authors": [
+        "rmr"
+    ],
+    "contact": "",
+    "categories": ["active"],
+    "widgets": {
+        "input": null,
+        "output": null
+    },
+    "parameters": [ 
+        {
+            "id": "Variation",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBaseGwasData.GwasVariations" ]
+            }
+        },
+        {
+            "id": "Associations",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBaseGwasData.GwasAssociations" ]
+            }
+        }
+    ],
+    "behavior": {
+        "service-mapping": {
+            "url": "",
+            "name": "GEMMA_GWAS",
+            "method": "run_GEMMA_GWAS",
+            "input_mapping": [
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "output_ws"
+                },{
+                    "input_parameter": "Variation",
+                    "target_property": "Variation"
+                },{
+                    "input_parameter": "Associations",
+                    "target_property": "Associations"
+                }
+            ],
+            "output_mapping": [
+                {
+                    "service_method_output_path": [0,"report_name"],
+                    "target_property": "report_name"
+                },{
+                    "service_method_output_path": [0,"report_ref"],
+                    "target_property": "report_ref"
+                },{
+                    "narrative_system_variable": "workspace",
+                    "target_property": "ws"
+                }
+            ]
+        }
+    },
+    "job_id_output_field": "docker"
+}
