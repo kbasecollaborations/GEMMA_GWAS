@@ -1,7 +1,3 @@
-import subprocess
-import os
-import json
-
 class AssociationUtils:
     def __init__(self, config):
         self.scratch = config["scratch"]

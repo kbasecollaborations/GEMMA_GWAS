@@ -30,6 +30,8 @@ ENV PATH=$PATH:/kb/module/deps/bin
 RUN pip install --upgrade pip \
     && pip install -q pyvcf
 
+RUN mkdir /data
+
 COPY ./ /kb/module
 RUN mkdir -p /kb/module/work
 RUN chmod -R a+rw /kb/module

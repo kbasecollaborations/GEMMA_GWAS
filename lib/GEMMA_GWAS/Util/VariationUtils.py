@@ -1,6 +1,4 @@
-import subprocess
 import os
-import json
 import vcf
 
 """

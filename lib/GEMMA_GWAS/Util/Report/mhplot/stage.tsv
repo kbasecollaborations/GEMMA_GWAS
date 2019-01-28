@@ -1,0 +1,1227 @@
+code	ch	description	a	b	c	d	rr	p	logp	id
+001	INFECT	Cholera	2	11	22841	41048	0.9998	1	0	1
+002	INFECT	Typhoid and paratyphoid fevers	5	8	22838	41051	1	1	0	2
+003	INFECT	Other salmonella infections	29	18	22814	41041	1.001	0.000353	3.452	3
+004	INFECT	Shigellosis	1	9	22842	41050	0.9998	1	0	4
+005	INFECT	Other food poisoning (bacterial)	16	58	22827	41001	0.9993	1	0	5
+006	INFECT	Amebiasis	8	21	22835	41038	0.9998	1	0	6
+007	INFECT	Other protozoal intestinal diseases	9	45	22834	41014	0.9993	1	0	7
+008	INFECT	Intestinal infections due to other organisms	633	1434	22210	39625	0.9926	1	0	8
+009	INFECT	Ill-defined intestinal infections	304	751	22539	40308	0.995	1	0	9
+010	INFECT	Primary tuberculous infection	7	25	22836	41034	0.9997	1	0	10
+011	INFECT	Pulmonary tuberculosis	131	269	22712	40790	0.9992	1	0	11
+012	INFECT	Other respiratory tuberculosis	3	6	22840	41053	1	1	0	12
+013	INFECT	Tuberculosis of meninges and central nervous system	2	9	22841	41050	0.9999	1	0	13
+014	INFECT	Tuberculosis of intestines, peritoneum, and mesenteric glands	3	2	22840	41057	1	0.356	0.4486	14
+015	INFECT	Tuberculosis of bones and joints	18	38	22825	41021	0.9999	1	0	15
+016	INFECT	Tuberculosis of genitourinary system	4	8	22839	41051	1	1	0	16
+017	INFECT	Tuberculosis of other organs	28	80	22815	40979	0.9993	1	0	17
+018	INFECT	Miliary tuberculosis	3	5	22840	41054	1	1	0	18
+020	INFECT	Plague	5	9	22838	41050	1	1	0	19
+021	INFECT	Tularemia	3	2	22840	41057	1	0.356	0.4486	20
+022	INFECT	Anthrax	2	2	22841	41057	1	0.621	0.2069	21
+023	INFECT	Brucellosis	1	6	22842	41053	0.9999	1	0	22
+024	INFECT	Glanders	1	4	22842	41055	0.9999	1	0	23
+025	INFECT	Melioidosis	0	4	22843	41055	0.9999	1	0	24
+026	INFECT	Rat-bite fever	3	4	22840	41055	1	0.706	0.1512	25
+027	INFECT	Other zoonotic bacterial diseases	3	17	22840	41042	0.9997	1	0	26
+030	INFECT	Leprosy	2	4	22841	41055	1	1	0	27
+031	INFECT	Diseases due to other mycobacteria	33	101	22810	40958	0.999	1	0	28
+032	INFECT	Diphtheria	38	67	22805	40992	1	0.919	0.03668	29
+033	INFECT	Whooping cough	11	39	22832	41020	0.9995	1	0	30
+034	INFECT	Streptococcal sore throat and scarlet fever	256	600	22587	40459	0.9966	1	0	31
+035	INFECT	Erysipelas	5	18	22838	41041	0.9998	1	0	32
+036	INFECT	Meningococcal infection	5	6	22838	41053	1	0.537	0.27	33
+037	INFECT	Tetanus	2	5	22841	41054	1	1	0	34
+038	INFECT	Septicemia	650	1319	22193	39740	0.9962	1	0	35
+039	INFECT	Actinomycotic infections	14	59	22829	41000	0.9992	1	0	36
+040	INFECT	Other bacterial diseases	7	27	22836	41032	0.9996	1	0	37
+041	INFECT	Bacterial infection in conditions classified elsewhere and of unspecified site	1420	3044	21423	38015	0.9872	1	0	38
+042	INFECT	Human immunodeficiency virus [HIV] disease	314	736	22529	40323	0.9958	1	0	39
+043	INFECT	Human immunodeficiency virus infection causing other specified conditions	1	6	22842	41053	0.9999	1	0	40
+045	INFECT	Acute poliomyelitis	8	11	22835	41048	1	0.634	0.1979	41
+046	INFECT	Slow virus infection of central nervous system	7	21	22836	41038	0.9998	1	0	42
+047	INFECT	Meningitis due to enterovirus	54	116	22789	40943	0.9995	1	0	43
+048	INFECT	Other enterovirus diseases of central nervous system	3	16	22840	41043	0.9997	1	0	44
+049	INFECT	Other non-arthropod-borne viral diseases of central nervous system	20	45	22823	41014	0.9998	1	0	45
+050	INFECT	Smallpox	0	6	22843	41053	0.9999	1	0	46
+051	INFECT	Cowpox and paravaccinia	4	9	22839	41050	1	1	0	47
+052	INFECT	Chickenpox	69	202	22774	40857	0.9981	1	0	48
+053	INFECT	Herpes zoster	447	1221	22396	39838	0.9896	1	0	49
+054	INFECT	Herpes simplex	833	1811	22010	39248	0.9921	1	0	50
+055	INFECT	Measles	2	4	22841	41055	1	1	0	51
+056	INFECT	Rubella	3	6	22840	41053	1	1	0	52
+057	INFECT	Other viral exanthemata	34	82	22809	40977	0.9995	1	0	53
+058	INFECT	Other human herpesvirus	0	8	22843	41051	0.9998	1	0	54
+060	INFECT	Yellow fever	0	2	22843	41057	1	1	0	55
+061	INFECT	Dengue	4	3	22839	41056	1	0.258	0.5884	56
+062	INFECT	Mosquito-borne viral encephalitis	2	4	22841	41055	1	1	0	57
+063	INFECT	Tick-borne viral encephalitis	0	0	22843	41059	1	1	0	58
+064	INFECT	Viral encephalitis transmitted by other and unspecified arthropods	1	1	22842	41058	1	1	0	59
+065	INFECT	Arthropod-borne hemorrhagic fever	2	0	22841	41059	1	0.128	0.8928	60
+066	INFECT	Other arthropod-borne viral diseases	5	14	22838	41045	0.9999	1	0	61
+070	INFECT	Viral hepatitis	1671	2328	21172	38731	1.018	4.01e-16	15.4	62
+071	INFECT	Rabies	4	2	22839	41057	1	0.196	0.7077	63
+072	INFECT	Mumps	5	8	22838	41051	1	1	0	64
+073	INFECT	Ornithosis	1	6	22842	41053	0.9999	1	0	65
+074	INFECT	Specific diseases due to Coxsackie virus	14	13	22829	41046	1	0.106	0.9747	66
+075	INFECT	Infectious mononucleosis	90	144	22753	40915	1	0.412	0.3851	67
+076	INFECT	Trachoma	4	3	22839	41056	1	0.258	0.5884	68
+077	INFECT	Other diseases of conjunctiva due to viruses and Chlamydiae	24	52	22819	41007	0.9998	1	0	69
+078	INFECT	Other diseases due to viruses and Chlamydiae	1338	3358	21505	37701	0.9753	1	0	70
+079	INFECT	Viral and chlamydial infection in conditions classified elsewhere and of unspecified site	2397	5396	20446	35663	0.9704	1	0	71
+080	INFECT	Louse-borne (epidemic) typhus	1	1	22842	41058	1	1	0	72
+081	INFECT	Other typhus	1	3	22842	41056	1	1	0	73
+082	INFECT	Tick-borne rickettsioses	4	14	22839	41045	0.9998	1	0	74
+083	INFECT	Other rickettsioses	2	6	22841	41053	0.9999	1	0	75
+084	INFECT	Malaria	7	16	22836	41043	0.9999	1	0	76
+085	INFECT	Leishmaniasis	1	6	22842	41053	0.9999	1	0	77
+086	INFECT	Trypanosomiasis	0	2	22843	41057	1	1	0	78
+087	INFECT	Relapsing fever	1	5	22842	41054	0.9999	1	0	79
+088	INFECT	Other arthropod-borne diseases	128	279	22715	40780	0.9988	1	0	80
+090	INFECT	Congenital syphilis	7	20	22836	41039	0.9998	1	0	81
+091	INFECT	Early syphilis, symptomatic	16	45	22827	41014	0.9996	1	0	82
+092	INFECT	Early syphilis, latent	7	8	22836	41051	1	0.423	0.3737	83
+093	INFECT	Cardiovascular syphilis	3	17	22840	41042	0.9997	1	0	84
+094	INFECT	Neurosyphilis	29	73	22814	40986	0.9995	1	0	85
+095	INFECT	Other forms of late syphilis, with symptoms	6	9	22837	41050	1	0.79	0.1024	86
+096	INFECT	Late syphilis, latent	2	5	22841	41054	1	1	0	87
+097	INFECT	Other and unspecified syphilis	61	174	22782	40885	0.9984	1	0	88
+098	INFECT	Gonococcal infections	53	110	22790	40949	0.9996	1	0	89
+099	INFECT	Other venereal diseases	213	438	22630	40621	0.9986	1	0	90
+100	INFECT	Leptospirosis	7	15	22836	41044	0.9999	1	0	91
+101	INFECT	Vincent's angina	2	7	22841	41052	0.9999	1	0	92
+102	INFECT	Yaws	8	9	22835	41050	1	0.324	0.4895	93
+103	INFECT	Pinta	5	8	22838	41051	1	1	0	94
+104	INFECT	Other spirochetal infection	4	5	22839	41054	1	0.73	0.1367	95
+110	INFECT	Dermatophytosis	1780	3474	21063	37585	0.9927	1	0	96
+111	INFECT	Dermatomycosis, other and unspecified	206	468	22637	40591	0.9976	1	0	97
+112	INFECT	Candidiasis	1196	2600	21647	38459	0.9884	1	0	98
+114	INFECT	Coccidioidomycosis	4	15	22839	41044	0.9998	1	0	99
+115	INFECT	Histoplasmosis	5	15	22838	41044	0.9999	1	0	100
+116	INFECT	Blastomycotic infection	1	3	22842	41056	1	1	0	101
+117	INFECT	Other mycoses	219	549	22624	40510	0.9962	1	0	102
+118	INFECT	Opportunistic mycoses	2	11	22841	41048	0.9998	1	0	103
+120	INFECT	Schistosomiasis (bilharziasis)	6	15	22837	41044	0.9999	1	0	104
+121	INFECT	Other trematode infections	2	11	22841	41048	0.9998	1	0	105
+122	INFECT	Echinococcosis	3	13	22840	41046	0.9998	1	0	106
+123	INFECT	Other cestode infection	9	26	22834	41033	0.9998	1	0	107
+124	INFECT	Trichinosis	1	1	22842	41058	1	1	0	108
+125	INFECT	Filarial infection and dracontiasis	3	12	22840	41047	0.9998	1	0	109
+126	INFECT	Ancylostomiasis and necatoriasis	3	7	22840	41052	1	1	0	110
+127	INFECT	Other intestinal helminthiases	21	56	22822	41003	0.9996	1	0	111
+128	INFECT	Other and unspecified helminthiases	5	11	22838	41048	1	1	0	112
+129	INFECT	Intestinal parasitism, unspecified	1	9	22842	41050	0.9998	1	0	113
+130	INFECT	Toxoplasmosis	7	35	22836	41024	0.9995	1	0	114
+131	INFECT	Trichomoniasis	70	117	22773	40942	1	0.647	0.1891	115
+132	INFECT	Pediculosis and phthirus infestation	61	114	22782	40945	0.9999	1	0	116
+133	INFECT	Acariasis	165	311	22678	40748	0.9996	1	0	117
+134	INFECT	Other infestation	5	16	22838	41043	0.9998	1	0	118
+135	INFECT	Sarcoidosis	89	244	22754	40815	0.9979	1	0	119
+136	INFECT	Other and unspecified infectious and parasitic diseases	352	852	22491	40207	0.9946	1	0	120
+137	INFECT	Late effects of tuberculosis	4	34	22839	41025	0.9993	1	0	121
+138	INFECT	Late effects of acute poliomyelitis	14	42	22829	41017	0.9996	1	0	122
+139	INFECT	Late effects of other infectious and parasitic diseases	12	34	22831	41025	0.9997	1	0	123
+140	NULL	Malignant neoplasm of lip	13	25	22830	41034	1	1	0	124
+141	CANCER	Malignant neoplasm of tongue	32	121	22811	40938	0.9985	1	0	125
+142	CANCER	Malignant neoplasm of major salivary glands	17	64	22826	40995	0.9992	1	0	126
+143	CANCER	Malignant neoplasm of gum	8	35	22835	41024	0.9995	1	0	127
+144	CANCER	Malignant neoplasm of floor of mouth	14	32	22829	41027	0.9998	1	0	128
+145	CANCER	Malignant neoplasm of other and unspecified parts of mouth	42	144	22801	40915	0.9983	1	0	129
+146	CANCER	Malignant neoplasm of oropharynx	30	113	22813	40946	0.9986	1	0	130
+147	CANCER	Malignant neoplasm of nasopharynx	22	82	22821	40977	0.999	1	0	131
+148	CANCER	Malignant neoplasm of hypopharynx	9	25	22834	41034	0.9998	1	0	132
+149	CANCER	Malignant neoplasm of other and ill-defined sites within the lip, oral cavity, and pharynx	30	96	22813	40963	0.999	1	0	133
+150	CANCER	Malignant neoplasm of esophagus	41	167	22802	40892	0.9977	1	0	134
+151	CANCER	Malignant neoplasm of stomach	31	170	22812	40889	0.9972	1	0	135
+152	CANCER	Malignant neoplasm of small intestine, including duodenum	17	77	22826	40982	0.9989	1	0	136
+153	CANCER	Malignant neoplasm of colon	168	524	22675	40535	0.9946	1	0	137
+154	CANCER	Malignant neoplasm of rectum, rectosigmoid junction, and anus	103	325	22740	40734	0.9966	1	0	138
+155	CANCER	Malignant neoplasm of liver and intrahepatic bile ducts	56	242	22787	40817	0.9965	1	0	139
+156	CANCER	Malignant neoplasm of gallbladder and extrahepatic bile ducts	23	70	22820	40989	0.9993	1	0	140
+157	CANCER	Malignant neoplasm of pancreas	65	272	22778	40787	0.9962	1	0	141
+158	CANCER	Malignant neoplasm of retroperitoneum and peritoneum	26	115	22817	40944	0.9983	1	0	142
+159	CANCER	Malignant neoplasm of other and ill-defined sites within the digestive organs and peritoneum	119	431	22724	40628	0.9947	1	0	143
+160	CANCER	Malignant neoplasm of nasal cavities, middle ear, and accessory sinuses	20	49	22823	41010	0.9997	1	0	144
+161	CANCER	Malignant neoplasm of larynx	34	91	22809	40968	0.9993	1	0	145
+162	CANCER	Malignant neoplasm of trachea, bronchus, and lung	289	909	22554	40150	0.9904	1	0	146
+163	CANCER	Malignant neoplasm of pleura	10	65	22833	40994	0.9989	1	0	147
+164	CANCER	Malignant neoplasm of thymus, heart, and mediastinum	14	80	22829	40979	0.9987	1	0	148
+165	CANCER	Malignant neoplasm of other and ill-defined sites within the respiratory system and intrathoracic organs	48	158	22795	40901	0.9982	1	0	149
+170	CANCER	Malignant neoplasm of bone and articular cartilage	98	382	22745	40677	0.995	1	0	150
+171	CANCER	Malignant neoplasm of connective and other soft tissue	124	433	22719	40626	0.9949	1	0	151
+172	CANCER	Malignant melanoma of skin	160	459	22683	40600	0.9958	1	0	152
+173	CANCER	Other malignant neoplasm of skin	619	1763	22224	39296	0.9837	1	0	153
+174	CANCER	Malignant neoplasm of female breast	499	1493	22344	39566	0.9852	1	0	154
+175	CANCER	Malignant neoplasm of male breast	11	52	22832	41007	0.9992	1	0	155
+176	CANCER	Kaposi's sarcoma	15	58	22828	41001	0.9992	1	0	156
+179	CANCER	Malignant neoplasm of uterus, part unspecified	70	180	22773	40879	0.9987	1	0	157
+180	CANCER	Malignant neoplasm of cervix uteri	73	170	22770	40889	0.9991	1	0	158
+181	CANCER	Malignant neoplasm of placenta	1	5	22842	41054	0.9999	1	0	159
+182	CANCER	Malignant neoplasm of body of uterus	93	247	22750	40812	0.998	1	0	160
+183	CANCER	Malignant neoplasm of ovary and other uterine adnexa	100	375	22743	40684	0.9952	1	0	161
+184	CANCER	Malignant neoplasm of other and unspecified female genital organs	98	202	22745	40857	0.9994	1	0	162
+185	CANCER	Malignant neoplasm of prostate	190	558	22653	40501	0.9947	1	0	163
+186	CANCER	Malignant neoplasm of testis	18	70	22825	40989	0.9991	1	0	164
+187	CANCER	Malignant neoplasm of penis and other male genital organs	28	80	22815	40979	0.9993	1	0	165
+188	CANCER	Malignant neoplasm of bladder	92	285	22751	40774	0.9971	1	0	166
+189	CANCER	Malignant neoplasm of kidney and other and unspecified urinary organs	115	410	22728	40649	0.995	1	0	167
+190	CANCER	Malignant neoplasm of eye	12	45	22831	41014	0.9994	1	0	168
+191	CANCER	Malignant neoplasm of brain	127	511	22716	40548	0.9931	1	0	169
+192	CANCER	Malignant neoplasm of other and unspecified parts of nervous system	37	158	22806	40901	0.9978	1	0	170
+193	CANCER	Malignant neoplasm of thyroid gland	116	337	22727	40722	0.9969	1	0	171
+194	CANCER	Malignant neoplasm of other endocrine glands and related structures	55	156	22788	40903	0.9986	1	0	172
+195	CANCER	Malignant neoplasm of other and ill-defined sites	103	387	22740	40672	0.9951	1	0	173
+196	CANCER	Secondary and unspecified malignant neoplasm of lymph nodes	276	1197	22567	39862	0.9827	1	0	174
+197	CANCER	Secondary malignant neoplasm of respiratory and digestive systems	318	1281	22525	39778	0.9825	1	0	175
+198	CANCER	Secondary malignant neoplasm of other specified sites	382	1508	22461	39551	0.9797	1	0	176
+199	CANCER	Malignant neoplasm without specification of site	289	1283	22554	39776	0.9812	1	0	177
+200	CANCER	Lymphosarcoma and reticulosarcoma	65	228	22778	40831	0.9973	1	0	178
+201	CANCER	Hodgkin's disease	49	221	22794	40838	0.9968	1	0	179
+202	CANCER	Other malignant neoplasms of lymphoid and histiocytic tissue	272	930	22571	40129	0.9891	1	0	180
+203	CANCER	Multiple myeloma and immunoproliferative neoplasms	61	219	22782	40840	0.9973	1	0	181
+204	CANCER	Lymphoid leukemia	72	300	22771	40759	0.9958	1	0	182
+205	CANCER	Myeloid leukemia	72	327	22771	40732	0.9952	1	0	183
+206	CANCER	Monocytic leukemia	15	37	22828	41022	0.9998	1	0	184
+207	CANCER	Other specified leukemia	7	16	22836	41043	0.9999	1	0	185
+208	CANCER	Leukemia of unspecified cell type	47	263	22796	40796	0.9956	1	0	186
+209	CANCER	Neuroendocrine tumors	24	106	22819	40953	0.9985	1	0	187
+210	CANCER	Benign neoplasm of lip, oral cavity, and pharynx	166	397	22677	40662	0.9976	1	0	188
+211	CANCER	Benign neoplasm of other parts of digestive system	1518	3914	21325	37145	0.9691	1	0	189
+212	CANCER	Benign neoplasm of respiratory and intrathoracic organs	88	186	22755	40873	0.9993	1	0	190
+213	CANCER	Benign neoplasm of bone and articular cartilage	173	456	22670	40603	0.9964	1	0	191
+214	CANCER	Lipoma	443	1092	22400	39967	0.9927	1	0	192
+215	CANCER	Other benign neoplasm of connective and other soft tissue	271	749	22572	40310	0.9935	1	0	193
+216	CANCER	Benign neoplasm of skin	2405	6627	20438	34432	0.9373	1	0	194
+217	CANCER	Benign neoplasm of breast	223	619	22620	40440	0.9946	1	0	195
+218	CANCER	Uterine leiomyoma	952	2463	21891	38596	0.9809	1	0	196
+219	CANCER	Other benign neoplasm of uterus	71	205	22772	40854	0.9981	1	0	197
+220	CANCER	Benign neoplasm of ovary	141	305	22702	40754	0.9987	1	0	198
+221	CANCER	Benign neoplasm of other female genital organs	46	112	22797	40947	0.9993	1	0	199
+222	CANCER	Benign neoplasm of male genital organs	26	69	22817	40990	0.9995	1	0	200
+223	CANCER	Benign neoplasm of kidney and other urinary organs	46	130	22797	40929	0.9988	1	0	201
+224	CANCER	Benign neoplasm of eye	15	47	22828	41012	0.9995	1	0	202
+225	CANCER	Benign neoplasm of brain and other parts of nervous system	185	470	22658	40589	0.9966	1	0	203
+226	CANCER	Benign neoplasm of thyroid glands	128	279	22715	40780	0.9988	1	0	204
+227	CANCER	Benign neoplasm of other endocrine glands and related structures	331	591	22512	40468	1	0.917	0.03763	205
+228	CANCER	Hemangioma and lymphangioma, any site	722	1962	22121	39097	0.9833	1	0	206
+229	CANCER	Benign neoplasm of other and unspecified sites	251	635	22592	40424	0.9955	1	0	207
+230	CANCER	Carcinoma in situ of digestive organs	55	164	22788	40895	0.9984	1	0	208
+231	CANCER	Carcinoma in situ of respiratory system	19	52	22824	41007	0.9996	1	0	209
+232	CANCER	Carcinoma in situ of skin	120	389	22723	40670	0.9958	1	0	210
+233	CANCER	Carcinoma in situ of breast and genitourinary system	488	1299	22355	39760	0.9895	1	0	211
+234	CANCER	Carcinoma in situ of other and unspecified sites	4	21	22839	41038	0.9997	1	0	212
+235	CANCER	Neoplasm of uncertain behavior of digestive and respiratory systems	211	600	22632	40459	0.9946	1	0	213
+236	CANCER	Neoplasm of uncertain behavior of genitourinary organs	76	241	22767	40818	0.9974	1	0	214
+237	CANCER	Neoplasm of uncertain behavior of endocrine glands and nervous system	220	648	22623	40411	0.9938	1	0	215
+238	CANCER	Neoplasm of uncertain behavior of other and unspecified sites and tissues	910	2600	21933	38459	0.9755	1	0	216
+239	CANCER	Neoplasms of unspecified nature	1209	3269	21634	37790	0.9718	1	0	217
+240	NULL	Simple and unspecified goiter	487	837	22356	40222	1.001	0.434	0.3625	218
+241	ENDOCR	Nontoxic nodular goiter	667	1597	22176	39462	0.99	1	0	219
+242	ENDOCR	Thyrotoxicosis with or without goiter	1051	1707	21792	39352	1.005	0.00878	2.057	220
+243	ENDOCR	Congenital hypothyroidism	8	11	22835	41048	1	0.634	0.1979	221
+244	ENDOCR	Acquired hypothyroidism	3563	5073	19280	35986	1.038	5.05e-30	29.3	222
+245	ENDOCR	Thyroiditis	391	738	22452	40321	0.9991	1	0	223
+246	ENDOCR	Other disorders of thyroid	1172	2120	21671	38939	0.9997	1	0	224
+249	ENDOCR	Secondary diabetes mellitus	49	137	22794	40922	0.9988	1	0	225
+250	ENDOCR	Diabetes mellitus	3423	5985	19420	35074	1.005	0.166	0.7799	226
+251	ENDOCR	Other disorders of pancreatic internal secretion	455	913	22388	40146	0.9976	1	0	227
+252	ENDOCR	Disorders of parathyroid gland	434	760	22409	40299	1	0.67	0.1739	228
+253	ENDOCR	Disorders of the pituitary gland and its hypothalamic control	798	998	22045	40061	1.011	1.83e-14	13.74	229
+254	ENDOCR	Diseases of thymus gland	17	45	22826	41014	0.9996	1	0	230
+255	ENDOCR	Disorders of adrenal glands	498	1121	22345	39938	0.9944	1	0	231
+256	ENDOCR	Ovarian dysfunction	472	1017	22371	40042	0.9958	1	0	232
+257	ENDOCR	Testicular dysfunction	231	537	22612	40522	0.997	1	0	233
+258	ENDOCR	Polyglandular dysfunction and related disorders	21	59	22822	41000	0.9995	1	0	234
+259	ENDOCR	Other endocrine disorders	304	462	22539	40597	1.002	0.0229	1.64	235
+260	ENDOCR	Kwashiorkor	12	11	22831	41048	1	0.126	0.8996	236
+261	ENDOCR	Nutritional marasmus	41	115	22802	40944	0.999	1	0	237
+262	ENDOCR	Other severe protein-calorie malnutrition	35	63	22808	40996	1	1	0	238
+263	ENDOCR	Other and unspecified protein-calorie malnutrition	440	1100	22403	39959	0.9923	1	0	239
+264	ENDOCR	Vitamin A deficiency	20	24	22823	41035	1	0.208	0.6819	240
+265	ENDOCR	Thiamine and niacin deficiency states	13	38	22830	41021	0.9996	1	0	241
+266	ENDOCR	Deficiency of B-complex components	455	966	22388	40093	0.9963	1	0	242
+267	ENDOCR	Ascorbic acid deficiency	10	13	22833	41046	1	0.515	0.2882	243
+268	ENDOCR	Vitamin D deficiency	907	2247	21936	38812	0.9844	1	0	244
+269	ENDOCR	Other nutritional deficiencies	550	1124	22293	39935	0.9966	1	0	245
+270	ENDOCR	Disorders of amino-acid transport and metabolism	117	202	22726	40857	1	0.726	0.1391	246
+271	ENDOCR	Disorders of carbohydrate transport and metabolism	285	637	22558	40422	0.9969	1	0	247
+272	ENDOCR	Disorders of lipoid metabolism	6298	13199	16545	27860	0.9368	1	0	248
+273	ENDOCR	Disorders of plasma protein metabolism	740	1816	22103	39243	0.9878	1	0	249
+274	ENDOCR	Gout	500	1119	22343	39940	0.9945	1	0	250
+275	ENDOCR	Disorders of mineral metabolism	959	1814	21884	39245	0.9977	1	0	251
+276	ENDOCR	Disorders of fluid, electrolyte, and acid-base balance	4545	8238	18298	32821	0.9979	1	0	252
+277	ENDOCR	Other and unspecified disorders of metabolism	379	823	22464	40236	0.9965	1	0	253
+278	ENDOCR	Obesity and other hyperalimentation	4461	8197	18382	32862	0.9946	1	0	254
+279	ENDOCR	Disorders involving the immune mechanism	2587	5725	20256	35334	0.9705	1	0	255
+280	NULL	Iron deficiency anemias	1475	3303	21368	37756	0.983	1	0	256
+281	BLOOD	Other deficiency anemias	509	1201	22334	39858	0.9929	1	0	257
+282	BLOOD	Hereditary hemolytic anemias	189	468	22654	40591	0.9968	1	0	258
+283	BLOOD	Acquired hemolytic anemias	45	159	22798	40900	0.9981	1	0	259
+284	BLOOD	Aplastic anemia	297	750	22546	40309	0.9947	1	0	260
+285	BLOOD	Other and unspecified anemias	4362	9577	18481	31482	0.9477	1	0	261
+286	BLOOD	Coagulation defects	1325	3300	21518	37759	0.9763	1	0	262
+287	BLOOD	Purpura and other hemorrhagic conditions	725	1599	22118	39460	0.9926	1	0	263
+288	BLOOD	Diseases of white blood cells	1496	2998	21347	38061	0.9919	1	0	264
+289	BLOOD	Other diseases of blood and blood-forming organs	781	1990	22062	39069	0.9852	1	0	265
+290	NULL	Senile and presenile organic psychotic conditions	757	1252	22086	39807	1.003	0.0686	1.164	266
+291	PSYCH	Alcoholic psychoses	811	1222	22032	39837	1.006	8.53e-05	4.069	267
+292	PSYCH	Drug psychoses	1462	1692	21381	39367	1.024	5.1e-36	35.29	268
+293	PSYCH	Transient organic psychotic conditions	2375	3808	20468	37251	1.013	4.65e-06	5.333	269
+294	PSYCH	Other organic psychotic conditions (chronic)	1581	2750	21262	38309	1.002	0.286	0.5436	270
+295	PSYCH	Schizophrenic disorders	4150	2026	18693	39033	1.162	9.99999999999999e-306	100	271
+296	PSYCH	Affective psychoses	22680	41002	163	57	0.1946	1	0	272
+297	PSYCH	Paranoid states	865	635	21978	40424	1.023	3.22e-68	67.49	273
+298	PSYCH	Other nonorganic psychoses	4787	4282	18056	36777	1.133	2.99e-281	100	274
+299	PSYCH	Psychoses with origin specific to childhood	352	364	22491	40695	1.007	1.61e-13	12.79	275
+300	PSYCH	Neurotic disorders	10625	24145	12218	16914	0.7702	1	0	276
+301	PSYCH	Personality disorders	3596	3396	19247	37663	1.089	8.78e-178	100	277
+302	PSYCH	Sexual deviations and disorders	362	720	22481	40339	0.9983	1	0	278
+303	PSYCH	Alcohol dependence syndrome	3935	4896	18908	36163	1.064	1.86e-75	74.73	279
+304	PSYCH	Drug dependence	4140	4768	18703	36291	1.08	1.54e-111	100	280
+305	PSYCH	Nondependent abuse of drugs	8552	11477	14291	29582	1.152	9.25e-134	100	281
+306	PSYCH	Physiological malfunction arising from mental factors	125	244	22718	40815	0.9995	1	0	282
+307	PSYCH	Special symptoms or syndromes, not elsewhere classified	2636	4615	20207	36444	1.003	0.252	0.5986	283
+308	PSYCH	Acute reaction to stress	875	1969	21968	39090	0.99	1	0	284
+309	PSYCH	Adjustment reaction	7153	15819	15690	25240	0.895	1	0	285
+310	PSYCH	Specific nonpsychotic mental disorders due to organic brain damage	1065	1646	21778	39413	1.007	9.94e-05	4.003	286
+311	PSYCH	Depressive disorder, not elsewhere classified	10284	23277	12559	17782	0.7877	1	0	287
+312	PSYCH	Disturbance of conduct, not elsewhere classified	1056	1019	21787	40040	1.022	1.62e-46	45.79	288
+313	PSYCH	Disturbance of emotions specific to childhood and adolescence	466	488	22377	40571	1.009	8.67e-17	16.06	289
+314	PSYCH	Hyperkinetic syndrome of childhood	2696	3721	20147	37338	1.031	8.18e-28	27.09	290
+315	PSYCH	Specific delays in development	643	831	22200	40228	1.008	3.33e-10	9.478	291
+316	PSYCH	Psychic factors associated with diseases classified elsewhere	317	860	22526	40199	0.9928	1	0	292
+317	PSYCH	Mild mental retardation	222	171	22621	40888	1.006	5.98e-17	16.22	293
+318	PSYCH	Other specified mental retardation	76	29	22767	41030	1.003	2.64e-14	13.58	294
+319	PSYCH	Unspecified mental retardation	261	177	22582	40882	1.007	2.97e-24	23.53	295
+320	NULL	Bacterial meningitis	40	59	22803	41000	1	0.346	0.4609	296
+321	NEURO	Meningitis due to other organisms	7	22	22836	41037	0.9998	1	0	297
+322	NEURO	Meningitis of unspecified cause	143	303	22700	40756	0.9989	1	0	298
+323	NEURO	Encephalitis, myelitis, and encephalomyelitis	114	273	22729	40786	0.9983	1	0	299
+324	NEURO	Intracranial and intraspinal abscess	70	159	22773	40900	0.9992	1	0	300
+325	NEURO	Phlebitis and thrombophlebitis of intracranial venous sinuses	16	38	22827	41021	0.9998	1	0	301
+326	NEURO	Late effects of intracranial abscess or pyogenic infection	7	20	22836	41039	0.9998	1	0	302
+327	NEURO	Organic sleep disorders	1064	2124	21779	38935	0.9946	1	0	303
+330	NEURO	Cerebral degenerations usually manifest in childhood	12	40	22831	41019	0.9996	1	0	304
+331	NEURO	Other cerebral degenerations	776	1479	22067	39580	0.9979	1	0	305
+332	NEURO	Parkinson's disease	531	577	22312	40482	1.009	6.26e-17	16.2	306
+333	NEURO	Other extrapyramidal disease and abnormal movement disorders	1506	2142	21337	38917	1.015	1.2e-12	11.92	307
+334	NEURO	Spinocerebellar disease	84	172	22759	40887	0.9995	1	0	308
+335	NEURO	Anterior horn cell disease	35	130	22808	40929	0.9984	1	0	309
+336	NEURO	Other diseases of spinal cord	267	704	22576	40355	0.9945	1	0	310
+337	NEURO	Disorders of the autonomic nervous system	266	692	22577	40367	0.9947	1	0	311
+338	NEURO	Pain, not elsewhere classified	1786	3354	21057	37705	0.9962	1	0	312
+339	NEURO	Other headache syndromes	124	265	22719	40794	0.999	1	0	313
+340	NEURO	Multiple sclerosis	250	563	22593	40496	0.9972	1	0	314
+341	NEURO	Other demyelinating diseases of central nervous system	148	353	22695	40706	0.9979	1	0	315
+342	NEURO	Hemiplegia and hemiparesis	590	1282	22253	39777	0.9945	1	0	316
+343	NEURO	Infantile cerebral palsy	77	106	22766	40953	1.001	0.0759	1.12	317
+344	NEURO	Other paralytic syndromes	239	557	22604	40502	0.9969	1	0	318
+345	NEURO	Epilepsy	1620	2079	21223	38980	1.022	3.05e-25	24.52	319
+346	NEURO	Migraine	2580	5005	20263	36054	0.9899	1	0	320
+347	NEURO	Cataplexy and narcolepsy	60	106	22783	40953	1	0.935	0.02919	321
+348	NEURO	Other conditions of brain	2745	4325	20098	36734	1.017	1.21e-08	7.917	322
+349	NEURO	Other and unspecified disorders of the nervous system	384	862	22459	40197	0.9957	1	0	323
+350	NEURO	Trigeminal nerve disorders	280	578	22563	40481	0.9982	1	0	324
+351	NEURO	Facial nerve disorders	173	379	22670	40680	0.9983	1	0	325
+352	NEURO	Disorders of other cranial nerves	37	136	22806	40923	0.9983	1	0	326
+353	NEURO	Nerve root and plexus disorders	294	830	22549	40229	0.9926	1	0	327
+354	NEURO	Mononeuritis of upper limb and mononeuritis multiplex	1228	2866	21615	38193	0.983	1	0	328
+355	NEURO	Mononeuritis of lower limb	1118	2432	21725	38627	0.9892	1	0	329
+356	NEURO	Hereditary and idiopathic peripheral neuropathy	1158	2620	21685	38439	0.9862	1	0	330
+357	NEURO	Inflammatory and toxic neuropathy	545	1284	22298	39775	0.9924	1	0	331
+358	NEURO	Myoneural disorders	57	126	22786	40933	0.9994	1	0	332
+359	NEURO	Muscular dystrophies and other myopathies	193	487	22650	40572	0.9966	1	0	333
+360	NEURO	Disorders of the globe	39	94	22804	40965	0.9994	1	0	334
+361	NEURO	Retinal detachments and defects	33	76	22810	40983	0.9996	1	0	335
+362	NEURO	Other retinal disorders	210	616	22633	40443	0.9941	1	0	336
+363	NEURO	Chorioretinal inflammations, scars, and other disorders of choroid	16	50	22827	41009	0.9995	1	0	337
+364	NEURO	Disorders of iris and ciliary body	72	142	22771	40917	0.9997	1	0	338
+365	NEURO	Glaucoma	248	489	22595	40570	0.9989	1	0	339
+366	NEURO	Cataract	346	753	22497	40306	0.9968	1	0	340
+367	NEURO	Disorders of refraction and accommodation	158	327	22685	40732	0.9989	1	0	341
+368	NEURO	Visual disturbances	1019	2041	21824	39018	0.9947	1	0	342
+369	NEURO	Blindness and low vision	269	665	22574	40394	0.9955	1	0	343
+370	NEURO	Keratitis	58	151	22785	40908	0.9989	1	0	344
+371	NEURO	Corneal opacity and other disorders of cornea	24	72	22819	40987	0.9993	1	0	345
+372	NEURO	Disorders of conjunctiva	1331	2984	21512	38075	0.9847	1	0	346
+373	NEURO	Inflammation of eyelids	328	720	22515	40339	0.9968	1	0	347
+374	NEURO	Other disorders of eyelids	102	246	22741	40813	0.9985	1	0	348
+375	NEURO	Disorders of lacrimal system	69	148	22774	40911	0.9994	1	0	349
+376	NEURO	Disorders of the orbit	92	179	22751	40880	0.9997	1	0	350
+377	NEURO	Disorders of optic nerve and visual pathways	80	249	22763	40810	0.9974	1	0	351
+378	NEURO	Strabismus and other disorders of binocular eye movements	117	268	22726	40791	0.9986	1	0	352
+379	NEURO	Other disorders of eye	513	1078	22330	39981	0.9961	1	0	353
+380	NEURO	Disorders of external ear	1578	3282	21265	37777	0.9883	1	0	354
+381	NEURO	Nonsuppurative otitis media and Eustachian tube disorders	444	991	22399	40068	0.9952	1	0	355
+382	NEURO	Suppurative and unspecified otitis media	1424	3115	21419	37944	0.9856	1	0	356
+383	NEURO	Mastoiditis and related conditions	47	76	22796	40983	1	0.573	0.2418	357
+384	NEURO	Other disorders of tympanic membrane	55	136	22788	40923	0.9991	1	0	358
+385	NEURO	Other disorders of middle ear and mastoid	50	94	22793	40965	0.9999	1	0	359
+386	NEURO	Vertiginous syndromes and other disorders of vestibular system	359	946	22484	40113	0.9926	1	0	360
+387	NEURO	Otosclerosis	12	35	22831	41024	0.9997	1	0	361
+388	NEURO	Other disorders of ear	1545	3311	21298	37748	0.9861	1	0	362
+389	NEURO	Hearing loss	734	1680	22109	39379	0.9909	1	0	363
+390	NULL	Rheumatic fever without mention of heart involvement	13	16	22830	41043	1	0.335	0.475	364
+391	CARDIO	Rheumatic fever with heart involvement	5	9	22838	41050	1	1	0	365
+392	CARDIO	Rheumatic chorea	3	16	22840	41043	0.9997	1	0	366
+393	CARDIO	Chronic rheumatic pericarditis	0	1	22843	41058	1	1	0	367
+394	CARDIO	Diseases of mitral valve	290	799	22553	40260	0.9931	1	0	368
+395	CARDIO	Diseases of aortic valve	40	60	22803	40999	1	0.404	0.3936	369
+396	CARDIO	Diseases of mitral and aortic valves	150	383	22693	40676	0.9972	1	0	370
+397	CARDIO	Diseases of other endocardial structures	773	1956	22070	39103	0.9857	1	0	371
+398	CARDIO	Other rheumatic heart disease	50	104	22793	40955	0.9997	1	0	372
+401	CARDIO	Essential hypertension	7565	14107	15278	26952	0.9815	1	0	373
+402	CARDIO	Hypertensive heart disease	116	402	22727	40657	0.9953	1	0	374
+403	CARDIO	Hypertensive renal disease	523	1090	22320	39969	0.9963	1	0	375
+404	CARDIO	Hypertensive heart and renal disease	17	85	22826	40974	0.9987	1	0	376
+405	CARDIO	Secondary hypertension	66	139	22777	40920	0.9995	1	0	377
+410	CARDIO	Acute myocardial infarction	1055	2291	21788	38768	0.9899	1	0	378
+411	CARDIO	Other acute and subacute forms of ischemic heart disease	616	1414	22227	39645	0.9923	1	0	379
+412	CARDIO	Old myocardial infarction	740	1545	22103	39514	0.9946	1	0	380
+413	CARDIO	Angina pectoris	622	1479	22221	39580	0.991	1	0	381
+414	CARDIO	Other forms of chronic ischemic heart disease	2218	4827	20625	36232	0.9773	1	0	382
+415	CARDIO	Acute pulmonary heart disease	451	916	22392	40143	0.9974	1	0	383
+416	CARDIO	Chronic pulmonary heart disease	428	1072	22415	39987	0.9925	1	0	384
+417	CARDIO	Other diseases of pulmonary circulation	27	78	22816	40981	0.9993	1	0	385
+420	CARDIO	Acute pericarditis	79	214	22764	40845	0.9982	1	0	386
+421	CARDIO	Acute and subacute endocarditis	74	161	22769	40898	0.9993	1	0	387
+422	CARDIO	Acute myocarditis	16	44	22827	41015	0.9996	1	0	388
+423	CARDIO	Other diseases of pericardium	434	1097	22409	39962	0.9921	1	0	389
+424	CARDIO	Other diseases of endocardium	2093	5026	20750	36033	0.9661	1	0	390
+425	CARDIO	Cardiomyopathy	763	2052	22080	39007	0.9829	1	0	391
+426	CARDIO	Conduction disorders	799	1669	22044	39390	0.9941	1	0	392
+427	CARDIO	Cardiac dysrhythmias	4653	9167	18190	31892	0.9754	1	0	393
+428	CARDIO	Heart failure	1562	3364	21281	37695	0.9855	1	0	394
+429	CARDIO	Ill-defined descriptions and complications of heart disease	1943	4109	20900	36950	0.9836	1	0	395
+430	CARDIO	Subarachnoid hemorrhage	171	346	22672	40713	0.9991	1	0	396
+431	CARDIO	Intracerebral hemorrhage	267	614	22576	40445	0.9967	1	0	397
+432	CARDIO	Other and unspecified intracranial hemorrhage	230	467	22613	40592	0.9987	1	0	398
+433	CARDIO	Occlusion and stenosis of precerebral arteries	719	1837	22124	39222	0.9863	1	0	399
+434	CARDIO	Occlusion of cerebral arteries	760	1785	22083	39274	0.9894	1	0	400
+435	CARDIO	Transient cerebral ischemia	513	1264	22330	39795	0.9915	1	0	401
+436	CARDIO	Acute, but ill-defined, cerebrovascular disease	412	976	22431	40083	0.9942	1	0	402
+437	CARDIO	Other and ill-defined cerebrovascular disease	541	1248	22302	39811	0.9931	1	0	403
+438	CARDIO	Late effects of cerebrovascular disease	562	1254	22281	39805	0.9939	1	0	404
+440	CARDIO	Atherosclerosis	678	1799	22165	39260	0.9854	1	0	405
+441	CARDIO	Aortic aneurysm and dissection	391	858	22452	40201	0.9962	1	0	406
+442	CARDIO	Other aneurysm	135	347	22708	40712	0.9974	1	0	407
+443	CARDIO	Other peripheral vascular disease	841	2084	22002	38975	0.9855	1	0	408
+444	CARDIO	Arterial embolism and thrombosis	153	437	22690	40622	0.996	1	0	409
+445	CARDIO	Atheroembolism	4	21	22839	41038	0.9997	1	0	410
+446	CARDIO	Polyarteritis nodosa and allied conditions	68	250	22775	40809	0.9969	1	0	411
+447	CARDIO	Other disorders of arteries and arterioles	672	1709	22171	39350	0.9874	1	0	412
+448	CARDIO	Disease of capillaries	302	1000	22541	40059	0.9887	1	0	413
+451	CARDIO	Phlebitis and thrombophlebitis	736	1701	22107	39358	0.9905	1	0	414
+452	CARDIO	Portal vein thrombosis	28	71	22815	40988	0.9995	1	0	415
+453	CARDIO	Other venous embolism and thrombosis	754	1833	22089	39226	0.988	1	0	416
+454	CARDIO	Varicose veins of lower extremities	434	1158	22409	39901	0.9906	1	0	417
+455	CARDIO	Hemorrhoids	1473	3456	21370	37603	0.979	1	0	418
+456	CARDIO	Varicose veins of other sites	198	488	22645	40571	0.9968	1	0	419
+457	CARDIO	Noninfectious disorders of lymphatic channels	140	359	22703	40700	0.9974	1	0	420
+458	CARDIO	Hypotension	1710	3415	21133	37644	0.991	1	0	421
+459	CARDIO	Other disorders of circulatory system	985	2339	21858	38720	0.9855	1	0	422
+460	NULL	Acute nasopharyngitis (common cold)	100	320	22743	40739	0.9966	1	0	423
+461	RESPIR	Acute sinusitis	1805	4242	21038	36817	0.9736	1	0	424
+462	RESPIR	Acute pharyngitis	3408	7943	19435	33116	0.948	1	0	425
+463	RESPIR	Acute tonsillitis	143	300	22700	40759	0.9989	1	0	426
+464	RESPIR	Acute laryngitis and tracheitis	350	710	22493	40349	0.998	1	0	427
+465	RESPIR	Acute upper respiratory infections of multiple or unspecified sites	4600	10159	18243	30900	0.9423	1	0	428
+466	RESPIR	Acute bronchitis and bronchiolitis	2514	4755	20329	36304	0.9935	1	0	429
+470	RESPIR	Deviated nasal septum	271	659	22572	40400	0.9958	1	0	430
+471	RESPIR	Nasal polyps	90	245	22753	40814	0.998	1	0	431
+472	RESPIR	Chronic pharyngitis and nasopharyngitis	601	1548	22242	39511	0.9883	1	0	432
+473	RESPIR	Chronic sinusitis	1855	4411	20988	36648	0.9715	1	0	433
+474	RESPIR	Chronic disease of tonsils and adenoids	208	479	22635	40580	0.9974	1	0	434
+475	RESPIR	Peritonsillar abscess	31	48	22812	41011	1	0.557	0.2541	435
+476	RESPIR	Chronic laryngitis and laryngotracheitis	93	216	22750	40843	0.9988	1	0	436
+477	RESPIR	Allergic rhinitis	2538	5828	20305	35231	0.9653	1	0	437
+478	RESPIR	Other diseases of upper respiratory tract	1025	2193	21818	38866	0.9911	1	0	438
+480	RESPIR	Viral pneumonia	66	151	22777	40908	0.9992	1	0	439
+481	RESPIR	Pneumococcal pneumonia [Streptococcus pneumoniae pneumonia]	202	483	22641	40576	0.9971	1	0	440
+482	RESPIR	Other bacterial pneumonia	429	868	22414	40191	0.9976	1	0	441
+483	RESPIR	Pneumonia due to other specified organism	28	55	22815	41004	0.9999	1	0	442
+484	RESPIR	Pneumonia in infectious diseases classified elsewhere	15	73	22828	40986	0.9989	1	0	443
+485	RESPIR	Bronchopneumonia, organism unspecified	61	150	22782	40909	0.999	1	0	444
+486	RESPIR	Pneumonia, organism unspecified	2737	5500	20106	35559	0.9839	1	0	445
+487	RESPIR	Influenza	385	1042	22458	40017	0.9913	1	0	446
+488	RESPIR	Influenza due to certain identified influenza viruses	26	30	22817	41029	1	0.124	0.9066	447
+490	RESPIR	Bronchitis, not specified as acute or chronic	1886	3795	20957	37264	0.9892	1	0	448
+491	RESPIR	Chronic bronchitis	709	1093	22134	39966	1.005	0.0013	2.886	449
+492	RESPIR	Emphysema	774	1467	22069	39592	0.9981	1	0	450
+493	RESPIR	Asthma	4218	7271	18625	33788	1.009	0.0175	1.757	451
+494	RESPIR	Bronchiectasis	222	560	22621	40499	0.996	1	0	452
+495	RESPIR	Extrinsic allergic alveolitis	32	70	22811	40989	0.9997	1	0	453
+496	RESPIR	Chronic airway obstruction, not elsewhere classified	1930	2921	20913	38138	1.015	1.32e-09	8.879	454
+500	RESPIR	Coal workers' pneumoconiosis	1	6	22842	41053	0.9999	1	0	455
+501	RESPIR	Asbestosis	20	55	22823	41004	0.9995	1	0	456
+502	RESPIR	Pneumoconiosis due to other silica or silicates	0	3	22843	41056	0.9999	1	0	457
+503	RESPIR	Pneumoconiosis due to other inorganic dust	1	2	22842	41057	1	1	0	458
+504	RESPIR	Pneumonopathy due to inhalation of other dust	1	2	22842	41057	1	1	0	459
+505	RESPIR	Pneumoconiosis, unspecified	2	8	22841	41051	0.9999	1	0	460
+506	RESPIR	Respiratory conditions due to chemical fumes and vapors	16	39	22827	41020	0.9998	1	0	461
+507	RESPIR	Pneumonitis due to solids and liquids	632	1099	22211	39960	1.001	0.509	0.2933	462
+508	RESPIR	Respiratory conditions due to other and unspecified external agents	31	157	22812	40902	0.9975	1	0	463
+510	RESPIR	Empyema	61	150	22782	40909	0.999	1	0	464
+511	RESPIR	Pleurisy	1979	4525	20864	36534	0.9742	1	0	465
+512	RESPIR	Pneumothorax	405	1088	22438	39971	0.9911	1	0	466
+513	RESPIR	Abscess of lung and mediastinum	49	104	22794	40955	0.9996	1	0	467
+514	RESPIR	Pulmonary congestion and hypostasis	1226	2575	21617	38484	0.9904	1	0	468
+515	RESPIR	Postinflammatory pulmonary fibrosis	344	839	22499	40220	0.9945	1	0	469
+516	RESPIR	Other alveolar and parietoalveolar pneumonopathy	178	394	22665	40665	0.9982	1	0	470
+517	RESPIR	Lung involvement in conditions classified elsewhere	46	155	22797	40904	0.9982	1	0	471
+518	RESPIR	Other diseases of lung	3991	8466	18852	32593	0.9619	1	0	472
+519	RESPIR	Other diseases of respiratory system	517	1183	22326	39876	0.9937	1	0	473
+520	NULL	Disorders of tooth development and eruption	440	836	22403	40223	0.9989	1	0	474
+521	GI	Diseases of hard tissues of teeth	1294	2174	21549	38885	1.004	0.0491	1.309	475
+522	GI	Diseases of pulp and periapical tissues	1241	2004	21602	39055	1.006	0.00247	2.607	476
+523	GI	Gingival and periodontal diseases	590	1183	22253	39876	0.9969	1	0	477
+524	GI	Dentofacial anomalies, including malocclusion	605	1252	22238	39807	0.9959	1	0	478
+525	GI	Other diseases and conditions of the teeth and supporting structures	1052	1503	21791	39556	1.01	7.56e-09	8.121	479
+526	GI	Diseases of the jaws	408	680	22435	40379	1.001	0.225	0.6478	480
+527	GI	Diseases of the salivary glands	279	621	22564	40438	0.9971	1	0	481
+528	GI	Diseases of the oral soft tissues, excluding lesions specific for gingiva and tongue	813	1664	22030	39395	0.9949	1	0	482
+529	GI	Diseases and other conditions of the tongue	177	328	22666	40731	0.9998	1	0	483
+530	GI	Diseases of esophagus	5032	10357	17811	30702	0.959	1	0	484
+531	GI	Gastric ulcer	197	522	22646	40537	0.9959	1	0	485
+532	GI	Duodenal ulcer	118	266	22725	40793	0.9987	1	0	486
+533	GI	Peptic ulcer, site unspecified	407	907	22436	40152	0.9956	1	0	487
+534	GI	Gastrojejunal ulcer	44	98	22799	40961	0.9995	1	0	488
+535	GI	Gastritis and duodenitis	2147	4859	20696	36200	0.9731	1	0	489
+536	GI	Disorders of function of stomach	1325	3266	21518	37793	0.9771	1	0	490
+537	GI	Other disorders of stomach and duodenum	328	901	22515	40158	0.9923	1	0	491
+539	GI	Complications of bariatric procedures	13	16	22830	41043	1	0.335	0.475	492
+540	GI	Acute appendicitis	157	335	22686	40724	0.9987	1	0	493
+541	GI	Appendicitis, unqualified	136	330	22707	40729	0.9979	1	0	494
+542	GI	Other appendicitis	27	37	22816	41022	1	0.298	0.5258	495
+543	GI	Other diseases of appendix	51	89	22792	40970	1	0.86	0.0655	496
+550	GI	Inguinal hernia	445	959	22398	40100	0.996	1	0	497
+551	GI	Other hernia of abdominal cavity, with gangrene	6	14	22837	41045	0.9999	1	0	498
+552	GI	Other hernia of abdominal cavity, with obstruction, but without mention of gangrene	133	268	22710	40791	0.9993	1	0	499
+553	GI	Other hernia of abdominal cavity without mention of obstruction or gangrene	1311	2987	21532	38072	0.9837	1	0	500
+555	GI	Regional enteritis	228	586	22615	40473	0.9957	1	0	501
+556	GI	Ulcerative colitis	246	586	22597	40473	0.9965	1	0	502
+557	GI	Vascular insufficiency of intestine	126	314	22717	40745	0.9979	1	0	503
+558	GI	Other noninfectious gastroenteritis and colitis	2002	4063	20841	36996	0.9876	1	0	504
+560	GI	Intestinal obstruction without mention of hernia	738	1687	22105	39372	0.9909	1	0	505
+562	GI	Diverticula of intestine	1219	3018	21624	38041	0.9787	1	0	506
+564	GI	Functional digestive disorders, not elsewhere classified	3956	7991	18887	33068	0.9741	1	0	507
+565	GI	Anal fissure and fistula	220	523	22623	40536	0.9969	1	0	508
+566	GI	Abscess of anal and rectal regions	107	274	22736	40785	0.998	1	0	509
+567	GI	Peritonitis	238	618	22605	40441	0.9953	1	0	510
+568	GI	Other disorders of peritoneum	388	924	22455	40135	0.9944	1	0	511
+569	GI	Other disorders of intestine	2284	5370	20559	35689	0.9658	1	0	512
+570	GI	Acute and subacute necrosis of liver	133	295	22710	40764	0.9986	1	0	513
+571	GI	Chronic liver disease and cirrhosis	1510	3078	21333	37981	0.9905	1	0	514
+572	GI	Liver abscess and sequelae of chronic liver disease	253	628	22590	40431	0.9957	1	0	515
+573	GI	Other disorders of liver	2169	4739	20674	36320	0.9774	1	0	516
+574	GI	Cholelithiasis	993	2281	21850	38778	0.9874	1	0	517
+575	GI	Other disorders of gallbladder	668	1532	22175	39527	0.9917	1	0	518
+576	GI	Other disorders of biliary tract	320	792	22523	40267	0.9946	1	0	519
+577	GI	Diseases of pancreas	680	1415	22163	39644	0.9952	1	0	520
+578	GI	Gastrointestinal hemorrhage	2119	4666	20724	36393	0.977	1	0	521
+579	GI	Intestinal malabsorption	222	516	22621	40543	0.9971	1	0	522
+580	NULL	Acute glomerulonephritis	66	120	22777	40939	1	1	0	523
+581	UROL	Nephrotic syndrome	60	199	22783	40860	0.9978	1	0	524
+582	UROL	Chronic glomerulonephritis	135	242	22708	40817	1	1	0	525
+583	UROL	Nephritis and nephropathy, not specified as acute or chronic	267	674	22576	40385	0.9952	1	0	526
+584	UROL	Acute renal failure	1193	2310	21650	38749	0.9957	1	0	527
+585	UROL	Chronic renal failure	1021	1860	21822	39199	0.9994	1	0	528
+586	UROL	Renal failure, unspecified	886	1745	21957	39314	0.9961	1	0	529
+587	UROL	Renal sclerosis, unspecified	57	170	22786	40889	0.9984	1	0	530
+588	UROL	Disorders resulting from impaired renal function	257	257	22586	40802	1.005	3.87e-11	10.41	531
+589	UROL	Small kidney of unknown cause	18	51	22825	41008	0.9995	1	0	532
+590	UROL	Infections of kidney	486	976	22357	40083	0.9975	1	0	533
+591	UROL	Hydronephrosis	316	820	22527	40239	0.9938	1	0	534
+592	UROL	Calculus of kidney and ureter	758	1968	22085	39091	0.9847	1	0	535
+593	UROL	Other disorders of kidney and ureter	1506	3225	21337	37834	0.9865	1	0	536
+594	UROL	Calculus of lower urinary tract	52	136	22791	40923	0.999	1	0	537
+595	UROL	Cystitis	339	739	22504	40320	0.9968	1	0	538
+596	UROL	Other disorders of bladder	720	1436	22123	39623	0.9964	1	0	539
+597	UROL	Urethritis, not sexually transmitted, and urethral syndrome	409	844	22434	40215	0.9973	1	0	540
+598	UROL	Urethral stricture	90	298	22753	40761	0.9967	1	0	541
+599	UROL	Other disorders of urethra and urinary tract	5436	11755	17407	29304	0.9366	1	0	542
+600	UROL	Hyperplasia of prostate	922	2248	21921	38811	0.985	1	0	543
+601	UROL	Inflammatory diseases of prostate	275	665	22568	40394	0.9958	1	0	544
+602	UROL	Other disorders of prostate	58	174	22785	40885	0.9983	1	0	545
+603	UROL	Hydrocele	150	294	22693	40765	0.9994	1	0	546
+604	UROL	Orchitis and epididymitis	187	367	22656	40692	0.9992	1	0	547
+605	UROL	Redundant prepuce and phimosis	56	143	22787	40916	0.999	1	0	548
+606	UROL	Infertility, male	133	438	22710	40621	0.9951	1	0	549
+607	UROL	Disorders of penis	732	1778	22111	39281	0.9884	1	0	550
+608	UROL	Other disorders of male genital organs	558	1230	22285	39829	0.9943	1	0	551
+610	UROL	Benign mammary dysplasias	1079	2730	21764	38329	0.9798	1	0	552
+611	UROL	Other disorders of breast	2517	5937	20326	35122	0.9613	1	0	553
+612	UROL	Deformity and disproportion of reconstructed breast	17	81	22826	40978	0.9988	1	0	554
+614	UROL	Inflammatory disease of ovary, fallopian tube, pelvic cellular tissue, and peritoneum	497	1028	22346	40031	0.9966	1	0	555
+615	UROL	Inflammatory diseases of uterus, except cervix	102	223	22741	40836	0.999	1	0	556
+616	UROL	Inflammatory disease of cervix, vagina, and vulva	2972	6631	19871	34428	0.9639	1	0	557
+617	UROL	Endometriosis	472	1149	22371	39910	0.9925	1	0	558
+618	UROL	Genital prolapse	340	743	22503	40316	0.9967	1	0	559
+619	UROL	Fistula involving female genital tract	23	79	22820	40980	0.9991	1	0	560
+620	UROL	Noninflammatory disorders of ovary, fallopian tube, and broad ligament	1450	3463	21393	37596	0.9777	1	0	561
+621	UROL	Disorders of uterus, not elsewhere classified	819	2046	22024	39013	0.9855	1	0	562
+622	UROL	Noninflammatory disorders of cervix	1336	3243	21507	37816	0.9782	1	0	563
+623	UROL	Noninflammatory disorders of vagina	1179	2585	21664	38474	0.988	1	0	564
+624	UROL	Noninflammatory disorders of vulva and perineum	295	694	22548	40365	0.996	1	0	565
+625	UROL	Pain and other symptoms associated with female genital organs	2981	6772	19862	34287	0.9604	1	0	566
+626	UROL	Disorders of menstruation and other abnormal bleeding from female genital tract	3222	7378	19621	33681	0.955	1	0	567
+627	UROL	Menopausal and postmenopausal disorders	2187	5257	20656	35802	0.9643	1	0	568
+628	UROL	Infertility, female	417	1553	22426	39506	0.9801	1	0	569
+629	UROL	Other disorders of female genital organs	69	256	22774	40803	0.9968	1	0	570
+630	NULL	Hydatidiform mole	14	39	22829	41020	0.9997	1	0	571
+631	OBS	Other abnormal product of conception	24	70	22819	40989	0.9993	1	0	572
+632	OBS	Excision of cyst of epididymis	190	663	22653	40396	0.9921	1	0	573
+633	OBS	Ectopic pregnancy	77	258	22766	40801	0.9971	1	0	574
+634	OBS	Spontaneous abortion	185	598	22658	40461	0.9935	1	0	575
+635	OBS	Legally induced abortion	247	431	22596	40628	1	0.717	0.1445	576
+636	OBS	Illegally induced abortion	2	6	22841	41053	0.9999	1	0	577
+637	OBS	Unspecified abortion	40	138	22803	40921	0.9984	1	0	578
+638	OBS	Failed attempted abortion	3	12	22840	41047	0.9998	1	0	579
+639	OBS	Complications following abortion or ectopic and molar pregnancies	45	93	22798	40966	0.9997	1	0	580
+640	OBS	Hemorrhage in early pregnancy	395	1042	22448	40017	0.9918	1	0	581
+641	OBS	Antepartum hemorrhage, abruptio placentae, and placenta previa	252	740	22591	40319	0.9929	1	0	582
+642	OBS	Hypertension complicating pregnancy, childbirth, and the puerperium	262	630	22581	40429	0.9961	1	0	583
+643	OBS	Excessive vomiting in pregnancy	142	360	22701	40699	0.9974	1	0	584
+644	OBS	Early or threatened labor	554	1439	22289	39620	0.9889	1	0	585
+645	OBS	Prolonged pregnancy	198	620	22645	40439	0.9935	1	0	586
+646	OBS	Other complications of pregnancy, not elsewhere classified	568	1368	22275	39691	0.9913	1	0	587
+647	OBS	Infectious and parasitic conditions in the mother classifiable elsewhere, but complicating pregnancy, childbirth, or the puerperium	120	248	22723	40811	0.9992	1	0	588
+648	OBS	Other current conditions in the mother classifiable elsewhere, but complicating pregnancy, childbirth, or the puerperium	1130	2765	21713	38294	0.9812	1	0	589
+649	OBS	Other conditions or status of the mother complicating pregnancy, childbirth, or the puerperium	250	531	22593	40528	0.998	1	0	590
+650	OBS	Normal delivery	816	2379	22027	38680	0.977	1	0	591
+651	OBS	Multiple gestation	57	266	22786	40793	0.996	1	0	592
+652	OBS	Malposition and malpresentation of fetus	205	667	22638	40392	0.9927	1	0	593
+653	OBS	Disproportion in pregnancy, labor, and delivery	19	66	22824	40993	0.9992	1	0	594
+654	OBS	Abnormality of organs and soft tissues of pelvis complicating pregnancy, childbirth, or the puerperium	357	1087	22486	39972	0.989	1	0	595
+655	OBS	Known or suspected fetal abnormality affecting management of mother	545	1477	22298	39582	0.9876	1	0	596
+656	OBS	Other fetal and placental problems affecting management of mother	665	1827	22178	39232	0.9842	1	0	597
+657	OBS	Polyhydramnios	34	114	22809	40945	0.9987	1	0	598
+658	OBS	Other problems associated with amniotic cavity and membranes	287	848	22556	40211	0.9918	1	0	599
+659	OBS	Other indications for care or intervention related to labor and delivery, not elsewhere classified	559	1935	22284	39124	0.9768	1	0	600
+660	OBS	Obstructed labor	52	190	22791	40869	0.9976	1	0	601
+661	OBS	Abnormality of forces of labor	134	412	22709	40647	0.9958	1	0	602
+662	OBS	Long labor	18	48	22825	41011	0.9996	1	0	603
+663	OBS	Umbilical cord complications during labor and delivery	209	593	22634	40466	0.9947	1	0	604
+664	OBS	Trauma to perineum and vulva during delivery	473	1525	22370	39534	0.9832	1	0	605
+665	OBS	Other obstetrical trauma	51	159	22792	40900	0.9984	1	0	606
+666	OBS	Postpartum hemorrhage	68	239	22775	40820	0.9971	1	0	607
+667	OBS	Retained placenta without hemorrhage	38	102	22805	40957	0.9992	1	0	608
+668	OBS	Complications of the administration of anesthetic or other sedation in labor and delivery	9	28	22834	41031	0.9997	1	0	609
+669	OBS	Other complications of labor and delivery, not elsewhere classified	156	440	22687	40619	0.9961	1	0	610
+670	OBS	Major puerperal infection	34	74	22809	40985	0.9997	1	0	611
+671	OBS	Venous complications in pregnancy and the puerperium	42	143	22801	40916	0.9984	1	0	612
+672	OBS	Pyrexia of unknown origin during the puerperium	17	57	22826	41002	0.9994	1	0	613
+673	OBS	Obstetrical pulmonary embolism	7	9	22836	41050	1	0.603	0.2197	614
+674	OBS	Other and unspecified complications of the puerperium, not elsewhere classified	103	314	22740	40745	0.9968	1	0	615
+675	OBS	Infections of the breast and nipple associated with childbirth	13	60	22830	40999	0.9991	1	0	616
+676	OBS	Other disorders of the breast associated with childbirth and disorders of lactation	98	180	22745	40879	0.9999	1	0	617
+677	OBS	Late effect of complication of pregnancy, childbirth, and the puerperium	2	8	22841	41051	0.9999	1	0	618
+680	NULL	Carbuncle and furuncle	476	842	22367	40217	1	0.794	0.1002	619
+681	DERM	Cellulitis and abscess of finger and toe	706	1451	22137	39608	0.9954	1	0	620
+682	DERM	Other cellulitis and abscess	3707	6750	19136	34309	0.9975	1	0	621
+683	DERM	Acute lymphadenitis	25	51	22818	41008	0.9999	1	0	622
+684	DERM	Impetigo	279	593	22564	40466	0.9977	1	0	623
+685	DERM	Pilonidal cyst	150	247	22693	40812	1.001	0.401	0.3969	624
+686	DERM	Other local infections of skin and subcutaneous tissue	490	1071	22353	39988	0.9953	1	0	625
+690	DERM	Erythematosquamous dermatosis	595	1445	22248	39614	0.9906	1	0	626
+691	DERM	Atopic dermatitis and related conditions	695	1641	22148	39418	0.9902	1	0	627
+692	DERM	Contact dermatitis and other eczema	3781	8645	19062	32414	0.946	1	0	628
+693	DERM	Dermatitis due to substances taken internally	369	817	22474	40242	0.9962	1	0	629
+694	DERM	Bullous dermatoses	26	52	22817	41007	0.9999	1	0	630
+695	DERM	Erythematous conditions	1067	2382	21776	38677	0.9881	1	0	631
+696	DERM	Psoriasis and similar disorders	758	1546	22085	39513	0.9954	1	0	632
+697	DERM	Lichen	53	179	22790	40880	0.998	1	0	633
+698	DERM	Pruritus and related conditions	1173	2682	21670	38377	0.9853	1	0	634
+700	DERM	Corns and callosities	558	982	22285	40077	1.001	0.687	0.163	635
+701	DERM	Other hypertrophic and atrophic conditions of skin	1296	3322	21547	37737	0.9744	1	0	636
+702	DERM	Other dermatoses	1571	4298	21272	36761	0.9614	1	0	637
+703	DERM	Diseases of nail	1144	2043	21699	39016	1	0.865	0.06298	638
+704	DERM	Diseases of hair and hair follicles	1356	3116	21487	37943	0.9824	1	0	639
+705	DERM	Disorders of sweat glands	260	515	22583	40544	0.9988	1	0	640
+706	DERM	Diseases of sebaceous glands	2744	6260	20099	34799	0.9632	1	0	641
+707	DERM	Chronic ulcer of skin	828	1653	22015	39406	0.9958	1	0	642
+708	DERM	Urticaria	660	1612	22183	39447	0.9893	1	0	643
+709	DERM	Other disorders of skin and subcutaneous tissue	2752	7009	20091	34050	0.9429	1	0	644
+710	NULL	Diffuse diseases of connective tissue	401	887	22442	40172	0.9959	1	0	645
+711	ORTHO	Arthropathy associated with infections	152	320	22691	40739	0.9989	1	0	646
+712	ORTHO	Crystal arthropathies	85	240	22758	40819	0.9979	1	0	647
+713	ORTHO	Arthropathy associated with other disorders classified elsewhere	43	130	22800	40929	0.9987	1	0	648
+714	ORTHO	Rheumatoid arthritis and other inflammatory polyarthropathies	608	1427	22235	39632	0.9916	1	0	649
+715	ORTHO	Osteoarthrosis and allied disorders	3915	8352	18928	32707	0.9613	1	0	650
+716	ORTHO	Other and unspecified arthropathies	1905	4040	20938	37019	0.9836	1	0	651
+717	ORTHO	Internal derangement of knee	1086	2593	21757	38466	0.9836	1	0	652
+718	ORTHO	Other derangement of joint	1001	2245	21842	38814	0.9886	1	0	653
+719	ORTHO	Other and unspecified disorders of joint	8264	17816	14579	23243	0.887	1	0	654
+720	ORTHO	Ankylosing spondylitis and other inflammatory spondylopathies	127	306	22716	40753	0.9981	1	0	655
+721	ORTHO	Spondylosis and allied disorders	2767	6156	20076	34903	0.9672	1	0	656
+722	ORTHO	Intervertebral disc disorders	3306	7392	19537	33667	0.9587	1	0	657
+723	ORTHO	Other disorders of cervical region	4122	8664	18721	32395	0.9627	1	0	658
+724	ORTHO	Other and unspecified disorders of back	7528	15667	15315	25392	0.9224	1	0	659
+725	ORTHO	Polymyalgia rheumatica	122	297	22721	40762	0.9981	1	0	660
+726	ORTHO	Peripheral enthesopathies and allied syndromes	3151	7397	19692	33662	0.951	1	0	661
+727	ORTHO	Other disorders of synovium, tendon, and bursa	1970	4625	20873	36434	0.9711	1	0	662
+728	ORTHO	Disorders of muscle, ligament, and fascia	2432	4985	20411	36074	0.9833	1	0	663
+729	ORTHO	Other disorders of soft tissues	8331	17193	14512	23866	0.9149	1	0	664
+730	ORTHO	Osteomyelitis, periostitis, and other infections involving bone	404	811	22439	40248	0.9979	1	0	665
+731	ORTHO	Osteitis deformans and osteopathies associated with other disorders classified elsewhere	66	151	22777	40908	0.9992	1	0	666
+732	ORTHO	Osteochondropathies	126	321	22717	40738	0.9977	1	0	667
+733	ORTHO	Other disorders of bone and cartilage	3631	8467	19212	32592	0.9438	1	0	668
+734	ORTHO	Flat foot	229	483	22614	40576	0.9982	1	0	669
+735	ORTHO	Acquired deformities of toe	731	1639	22112	39420	0.9918	1	0	670
+736	ORTHO	Other acquired deformities of limbs	789	1566	22054	39493	0.9963	1	0	671
+737	ORTHO	Curvature of spine	707	1368	22136	39691	0.9976	1	0	672
+738	ORTHO	Other acquired musculoskeletal deformity	476	1086	22367	39973	0.9943	1	0	673
+739	ORTHO	Nonallopathic lesions, not elsewhere classified	94	189	22749	40870	0.9995	1	0	674
+740	NULL	Anencephalus and similar anomalies	1	7	22842	41052	0.9999	1	0	675
+741	CONG	Spina bifida	31	64	22812	40995	0.9998	1	0	676
+742	CONG	Other congenital anomalies of nervous system	112	252	22731	40807	0.9988	1	0	677
+743	CONG	Congenital anomalies of eye	17	47	22826	41012	0.9996	1	0	678
+744	CONG	Congenital anomalies of ear, face, and neck	40	95	22803	40964	0.9994	1	0	679
+745	CONG	Bulbus cordis anomalies and anomalies of cardiac septal closure	267	636	22576	40423	0.9962	1	0	680
+746	CONG	Other congenital anomalies of heart	174	509	22669	40550	0.9952	1	0	681
+747	CONG	Other congenital anomalies of circulatory system	272	609	22571	40450	0.997	1	0	682
+748	CONG	Anomalies of respiratory system, congenital	55	166	22788	40893	0.9984	1	0	683
+749	CONG	Cleft palate and cleft lip	6	14	22837	41045	0.9999	1	0	684
+750	CONG	Other congenital anomalies of upper alimentary tract	57	157	22786	40902	0.9987	1	0	685
+751	CONG	Other congenital anomalies of digestive system	91	223	22752	40836	0.9985	1	0	686
+752	CONG	Congenital anomalies of genital organs	118	265	22725	40794	0.9987	1	0	687
+753	CONG	Congenital anomalies of urinary system	211	450	22632	40609	0.9983	1	0	688
+754	CONG	Certain congenital musculoskeletal deformities	143	331	22700	40728	0.9982	1	0	689
+755	CONG	Other congenital anomalies of limbs	153	263	22690	40796	1	0.681	0.1669	690
+756	CONG	Other congenital musculoskeletal anomalies	358	746	22485	40313	0.9975	1	0	691
+757	CONG	Congenital anomalies of the integument	277	708	22566	40351	0.9948	1	0	692
+758	CONG	Chromosomal anomalies	102	161	22741	40898	1.001	0.303	0.5186	693
+759	CONG	Other and unspecified congenital anomalies	149	350	22694	40709	0.998	1	0	694
+760	NULL	Fetus or newborn affected by maternal conditions which may be unrelated to present pregnancy	90	182	22753	40877	0.9995	1	0	695
+761	PREG	Fetus or newborn affected by maternal complications of pregnancy	9	23	22834	41036	0.9998	1	0	696
+762	PREG	Fetus or newborn affected by complications of placenta, cord, and membranes	40	88	22803	40971	0.9996	1	0	697
+763	PREG	Fetus or newborn affected by other complications of labor and delivery	8	9	22835	41050	1	0.324	0.4895	698
+764	PREG	Slow fetal growth and fetal malnutrition	9	15	22834	41044	1	0.834	0.07883	699
+765	PREG	Disorders relating to short gestation and unspecified low birthweight	17	34	22826	41025	0.9999	1	0	700
+766	PREG	Disorders relating to long gestation and high birthweight	2	8	22841	41051	0.9999	1	0	701
+767	PREG	Birth trauma	7	20	22836	41039	0.9998	1	0	702
+768	PREG	Intrauterine hypoxia and birth asphyxia	13	26	22830	41033	0.9999	1	0	703
+769	PREG	Respiratory distress syndrome in newborn	2	8	22841	41051	0.9999	1	0	704
+770	PREG	Other respiratory conditions of fetus and newborn	34	68	22809	40991	0.9998	1	0	705
+771	PREG	Infections specific to the perinatal period	1	12	22842	41047	0.9998	1	0	706
+772	PREG	Fetal and neonatal hemorrhage	15	27	22828	41032	1	1	0	707
+773	PREG	Hemolytic disease of fetus or newborn, due to isoimmunization	3	8	22840	41051	0.9999	1	0	708
+774	PREG	Other perinatal jaundice	3	12	22840	41047	0.9998	1	0	709
+775	PREG	Endocrine and metabolic disturbances specific to the fetus and newborn	6	22	22837	41037	0.9997	1	0	710
+776	PREG	Hematological disorders of fetus and newborn	6	15	22837	41044	0.9999	1	0	711
+777	PREG	Perinatal disorders of digestive system	4	6	22839	41053	1	0.752	0.1238	712
+778	PREG	Conditions involving the integument and temperature regulation of fetus and newborn	7	10	22836	41049	1	0.622	0.2062	713
+779	PREG	Other and ill-defined conditions originating in the perinatal period	36	74	22807	40985	0.9998	1	0	714
+780	NULL	General symptoms	12611	24646	10232	16413	0.8924	1	0	715
+781	SIGNS	Symptoms involving nervous and musculoskeletal systems	3470	5902	19373	35157	1.01	0.0053	2.276	716
+782	SIGNS	Symptoms involving skin and other integumentary tissue	6443	13257	16400	27802	0.9431	1	0	717
+783	SIGNS	Symptoms concerning nutrition, metabolism, and development	4149	8679	18694	32380	0.9637	1	0	718
+784	SIGNS	Symptoms involving head and neck	6640	13867	16203	27192	0.9337	1	0	719
+785	SIGNS	Symptoms involving cardiovascular system	5851	12044	16992	29015	0.95	1	0	720
+786	SIGNS	Symptoms involving respiratory system and other chest symptoms	10712	21446	12131	19613	0.8995	1	0	721
+787	SIGNS	Symptoms involving digestive system	6621	13983	16222	27076	0.9286	1	0	722
+788	SIGNS	Symptoms involving urinary system	4534	9009	18309	32050	0.9739	1	0	723
+789	SIGNS	Other symptoms involving abdomen and pelvis	7999	16893	14844	24166	0.9057	1	0	724
+790	SIGNS	Nonspecific findings on examination of blood	3972	7819	18871	33240	0.98	1	0	725
+791	SIGNS	Nonspecific findings on examination of urine	658	1398	22185	39661	0.9946	1	0	726
+792	SIGNS	Nonspecific abnormal findings in other body substances	655	1529	22188	39530	0.9912	1	0	727
+793	SIGNS	Nonspecific abnormal findings on radiological and other examination of body structure	4122	9550	18721	31509	0.9364	1	0	728
+794	SIGNS	Nonspecific abnormal results of function studies	3069	6027	19774	35032	0.9856	1	0	729
+795	SIGNS	Nonspecific abnormal histological and immunological findings	2185	5467	20658	35592	0.9585	1	0	730
+796	SIGNS	Other nonspecific abnormal findings	2050	4104	20793	36955	0.9888	1	0	731
+797	SIGNS	Senility without mention of psychosis	2	16	22841	41043	0.9997	1	0	732
+798	SIGNS	Sudden death, cause unknown	9	9	22834	41050	1	0.224	0.6498	733
+799	SIGNS	Other ill-defined and unknown causes of morbidity and mortality	5229	8599	17614	32460	1.025	1.11e-08	7.955	734
+800	NULL	Fracture of vault of skull	48	76	22795	40983	1	0.512	0.2907	735
+801	INJUR	Fracture of base of skull	132	218	22711	40841	1	0.467	0.3307	736
+802	INJUR	Fracture of face bones	538	776	22305	40283	1.005	8.52e-05	4.07	737
+803	INJUR	Other and unqualified skull fractures	52	71	22791	40988	1.001	0.133	0.8761	738
+804	INJUR	Multiple fractures involving skull or face with other bones	29	50	22814	41009	1	0.907	0.04239	739
+805	INJUR	Fracture of vertebral column without mention of spinal cord injury	448	915	22395	40144	0.9973	1	0	740
+806	INJUR	Fracture of vertebral column with spinal cord injury	75	190	22768	40869	0.9987	1	0	741
+807	INJUR	Fracture of rib(s), sternum, larynx, and trachea	579	1018	22264	40041	1.001	0.672	0.1726	742
+808	INJUR	Fracture of pelvis	177	341	22666	40718	0.9994	1	0	743
+809	INJUR	Ill-defined fractures of bones of trunk	11	13	22832	41046	1	0.296	0.5287	744
+810	INJUR	Fracture of clavicle	149	267	22694	40792	1	1	0	745
+811	INJUR	Fracture of scapula	57	97	22786	40962	1	0.737	0.1325	746
+812	INJUR	Fracture of humerus	364	623	22479	40436	1.001	0.462	0.3354	747
+813	INJUR	Fracture of radius and ulna	602	1155	22241	39904	0.9982	1	0	748
+814	INJUR	Fracture of carpal bone(s)	270	430	22573	40629	1.001	0.122	0.9136	749
+815	INJUR	Fracture of metacarpal bone(s)	437	650	22406	40409	1.003	0.00217	2.664	750
+816	INJUR	Fracture of one or more phalanges of hand	511	930	22332	40129	0.9997	1	0	751
+817	INJUR	Multiple fractures of hand bones	30	41	22813	41018	1	0.266	0.5751	752
+818	INJUR	Ill-defined fractures of upper limb	46	98	22797	40961	0.9996	1	0	753
+819	INJUR	Multiple fractures involving both upper limbs, and upper limb with rib(s) and sternum	4	8	22839	41051	1	1	0	754
+820	INJUR	Fracture of neck of femur	254	519	22589	40540	0.9985	1	0	755
+821	INJUR	Fracture of other and unspecified parts of femur	164	298	22679	40761	0.9999	1	0	756
+822	INJUR	Fracture of patella	116	181	22727	40878	1.001	0.249	0.6038	757
+823	INJUR	Fracture of tibia and fibula	385	692	22458	40367	1	1	0	758
+824	INJUR	Fracture of ankle	647	1161	22196	39898	1	0.98	0.008774	759
+825	INJUR	Fracture of one or more tarsal and metatarsal bones	570	1162	22273	39897	0.9966	1	0	760
+826	INJUR	Fracture of one or more phalanges of foot	361	769	22482	40290	0.997	1	0	761
+827	INJUR	Other, multiple, and ill-defined fractures of lower limb	47	76	22796	40983	1	0.573	0.2418	762
+828	INJUR	Multiple fractures involving both lower limbs, lower with upper limb, and lower limb(s) with rib(s) and sternum	6	4	22837	41055	1	0.183	0.7375	763
+829	INJUR	Fracture of unspecified bones	106	220	22737	40839	0.9993	1	0	764
+830	INJUR	Dislocation of jaw	35	48	22808	41011	1	0.252	0.5986	765
+831	INJUR	Dislocation of shoulder	202	370	22641	40689	0.9998	1	0	766
+832	INJUR	Dislocation of elbow	50	64	22793	40995	1.001	0.0781	1.107	767
+833	INJUR	Dislocation of wrist	52	81	22791	40978	1	0.416	0.3809	768
+834	INJUR	Dislocation of finger	117	202	22726	40857	1	0.726	0.1391	769
+835	INJUR	Dislocation of hip	51	100	22792	40959	0.9998	1	0	770
+836	INJUR	Dislocation of knee	700	1646	22143	39413	0.9903	1	0	771
+837	INJUR	Dislocation of ankle	29	60	22814	40999	0.9998	1	0	772
+838	INJUR	Dislocation of foot	58	126	22785	40933	0.9995	1	0	773
+839	INJUR	Other, multiple, and ill-defined dislocations	63	122	22780	40937	0.9998	1	0	774
+840	INJUR	Sprains and strains of shoulder and upper arm	1000	2303	21843	38756	0.9871	1	0	775
+841	INJUR	Sprains and strains of elbow and forearm	97	182	22746	40877	0.9998	1	0	776
+842	INJUR	Sprains and strains of wrist and hand	697	1287	22146	39772	0.9991	1	0	777
+843	INJUR	Sprains and strains of hip and thigh	167	356	22676	40703	0.9986	1	0	778
+844	INJUR	Sprains and strains of knee and leg	956	1811	21887	39248	0.9976	1	0	779
+845	INJUR	Sprains and strains of ankle and foot	1620	3055	21223	38004	0.9962	1	0	780
+846	INJUR	Sprains and strains of sacroiliac region	199	356	22644	40703	1	0.965	0.01547	781
+847	INJUR	Sprains and strains of other and unspecified parts of back	2137	4304	20706	36755	0.9876	1	0	782
+848	INJUR	Other and ill-defined sprains and strains	606	1261	22237	39798	0.9957	1	0	783
+850	INJUR	Concussion	636	1030	22207	40029	1.003	0.0382	1.418	784
+851	INJUR	Cerebral laceration and contusion	113	192	22730	40867	1	0.632	0.1993	785
+852	INJUR	Subarachnoid, subdural, and extradural hemorrhage, following injury	270	456	22573	40603	1.001	0.414	0.383	786
+853	INJUR	Other and unspecified intracranial hemorrhage following injury	141	246	22702	40813	1	0.79	0.1024	787
+854	INJUR	Intracranial injury of other and unspecified nature	563	957	22280	40102	1.001	0.291	0.5361	788
+860	INJUR	Traumatic pneumothorax and hemothorax	115	179	22728	40880	1.001	0.246	0.6091	789
+861	INJUR	Injury to heart and lung	94	135	22749	40924	1.001	0.0975	1.011	790
+862	INJUR	Injury to other and unspecified intrathoracic organs	52	85	22791	40974	1	0.593	0.2269	791
+863	INJUR	Injury to gastrointestinal tract	39	67	22804	40992	1	0.84	0.07572	792
+864	INJUR	Injury to liver	37	75	22806	40984	0.9998	1	0	793
+865	INJUR	Injury to spleen	33	67	22810	40992	0.9998	1	0	794
+866	INJUR	Injury to kidney	30	42	22813	41017	1	0.325	0.4881	795
+867	INJUR	Injury to pelvic organs	49	86	22794	40973	1	0.928	0.03245	796
+868	INJUR	Injury to other intra-abdominal organs	76	138	22767	40921	1	1	0	797
+869	INJUR	Internal injury to unspecified or ill-defined organs	56	95	22787	40964	1	0.734	0.1343	798
+870	INJUR	Open wound of ocular adnexa	59	100	22784	40959	1	0.741	0.1302	799
+871	INJUR	Open wound of eyeball	29	29	22814	41030	1.001	0.0279	1.554	800
+872	INJUR	Open wound of ear	73	101	22770	40958	1.001	0.0961	1.017	801
+873	INJUR	Other open wound of head	1435	2302	21408	38757	1.007	0.000529	3.277	802
+874	INJUR	Open wound of neck	68	108	22775	40951	1	0.432	0.3645	803
+875	INJUR	Open wound of chest (wall)	94	153	22749	40906	1	0.465	0.3325	804
+876	INJUR	Open wound of back	48	91	22795	40968	0.9999	1	0	805
+877	INJUR	Open wound of buttock	42	66	22801	40993	1	0.484	0.3152	806
+878	INJUR	Open wound of genital organs (external), including traumatic amputation	27	56	22816	41003	0.9998	1	0	807
+879	INJUR	Open wound of other and unspecified sites, except limbs	981	1866	21862	39193	0.9974	1	0	808
+880	INJUR	Open wound of shoulder and upper arm	79	115	22764	40944	1.001	0.154	0.8125	809
+881	INJUR	Open wound of elbow, forearm, and wrist	539	804	22304	40255	1.004	0.000759	3.12	810
+882	INJUR	Open wound of hand except finger(s) alone	556	886	22287	40173	1.003	0.0262	1.582	811
+883	INJUR	Open wound of finger(s)	867	1668	21976	39391	0.9972	1	0	812
+884	INJUR	Multiple and unspecified open wound of upper limb	193	344	22650	40715	1	0.928	0.03245	813
+885	INJUR	Traumatic amputation of thumb (complete) (partial)	9	28	22834	41031	0.9997	1	0	814
+886	INJUR	Traumatic amputation of other finger(s) (complete) (partial)	42	104	22801	40955	0.9993	1	0	815
+887	INJUR	Traumatic amputation of arm and hand (complete) (partial)	5	19	22838	41040	0.9998	1	0	816
+890	INJUR	Open wound of hip and thigh	84	174	22759	40885	0.9994	1	0	817
+891	INJUR	Open wound of knee, leg (except thigh), and ankle	394	689	22449	40370	1	0.678	0.1688	818
+892	INJUR	Open wound of foot except toe(s) alone	289	486	22554	40573	1.001	0.366	0.4365	819
+893	INJUR	Open wound of toe(s)	84	190	22759	40869	0.999	1	0	820
+894	INJUR	Multiple and unspecified open wound of lower limb	65	101	22778	40958	1	0.373	0.4283	821
+895	INJUR	Traumatic amputation of toe(s) (complete) (partial)	13	39	22830	41020	0.9996	1	0	822
+896	INJUR	Traumatic amputation of foot (complete) (partial)	6	8	22837	41051	1	0.586	0.2321	823
+897	INJUR	Traumatic amputation of leg(s) (complete) (partial)	21	62	22822	40997	0.9994	1	0	824
+900	INJUR	Injury to blood vessels of head and neck	45	75	22798	40984	1	0.703	0.153	825
+901	INJUR	Injury to blood vessels of thorax	14	25	22829	41034	1	1	0	826
+902	INJUR	Injury to blood vessels of abdomen and pelvis	15	35	22828	41024	0.9998	1	0	827
+903	INJUR	Injury to blood vessels of upper extremity	31	94	22812	40965	0.9991	1	0	828
+904	INJUR	Injury to blood vessels of lower extremity and unspecified sites	33	119	22810	40940	0.9985	1	0	829
+905	INJUR	Late effects of musculoskeletal and connective tissue injuries	346	591	22497	40468	1.001	0.45	0.3468	830
+906	INJUR	Late effects of injuries to skin and subcutaneous tissues	118	207	22725	40852	1	0.862	0.06449	831
+907	INJUR	Late effects of injuries to the nervous system	186	291	22657	40768	1.001	0.137	0.8633	832
+908	INJUR	Late effects of other and unspecified injuries	210	331	22633	40728	1.001	0.137	0.8633	833
+909	INJUR	Late effects of other and unspecified external causes	63	119	22780	40940	0.9999	1	0	834
+910	INJUR	Superficial injury of face, neck, and scalp except eye	533	831	22310	40228	1.003	0.0102	1.991	835
+911	INJUR	Superficial injury of trunk	124	177	22719	40882	1.001	0.0536	1.271	836
+912	INJUR	Superficial injury of shoulder and upper arm	56	94	22787	40965	1	0.671	0.1733	837
+913	INJUR	Superficial injury of elbow, forearm, and wrist	250	354	22593	40705	1.002	0.00423	2.374	838
+914	INJUR	Superficial injury of hand(s) except finger(s) alone	135	202	22708	40857	1.001	0.0987	1.006	839
+915	INJUR	Superficial injury of finger(s)	150	273	22693	40786	0.9999	1	0	840
+916	INJUR	Superficial injury of hip, thigh, leg, and ankle	354	524	22489	40535	1.003	0.00507	2.295	841
+917	INJUR	Superficial injury of foot and toe(s)	235	333	22608	40726	1.002	0.00556	2.255	842
+918	INJUR	Superficial injury of eye and adnexa	148	269	22695	40790	0.9999	1	0	843
+919	INJUR	Superficial injury of other, multiple, and unspecified sites	576	1214	22267	39845	0.9955	1	0	844
+920	INJUR	Contusion of face, scalp, and neck except eye(s)	990	1502	21853	39557	1.007	2.65e-05	4.577	845
+921	INJUR	Contusion of eye and adnexa	219	299	22624	40760	1.002	0.00203	2.693	846
+922	INJUR	Contusion of trunk	918	1596	21925	39463	1.001	0.42	0.3768	847
+923	INJUR	Contusion of upper limb	1085	1877	21758	39182	1.002	0.307	0.5129	848
+924	INJUR	Contusion of lower limb and of other and unspecified sites	2229	3940	20614	37119	1.002	0.511	0.2916	849
+925	INJUR	Crushing injury of face, scalp, and neck	4	8	22839	41051	1	1	0	850
+926	INJUR	Crushing injury of trunk	8	7	22835	41052	1	0.181	0.7423	851
+927	INJUR	Crushing injury of upper limb	191	362	22652	40697	0.9995	1	0	852
+928	INJUR	Crushing injury of lower limb	41	76	22802	40983	0.9999	1	0	853
+929	INJUR	Crushing injury of multiple and unspecified sites	7	10	22836	41049	1	0.622	0.2062	854
+930	INJUR	Foreign body on external eye	94	204	22749	40855	0.9991	1	0	855
+931	INJUR	Foreign body in ear	62	97	22781	40962	1	0.408	0.3893	856
+932	INJUR	Foreign body in nose	7	18	22836	41041	0.9999	1	0	857
+933	INJUR	Foreign body in pharynx and larynx	325	562	22518	40497	1.001	0.573	0.2418	858
+934	INJUR	Foreign body in trachea, bronchus, and lung	54	89	22789	40970	1	0.602	0.2204	859
+935	INJUR	Foreign body in mouth, esophagus, and stomach	91	142	22752	40917	1.001	0.304	0.5171	860
+936	INJUR	Foreign body in intestine and colon	31	31	22812	41028	1.001	0.0237	1.625	861
+937	INJUR	Foreign body in anus and rectum	10	16	22833	41043	1	0.838	0.07676	862
+938	INJUR	Foreign body in digestive system, unspecified	100	103	22743	40956	1.002	9.18e-05	4.037	863
+939	INJUR	Foreign body in genitourinary tract	52	83	22791	40976	1	0.529	0.2765	864
+940	INJUR	Burn confined to eye and adnexa	10	20	22833	41039	1	1	0	865
+941	INJUR	Burn of face, head, and neck	84	138	22759	40921	1	0.528	0.2774	866
+942	INJUR	Burn of trunk	115	168	22728	40891	1.001	0.0931	1.031	867
+943	INJUR	Burn of upper limb, except wrist and hand	144	220	22699	40839	1.001	0.139	0.857	868
+944	INJUR	Burn of wrist(s) and hand(s)	232	312	22611	40747	1.003	0.000874	3.058	869
+945	INJUR	Burn of lower limb(s)	137	237	22706	40822	1	0.745	0.1278	870
+946	INJUR	Burns of multiple specified sites	27	42	22816	41017	1	0.615	0.2111	871
+947	INJUR	Burn of internal organs	15	30	22828	41029	0.9999	1	0	872
+948	INJUR	Burns classified according to extent of body surface involved	176	268	22667	40791	1.001	0.0911	1.04	873
+949	INJUR	Burn, unspecified site	306	484	22537	40575	1.002	0.0792	1.101	874
+950	INJUR	Injury to optic nerve and pathways	8	11	22835	41048	1	0.634	0.1979	875
+951	INJUR	Injury to other cranial nerve(s)	23	57	22820	41002	0.9996	1	0	876
+952	INJUR	Spinal cord injury without evidence of spinal bone injury	106	195	22737	40864	0.9999	1	0	877
+953	INJUR	Injury to nerve roots and spinal plexus	54	121	22789	40938	0.9994	1	0	878
+954	INJUR	Injury to other nerve(s) of trunk, excluding shoulder and pelvic girdles	1	7	22842	41052	0.9999	1	0	879
+955	INJUR	Injury to peripheral nerve(s) of shoulder girdle and upper limb	188	383	22655	40676	0.9989	1	0	880
+956	INJUR	Injury to peripheral nerve(s) of pelvic girdle and lower limb	42	84	22801	40975	0.9998	1	0	881
+957	INJUR	Injury to other and unspecified nerves	18	31	22825	41028	1	0.882	0.05453	882
+958	INJUR	Certain early complications of trauma	512	1015	22331	40044	0.9976	1	0	883
+959	INJUR	Injury, other and unspecified	5091	9078	17752	31981	1.002	0.605	0.2182	884
+960	INJUR	Poisoning by antibiotics	23	38	22820	41021	1	0.79	0.1024	885
+961	INJUR	Poisoning by other anti-infectives	6	10	22837	41049	1	1	0	886
+962	INJUR	Poisoning by hormones and synthetic substitutes	46	84	22797	40975	1	1	0	887
+963	INJUR	Poisoning by primarily systemic agents	124	242	22719	40817	0.9995	1	0	888
+964	INJUR	Poisoning by agents primarily affecting blood constituents	23	35	22820	41024	1	0.584	0.2336	889
+965	INJUR	Poisoning by analgesics, antipyretics, and antirheumatics	676	939	22167	40120	1.007	2.84e-07	6.547	890
+966	INJUR	Poisoning by anticonvulsants and anti-Parkinsonism drugs	237	151	22606	40908	1.007	4.36e-24	23.36	891
+967	INJUR	Poisoning by sedatives and hypnotics	138	174	22705	40885	1.002	0.00204	2.69	892
+968	INJUR	Poisoning by other central nervous system depressants and anesthetics	78	94	22765	40965	1.001	0.0106	1.975	893
+969	INJUR	Poisoning by psychotropic agents	1232	1209	21611	39850	1.026	7.85e-52	51.11	894
+970	INJUR	Poisoning by central nervous system stimulants	164	130	22679	40929	1.004	2.76e-12	11.56	895
+971	INJUR	Poisoning by drugs primarily affecting the autonomic nervous system	53	52	22790	41007	1.001	0.00212	2.674	896
+972	INJUR	Poisoning by agents primarily affecting the cardiovascular system	113	139	22730	40920	1.002	0.00299	2.524	897
+973	INJUR	Poisoning by agents primarily affecting the gastrointestinal system	16	15	22827	41044	1	0.0897	1.047	898
+974	INJUR	Poisoning by water, mineral, and uric acid metabolism drugs	16	23	22827	41036	1	0.506	0.2958	899
+975	INJUR	Poisoning by agents primarily acting on the smooth and skeletal muscles and respiratory system	42	60	22801	40999	1	0.257	0.5901	900
+976	INJUR	Poisoning by agents primarily affecting skin and mucous membrane, ophthalmological, otorhinolaryngological, and dental drugs	23	23	22820	41036	1	0.0465	1.333	901
+977	INJUR	Poisoning by other and unspecified drugs and medicinal substances	1203	1396	21640	39663	1.02	2.48e-29	28.61	902
+978	INJUR	Poisoning by bacterial vaccines	4	8	22839	41051	1	1	0	903
+979	INJUR	Poisoning by other vaccines and biological substances	0	2	22843	41057	1	1	0	904
+980	INJUR	Toxic effect of alcohol	286	386	22557	40673	1.003	0.000266	3.575	905
+981	INJUR	Toxic effect of petroleum products	4	3	22839	41056	1	0.258	0.5884	906
+982	INJUR	Toxic effect of solvents other than petroleum based	16	23	22827	41036	1	0.506	0.2958	907
+983	INJUR	Toxic effect of corrosive aromatics, acids, and caustic alkalis	29	41	22814	41018	1	0.321	0.4935	908
+984	INJUR	Toxic effect of lead and its compounds (including fumes)	26	40	22817	41019	1	0.524	0.2807	909
+985	INJUR	Toxic effect of other metals	202	44	22641	41015	1.008	1.46e-50	49.84	910
+986	INJUR	Toxic effect of carbon monoxide	28	104	22815	40955	0.9987	1	0	911
+987	INJUR	Toxic effect of other gases, fumes, or vapors	85	146	22758	40913	1	0.731	0.1361	912
+988	INJUR	Toxic effect of noxious substances eaten as food	10	13	22833	41046	1	0.515	0.2882	913
+989	INJUR	Toxic effect of other substances, chiefly nonmedicinal as to source	125	277	22718	40782	0.9987	1	0	914
+990	INJUR	Effects of radiation, unspecified	27	109	22816	40950	0.9985	1	0	915
+991	INJUR	Effects of reduced temperature	103	143	22740	40916	1.001	0.0458	1.339	916
+992	INJUR	Effects of heat and light	32	60	22811	40999	0.9999	1	0	917
+993	INJUR	Effects of air pressure	7	14	22836	41045	1	1	0	918
+994	INJUR	Effects of other external causes	167	332	22676	40727	0.9992	1	0	919
+995	INJUR	Certain adverse effects not elsewhere classified	1950	3916	20893	37143	0.9891	1	0	920
+996	INJUR	Complications peculiar to certain specified procedures	1314	3146	21529	37913	0.9797	1	0	921
+997	INJUR	Complications affecting specified body systems, not elsewhere classified	662	1664	22181	39395	0.9881	1	0	922
+998	INJUR	Other complications of procedures, NEC	1502	3325	21341	37734	0.9837	1	0	923
+999	INJUR	Complications of medical care, not elsewhere classified	310	1015	22533	40044	0.9887	1	0	924
+E000	NULL	External Cause Status	123	150	22720	40909	1.002	0.00153	2.815	925
+E001	E	Activities involving walking and running	67	64	22776	40995	1.001	0.00034	3.469	926
+E002	E	Activities involving water and water craft	6	7	22837	41052	1	0.564	0.2487	927
+E003	E	Activities involving snow and ice	6	18	22837	41041	0.9998	1	0	928
+E004	E	Activities involving climbing, rappelling and jumping off	4	2	22839	41057	1	0.196	0.7077	929
+E005	E	Activities involving dancing and other rhythmic movement	4	7	22839	41052	1	1	0	930
+E006	E	Activities involving other sports and athletics played individually	17	19	22826	41040	1	0.165	0.7825	931
+E007	E	Activities involving other sports and athletics played as a group	32	56	22811	41003	1	0.912	0.04001	932
+E008	E	Activities involving other specified sports and athletics	4	12	22839	41047	0.9999	1	0	933
+E009	E	Activity involving other cardiorespiratory exercise	1	3	22842	41056	1	1	0	934
+E010	E	Activity involving other muscle strengthening exercises	3	7	22840	41052	1	1	0	935
+E013	E	Activities involving personal hygiene and household maintenance	23	27	22820	41032	1	0.141	0.8508	936
+E014	E	Activities involving person providing caregiving	1	5	22842	41054	0.9999	1	0	937
+E015	E	Activities involving food preparation, cooking and grilling	18	30	22825	41029	1	0.88	0.05552	938
+E016	E	Activities involving property and land maintenance, building and construction	8	19	22835	41040	0.9999	1	0	939
+E017	E	Activities involving roller coasters and other types of external motion	1	0	22842	41059	1	0.357	0.4473	940
+E019	E	Activities involving animal care	5	7	22838	41052	1	0.765	0.1163	941
+E029	E	Other activity	49	53	22794	41006	1.001	0.0127	1.896	942
+E030	E	Unspecified activity	170	352	22673	40707	0.9989	1	0	943
+E800	E	Railway accident involving collision with rolling stock	5	3	22838	41056	1	0.144	0.8416	944
+E801	E	Railway accident involving collision with other object	0	0	22843	41059	1	1	0	945
+E802	E	Railway accident involving derailment without antecedent collision	1	1	22842	41058	1	1	0	946
+E803	E	Railway accident involving explosion, fire, or burning	0	0	22843	41059	1	1	0	947
+E804	E	Fall in, on, or from railway train	7	8	22836	41051	1	0.423	0.3737	948
+E805	E	Hit by rolling stock	2	4	22841	41055	1	1	0	949
+E806	E	Other specified railway accident	3	4	22840	41055	1	0.706	0.1512	950
+E807	E	Railway accident of unspecified nature	2	4	22841	41055	1	1	0	951
+E810	E	Motor vehicle traffic accident involving collision with train	1	8	22842	41051	0.9998	1	0	952
+E811	E	Motor vehicle traffic accident involving re-entrant collision with another motor vehicle	1	6	22842	41053	0.9999	1	0	953
+E812	E	Other motor vehicle traffic accident involving collision with motor vehicle	696	1421	22147	39638	0.9957	1	0	954
+E813	E	Motor vehicle traffic accident involving collision with other vehicle	49	86	22794	40973	1	0.928	0.03245	955
+E814	E	Motor vehicle traffic accident involving collision with pedestrian	233	287	22610	40772	1.003	2.25e-05	4.648	956
+E815	E	Other motor vehicle traffic accident involving collision on the highway	108	143	22735	40916	1.001	0.0175	1.757	957
+E816	E	Motor vehicle traffic accident due to loss of control, without collision on the highway	138	179	22705	40880	1.002	0.00472	2.326	958
+E817	E	Noncollision motor vehicle traffic accident while boarding or alighting	32	47	22811	41012	1	0.411	0.3862	959
+E818	E	Other noncollision motor vehicle traffic accident	46	68	22797	40991	1	0.328	0.4841	960
+E819	E	Motor vehicle traffic accident of unspecified nature	813	1461	22030	39598	1	1	0	961
+E820	E	Nontraffic accident involving motor-driven snow vehicle	1	0	22842	41059	1	0.357	0.4473	962
+E821	E	Nontraffic accident involving other off-road motor vehicle	6	11	22837	41048	1	1	0	963
+E822	E	Other motor vehicle nontraffic accident involving collision with moving object	1	2	22842	41057	1	1	0	964
+E823	E	Other motor vehicle nontraffic accident involving collision with stationary object	7	22	22836	41037	0.9998	1	0	965
+E824	E	Other motor vehicle nontraffic accident while boarding and alighting	20	29	22823	41030	1	0.459	0.3382	966
+E825	E	Other motor vehicle nontraffic accident of other and unspecified nature	6	21	22837	41038	0.9998	1	0	967
+E826	E	Pedal cycle accident	123	165	22720	40894	1.001	0.0161	1.793	968
+E827	E	Animal-drawn vehicle accident	0	0	22843	41059	1	1	0	969
+E828	E	Accident involving animal being ridden	8	19	22835	41040	0.9999	1	0	970
+E829	E	Other road vehicle accidents	6	10	22837	41049	1	1	0	971
+E830	E	Accident to watercraft causing submersion	0	1	22843	41058	1	1	0	972
+E831	E	Accident to watercraft causing other injury	2	0	22841	41059	1	0.128	0.8928	973
+E832	E	Other accidental submersion or drowning in water transport accident	1	0	22842	41059	1	0.357	0.4473	974
+E833	E	Fall on stairs or ladders in water transport	2	4	22841	41055	1	1	0	975
+E834	E	Other fall from one level to another in water transport	1	2	22842	41057	1	1	0	976
+E835	E	Other and unspecified fall in water transport	1	2	22842	41057	1	1	0	977
+E836	E	Machinery accident in water transport	3	1	22840	41058	1	0.134	0.8729	978
+E837	E	Explosion, fire, or burning in watercraft	0	1	22843	41058	1	1	0	979
+E838	E	Other and unspecified water transport accident	4	6	22839	41053	1	0.752	0.1238	980
+E840	E	Accident to powered aircraft at takeoff or landing	1	1	22842	41058	1	1	0	981
+E841	E	Accident to powered aircraft, other and unspecified	0	0	22843	41059	1	1	0	982
+E842	E	Accident to unpowered aircraft	0	1	22843	41058	1	1	0	983
+E843	E	Fall in, on, or from aircraft	0	1	22843	41058	1	1	0	984
+E844	E	Other specified air transport accidents	1	1	22842	41058	1	1	0	985
+E845	E	Accident involving spacecraft	1	0	22842	41059	1	0.357	0.4473	986
+E846	E	Accidents involving powered vehicles used solely within the buildings and premises of industrial or commercial establishment	0	1	22843	41058	1	1	0	987
+E847	E	Accidents involving cable cars not running on rails	0	3	22843	41056	0.9999	1	0	988
+E848	E	Accidents involving other vehicles, not elsewhere classifiable	8	10	22835	41049	1	0.466	0.3316	989
+E849	E	Place of occurrence	930	1398	21913	39661	1.007	1.91e-05	4.719	990
+E850	E	Accidental poisoning by analgesics, antipyretics, and antirheumatics	236	262	22607	40797	1.004	9.9e-08	7.004	991
+E851	E	Accidental poisoning by barbiturates	3	5	22840	41054	1	1	0	992
+E852	E	Accidental poisoning by other sedatives and hypnotics	24	18	22819	41041	1.001	0.00558	2.253	993
+E853	E	Accidental poisoning by tranquilizers	165	134	22678	40925	1.004	7.08e-12	11.15	994
+E854	E	Accidental poisoning by other psychotropic agents	150	100	22693	40959	1.004	7.83e-15	14.11	995
+E855	E	Accidental poisoning by other drugs acting on central and autonomic nervous system	96	62	22747	40997	1.003	1.88e-10	9.726	996
+E856	E	Accidental poisoning by antibiotics	4	3	22839	41056	1	0.258	0.5884	997
+E857	E	Accidental poisoning by other anti-infectives	3	1	22840	41058	1	0.134	0.8729	998
+E858	E	Accidental poisoning by other drugs	126	156	22717	40903	1.002	0.00222	2.654	999
+E860	E	Accidental poisoning by alcohol, not elsewhere classified	42	41	22801	41018	1.001	0.00579	2.237	1000
+E861	E	Accidental poisoning by cleansing and polishing agents, disinfectants, paints, and varnishes	4	4	22839	41055	1	0.468	0.3298	1001
+E862	E	Accidental poisoning by petroleum products, other solvents and their vapors, not elsewhere classified	2	1	22841	41058	1	0.292	0.5346	1002
+E863	E	Accidental poisoning by agricultural and horticultural chemical and pharmaceutical preparations other than plant foods and fertilizers	2	5	22841	41054	1	1	0	1003
+E864	E	Accidental poisoning by corrosives and caustics, not elsewhere classified	4	6	22839	41053	1	0.752	0.1238	1004
+E865	E	Accidental poisoning from poisonous foodstuffs and poisonous plants	10	24	22833	41035	0.9999	1	0	1005
+E866	E	Accidental poisoning by other and unspecified solid and liquid substances	27	11	22816	41048	1.001	1.12e-05	4.951	1006
+E867	E	Accidental poisoning by gas distributed by pipeline	0	4	22843	41055	0.9999	1	0	1007
+E868	E	Accidental poisoning by other utility gas and other carbon monoxide	7	20	22836	41039	0.9998	1	0	1008
+E869	E	Accidental poisoning by other gases and vapors	9	20	22834	41039	0.9999	1	0	1009
+E870	E	Accidental cut, puncture, perforation, or hemorrhage during medical care	19	43	22824	41016	0.9998	1	0	1010
+E871	E	Foreign object left in body during procedure	3	6	22840	41053	1	1	0	1011
+E872	E	Failure of sterile precautions during procedure	0	0	22843	41059	1	1	0	1012
+E873	E	Failure in dosage	147	447	22696	40612	0.9955	1	0	1013
+E874	E	Mechanical failure of instrument or apparatus during procedure	1	0	22842	41059	1	0.357	0.4473	1014
+E875	E	Contaminated or infected blood, other fluid, drug, or biological substance	0	2	22843	41057	1	1	0	1015
+E876	E	Other and unspecified misadventures during medical care	4	11	22839	41048	0.9999	1	0	1016
+E878	E	Surgical operation and other surgical procedures as the cause of abnormal reaction of patient, or of later complication, without mention of misadventure at the time of operation	685	1547	22158	39512	0.9921	1	0	1017
+E879	E	Other procedures, without mention of misadventure at the time of procedure, as the cause of abnormal reaction of patient, or of later complication	311	737	22532	40322	0.9956	1	0	1018
+E880	E	Accidental fall on or from stairs or steps	731	1215	22112	39844	1.002	0.0927	1.033	1019
+E881	E	Accidental fall on or from ladders or scaffolding	75	149	22768	40910	0.9997	1	0	1020
+E882	E	Accidental fall from or out of building or other structure	62	65	22781	40994	1.001	0.00287	2.542	1021
+E883	E	Accidental fall into hole or other opening in surface	28	48	22815	41011	1	0.905	0.04335	1022
+E884	E	Other accidental falls from one level to another	435	660	22408	40399	1.003	0.00621	2.207	1023
+E885	E	Fall on same level from slipping, tripping, or stumbling	1293	2102	21550	38957	1.006	0.00364	2.439	1024
+E886	E	Fall on same level from collision, pushing, or shoving, by or with other person	54	94	22789	40965	1	0.864	0.06349	1025
+E887	E	Fracture, cause unspecified	869	1483	21974	39576	1.002	0.22	0.6576	1026
+E888	E	Other and unspecified accidental fall	3128	5415	19715	35644	1.006	0.0727	1.138	1027
+E889	E	Type of sporting injury	2	7	22841	41052	0.9999	1	0	1028
+E890	E	Conflagration in private dwelling	26	33	22817	41026	1	0.221	0.6556	1029
+E891	E	Conflagration in other and unspecified building or structure	7	6	22836	41053	1	0.245	0.6108	1030
+E892	E	Conflagration not in building or structure	3	6	22840	41053	1	1	0	1031
+E893	E	Accident caused by ignition of clothing	16	13	22827	41046	1	0.0335	1.475	1032
+E894	E	Ignition of highly inflammable material	10	10	22833	41049	1	0.242	0.6162	1033
+E895	E	Accident caused by controlled fire in private dwelling	5	7	22838	41052	1	0.765	0.1163	1034
+E896	E	Accident caused by controlled fire in other and unspecified building or structure	1	0	22842	41059	1	0.357	0.4473	1035
+E897	E	Accident caused by controlled fire not in building or structure	6	6	22837	41053	1	0.369	0.433	1036
+E898	E	Accident caused by other specified fire and flames	20	19	22823	41040	1	0.0462	1.335	1037
+E899	E	Accident caused by unspecified fire	20	33	22823	41026	1	0.775	0.1107	1038
+E900	E	Accident caused by excessive heat	11	14	22832	41045	1	0.408	0.3893	1039
+E901	E	Accidents due to excessive cold	36	48	22807	41011	1	0.174	0.7595	1040
+E902	E	Accident due to high and low air pressure and changes in air pressure	1	1	22842	41058	1	1	0	1041
+E903	E	Accident caused by travel and motion	2	5	22841	41054	1	1	0	1042
+E904	E	Hunger, thirst, exposure, and neglect	7	11	22836	41048	1	0.808	0.09259	1043
+E905	E	Venomous animals and plants as the cause of poisoning and toxic reactions	14	42	22829	41017	0.9996	1	0	1044
+E906	E	Other injury caused by animals	255	455	22588	40604	1	0.937	0.02826	1045
+E907	E	Accident due to lightning	1	1	22842	41058	1	1	0	1046
+E908	E	Accident due to cataclysmic storms, and floods resulting from storms	0	2	22843	41057	1	1	0	1047
+E909	E	Accident due to cataclysmic earth surface movements and eruptions	0	0	22843	41059	1	1	0	1048
+E910	E	Accidental drowning and submersion	5	9	22838	41050	1	1	0	1049
+E911	E	Inhalation and ingestion of food causing obstruction of respiratory tract or suffocation	15	23	22828	41036	1	0.616	0.2104	1050
+E912	E	Inhalation and ingestion of other object causing obstruction of respiratory tract or suffocation	20	29	22823	41030	1	0.459	0.3382	1051
+E913	E	Accidental mechanical suffocation	3	4	22840	41055	1	0.706	0.1512	1052
+E914	E	Foreign body accidentally entering eye and adnexa	30	68	22813	40991	0.9997	1	0	1053
+E915	E	Foreign body accidentally entering other orifice	116	135	22727	40924	1.002	0.000732	3.135	1054
+E916	E	Struck accidentally by falling object	109	211	22734	40848	0.9996	1	0	1055
+E917	E	Striking against or struck accidentally by objects or persons	846	1363	21997	39696	1.004	0.0114	1.943	1056
+E918	E	Caught accidentally in or between objects	152	260	22691	40799	1	0.643	0.1918	1057
+E919	E	Accidents caused by machinery	39	115	22804	40944	0.9989	1	0	1058
+E920	E	Accidents caused by cutting and piercing instruments or objects	630	1012	22213	40047	1.003	0.0266	1.575	1059
+E921	E	Accident caused by explosion of pressure vessel	2	4	22841	41055	1	1	0	1060
+E922	E	Accident caused by firearm, and air gun missile	26	46	22817	41013	1	1	0	1061
+E923	E	Accident caused by explosive material	7	18	22836	41041	0.9999	1	0	1062
+E924	E	Accident caused by hot substance or object, caustic or corrosive material, and steam	159	235	22684	40824	1.001	0.0577	1.239	1063
+E925	E	Accident caused by electric current	7	26	22836	41033	0.9997	1	0	1064
+E926	E	Exposure to radiation	16	14	22827	41045	1	0.0557	1.254	1065
+E927	E	Overexertion and strenuous movements	1078	1972	21765	39087	0.9991	1	0	1066
+E928	E	Other and unspecified environmental and accidental causes	1634	2647	21209	38412	1.008	0.000671	3.173	1067
+E929	E	Late effects of accidental injury	445	724	22398	40335	1.002	0.0963	1.016	1068
+E930	E	Antibiotics causing adverse effects in therapeutic use	166	420	22677	40639	0.997	1	0	1069
+E931	E	Other anti-infectives causing adverse effects in therapeutic use	70	143	22773	40916	0.9996	1	0	1070
+E932	E	Hormones and synthetic substitutes causing adverse effects in therapeutic use	224	644	22619	40415	0.9941	1	0	1071
+E933	E	Primarily systemic agents causing adverse effects in therapeutic use	98	658	22745	40401	0.9882	1	0	1072
+E934	E	Agents primarily affecting blood constituents causing adverse effects in therapeutic use	69	165	22774	40894	0.999	1	0	1073
+E935	E	Analgesics, antipyretics, and antirheumatics causing adverse effects in therapeutic use	227	482	22616	40577	0.9982	1	0	1074
+E936	E	Anticonvulsants and anti-Parkinsonism drugs causing adverse effects in therapeutic use	185	139	22658	40920	1.005	6.18e-15	14.21	1075
+E937	E	Sedatives and hypnotics causing adverse effects in therapeutic use	39	75	22804	40984	0.9999	1	0	1076
+E938	E	Other central nervous system depressants and anesthetics causing adverse effects in therapeutic use	21	49	22822	41010	0.9997	1	0	1077
+E939	E	Psychotropic agents causing adverse effects in therapeutic use	749	383	22094	40676	1.024	1.98e-97	96.7	1078
+E940	E	Central nervous system stimulants causing adverse effects in therapeutic use	5	7	22838	41052	1	0.765	0.1163	1079
+E941	E	Drugs primarily affecting the autonomic nervous system causing adverse effects in therapeutic use	36	55	22807	41004	1	0.445	0.3516	1080
+E942	E	Agents primarily affecting the cardiovascular system causing adverse effects in therapeutic use	91	181	22752	40878	0.9996	1	0	1081
+E943	E	Agents primarily affecting gastrointestinal system causing adverse effects in therapeutic use	5	19	22838	41040	0.9998	1	0	1082
+E944	E	Water, mineral, and uric acid metabolism drugs causing adverse effects in therapeutic use	26	59	22817	41000	0.9997	1	0	1083
+E945	E	Agents primarily acting on the smooth and skeletal muscles and respiratory system causing adverse effects in therapeutic use	22	27	22821	41032	1	0.183	0.7375	1084
+E946	E	Agents primarily affecting skin and mucous membrane, ophthalmological, otorhinolaryngological, and dental drugs causing adverse effects in therapeutic use	15	19	22828	41040	1	0.371	0.4306	1085
+E947	E	Other and unspecified drugs and medicinal substances causing adverse effects in therapeutic use	208	326	22635	40733	1.001	0.123	0.9101	1086
+E948	E	Bacterial vaccines causing adverse effects in therapeutic use	2	5	22841	41054	1	1	0	1087
+E949	E	Other vaccines and biological substances causing adverse effects in therapeutic use	20	27	22823	41032	1	0.362	0.4413	1088
+E950	E	Suicide and self-inflicted poisoning by solid or liquid substances	983	1264	21860	39795	1.013	1.88e-15	14.73	1089
+E951	E	Suicide and self-inflicted poisoning by gases in domestic use	0	3	22843	41056	0.9999	1	0	1090
+E952	E	Suicide and self-inflicted poisoning by other gases and vapors	18	56	22825	41003	0.9994	1	0	1091
+E953	E	Suicide and self-inflicted injury by hanging, strangulation, and suffocation	53	73	22790	40986	1.001	0.162	0.7905	1092
+E954	E	Suicide and self-inflicted injury by submersion (drowning)	5	10	22838	41049	1	1	0	1093
+E955	E	Suicide and self-inflicted injury by firearms, air guns, and explosives	7	24	22836	41035	0.9997	1	0	1094
+E956	E	Suicide and self-inflicted injury by cutting and piercing instrument	318	413	22525	40646	1.004	1.58e-05	4.801	1095
+E957	E	Suicide and self-inflicted injuries by jumping from high place	49	39	22794	41020	1.001	0.000197	3.706	1096
+E958	E	Suicide and self-inflicted injury by other and unspecified means	139	169	22704	40890	1.002	0.000816	3.088	1097
+E959	E	Late effects of self-inflicted injury	24	38	22819	41021	1	0.691	0.1605	1098
+E960	E	Fight, brawl, rape	598	615	22245	40444	1.012	2.01e-22	21.7	1099
+E961	E	Assault by corrosive or caustic substance, except poisoning	0	1	22843	41058	1	1	0	1100
+E962	E	Assault by poisoning	2	2	22841	41057	1	0.621	0.2069	1101
+E963	E	Assault by hanging and strangulation	3	12	22840	41047	0.9998	1	0	1102
+E964	E	Assault by submersion (drowning)	0	0	22843	41059	1	1	0	1103
+E965	E	Assault by firearms and explosives	14	30	22829	41029	0.9999	1	0	1104
+E966	E	Assault by cutting and piercing instrument	140	178	22703	40881	1.002	0.00227	2.644	1105
+E967	E	Child and adult battering and other maltreatment	85	105	22758	40954	1.001	0.0121	1.917	1106
+E968	E	Assault by other and unspecified means	618	706	22225	40353	1.01	1.8e-16	15.74	1107
+E969	E	Late effects of injury purposely inflicted by other person	55	66	22788	40993	1.001	0.0288	1.541	1108
+E970	E	Injury due to legal intervention by firearms	2	1	22841	41058	1	0.292	0.5346	1109
+E971	E	Injury due to legal intervention by explosives	0	0	22843	41059	1	1	0	1110
+E972	E	Injury due to legal intervention by gas	1	0	22842	41059	1	0.357	0.4473	1111
+E973	E	Injury due to legal intervention by blunt object	1	0	22842	41059	1	0.357	0.4473	1112
+E974	E	Injury due to legal intervention by cutting and piercing instrument	1	1	22842	41058	1	1	0	1113
+E975	E	Injury due to legal intervention by other specified means	16	12	22827	41047	1	0.028	1.553	1114
+E976	E	Injury due to legal intervention by unspecified means	4	9	22839	41050	1	1	0	1115
+E977	E	Late effects of injuries due to legal intervention	1	0	22842	41059	1	0.357	0.4473	1116
+E978	E	Legal execution	0	0	22843	41059	1	1	0	1117
+E980	E	Poisoning by solid or liquid substances, undetermined whether accidentally or purposely inflicted	597	603	22246	40456	1.012	1.38e-23	22.86	1118
+E981	E	Poisoning by gases in domestic use, undetermined whether accidentally or purposely inflicted	1	0	22842	41059	1	0.357	0.4473	1119
+E982	E	Poisoning by other gases, undetermined whether accidentally or purposely inflicted	4	10	22839	41049	0.9999	1	0	1120
+E983	E	Hanging, strangulation, or suffocation, undetermined whether accidentally or purposely inflicted	5	10	22838	41049	1	1	0	1121
+E984	E	Submersion (drowning), undetermined whether accidentally or purposely inflicted	1	3	22842	41056	1	1	0	1122
+E985	E	Injury by firearms, air guns and explosives, undetermined whether accidentally or purposely inflicted	10	26	22833	41033	0.9998	1	0	1123
+E986	E	Injury by cutting and piercing instruments, undetermined whether accidentally or purposely inflicted	32	39	22811	41020	1	0.108	0.9666	1124
+E987	E	Falling from high place, undetermined whether accidentally or purposely inflicted	13	16	22830	41043	1	0.335	0.475	1125
+E988	E	Injury by other and unspecified means, undetermined whether accidentally or purposely inflicted	1856	3168	20987	37891	1.004	0.0658	1.182	1126
+E989	E	Late effects of injury, undetermined whether accidentally or purposely inflicted	31	25	22812	41034	1.001	0.0031	2.509	1127
+E990	E	Injury due to war operations by fires and conflagrations	0	0	22843	41059	1	1	0	1128
+E991	E	Injury due to war operations by bullets and fragments	0	2	22843	41057	1	1	0	1129
+E992	E	Injury due to war operations by explosion of marine weapons	0	0	22843	41059	1	1	0	1130
+E993	E	Injury due to war operations by other explosion	0	1	22843	41058	1	1	0	1131
+E994	E	Injury due to war operations by destruction of aircraft	0	0	22843	41059	1	1	0	1132
+E995	E	Injury due to war operations by other and unspecified forms of conventional warfare	0	0	22843	41059	1	1	0	1133
+E996	E	Injury due to war operations by nuclear weapons	0	0	22843	41059	1	1	0	1134
+E997	E	Injury due to war operations by other forms of unconventional warfare	0	0	22843	41059	1	1	0	1135
+E998	E	Injury due to war operations but occurring after cessation of hostilities	0	0	22843	41059	1	1	0	1136
+E999	E	Late effect of injury due to war operations	0	3	22843	41056	0.9999	1	0	1137
+V01	V	Contact with or exposure to communicable diseases	593	983	22250	40076	1.002	0.116	0.9355	1138
+V02	V	Carrier or suspected carrier of infectious diseases	516	1054	22327	40005	0.9968	1	0	1139
+V03	V	Need for prophylactic vaccination and inoculation against bacterial diseases	1934	4598	20909	36461	0.9702	1	0	1140
+V04	V	Need for prophylactic vaccination and inoculation against certain diseases	5351	12446	17492	28613	0.9101	1	0	1141
+V05	V	Need for prophylactic vaccination and inoculation against single diseases	1804	4194	21039	36865	0.9748	1	0	1142
+V06	V	Need for prophylactic vaccination and inoculation against combinations of diseases	2885	6878	19958	34181	0.9528	1	0	1143
+V07	V	Need for isolation and other prophylactic measures	235	561	22608	40498	0.9966	1	0	1144
+V08	V	Asymptomatic human immunodeficiency virus [HIV] infection status	267	643	22576	40416	0.996	1	0	1145
+V09	V	Infection with drug-resistant microorganisms	244	496	22599	40563	0.9986	1	0	1146
+V10	V	Personal history of malignant neoplasm	1714	5037	21129	36022	0.9485	1	0	1147
+V11	V	Personal history of mental disorder	707	372	22136	40687	1.023	4.1e-89	88.39	1148
+V12	V	Personal history of certain other diseases	2430	4931	20413	36128	0.9846	1	0	1149
+V13	V	Personal history of other diseases	555	1142	22288	39917	0.9964	1	0	1150
+V14	V	Personal history of allergy to medicinal agents	345	600	22498	40459	1	0.632	0.1993	1151
+V15	V	Other personal history presenting hazards to health	4736	8596	18107	32463	0.9974	1	0	1152
+V16	V	Family history of malignant neoplasm	1321	3255	21522	37804	0.9772	1	0	1153
+V17	V	Family history of certain chronic disabling diseases	1174	2540	21669	38519	0.989	1	0	1154
+V18	V	Family history of certain other specific conditions	210	587	22633	40472	0.9948	1	0	1155
+V19	V	Family history of other conditions	47	126	22796	40933	0.999	1	0	1156
+V20	V	Health supervision of infant or child	562	1337	22281	39722	0.9918	1	0	1157
+V21	V	Constitutional states in development	8	31	22835	41028	0.9996	1	0	1158
+V22	V	Normal pregnancy	1310	3504	21533	37555	0.9703	1	0	1159
+V23	V	Supervision of high-risk pregnancy	325	1152	22518	39907	0.986	1	0	1160
+V24	V	Postpartum care and examination	492	1601	22351	39458	0.9822	1	0	1161
+V25	V	Encounter for contraceptive management	1938	4648	20905	36411	0.969	1	0	1162
+V26	V	Procreative management	293	964	22550	40095	0.9892	1	0	1163
+V27	V	Outcome of delivery	977	2870	21866	38189	0.9717	1	0	1164
+V28	V	Antenatal screening	598	1762	22245	39297	0.9828	1	0	1165
+V29	V	Observation and evaluation of newborns for suspected condition not found	2	2	22841	41057	1	0.621	0.2069	1166
+V30	V	Single liveborn	4	8	22839	41051	1	1	0	1167
+V31	V	Twin birth, mate liveborn	0	1	22843	41058	1	1	0	1168
+V32	V	Twin birth, mate stillborn	0	5	22843	41054	0.9999	1	0	1169
+V33	V	Twin birth, unspecified whether mate liveborn or stillborn	0	1	22843	41058	1	1	0	1170
+V34	V	Other multiple birth (three or more), mates all liveborn	0	1	22843	41058	1	1	0	1171
+V35	V	Other multiple birth (three or more), mates all stillborn	0	0	22843	41059	1	1	0	1172
+V36	V	Other multiple birth (three or more), mates liveborn and stillborn	0	0	22843	41059	1	1	0	1173
+V37	V	Other multiple birth (three or more), unspecified whether mates liveborn or stillborn	0	0	22843	41059	1	1	0	1174
+V39	V	Liveborn, unspecified whether single, twin, or multiple	0	0	22843	41059	1	1	0	1175
+V40	V	Mental and behavioral problems	55	73	22788	40986	1.001	0.0965	1.015	1176
+V41	V	Problems with special senses and other special functions	37	67	22806	40992	1	1	0	1177
+V42	V	Organ or tissue replaced by transplant	229	858	22614	40201	0.989	1	0	1178
+V43	V	Organ or tissue replaced by other means	774	1723	22069	39336	0.9916	1	0	1179
+V44	V	Artificial opening status	286	705	22557	40354	0.9953	1	0	1180
+V45	V	Other postsurgical states	3025	7012	19818	34047	0.9558	1	0	1181
+V46	V	Other dependence on machines	193	354	22650	40705	0.9998	1	0	1182
+V47	V	Other problems with internal organs	28	59	22815	41000	0.9998	1	0	1183
+V48	V	Problems with head, neck, and trunk	9	19	22834	41040	0.9999	1	0	1184
+V49	V	Problems with limbs and other problems	1714	4048	21129	37011	0.9745	1	0	1185
+V50	V	Elective surgery for purposes other than remedying health states	307	991	22536	40068	0.9892	1	0	1186
+V51	V	Aftercare involving the use of plastic surgery	17	72	22826	40987	0.999	1	0	1187
+V52	V	Fitting and adjustment of prosthetic device and implant	12	50	22831	41009	0.9993	1	0	1188
+V53	V	Fitting and adjustment of other device	346	910	22497	40149	0.9929	1	0	1189
+V54	V	Other orthopedic aftercare	1751	3363	21092	37696	0.9943	1	0	1190
+V55	V	Attention to artificial openings	276	696	22567	40363	0.9951	1	0	1191
+V56	V	Encounter for dialysis and dialysis catheter care	54	153	22789	40906	0.9986	1	0	1192
+V57	V	Care involving use of rehabilitation procedures	182	267	22661	40792	1.001	0.0378	1.423	1193
+V58	V	Encounter for other and unspecified procedure and aftercare	6972	13107	15871	27952	0.9798	1	0	1194
+V59	V	Donors	41	138	22802	40921	0.9984	1	0	1195
+V60	V	Housing, household, and economic circumstances	1265	1076	21578	39983	1.031	2.38e-75	74.62	1196
+V61	V	Other family circumstances	147	317	22696	40742	0.9987	1	0	1197
+V62	V	Other psychosocial circumstances	2266	2926	20577	38133	1.031	2.11e-34	33.68	1198
+V63	V	Unavailability of other medical facilities for care	18	23	22825	41036	1	0.328	0.4841	1199
+V64	V	Persons encountering health services for specific procedures, not carried out	367	777	22476	40282	0.9971	1	0	1200
+V65	V	Other persons seeking consultation without complaint or sickness	2554	6095	20289	34964	0.9587	1	0	1201
+V66	V	Convalescence and palliative care	193	774	22650	40285	0.9895	1	0	1202
+V67	V	Follow-up examination	1277	3074	21566	37985	0.9799	1	0	1203
+V68	V	Encounters for administrative purposes	669	770	22174	40289	1.011	3.28e-17	16.48	1204
+V69	V	Problems related to lifestyle	197	331	22646	40728	1.001	0.466	0.3316	1205
+V70	V	General medical examination	7651	17906	15192	23153	0.8479	1	0	1206
+V71	V	Observation and evaluation for suspected conditions not found	4443	7332	18400	33727	1.02	7.01e-07	6.154	1207
+V72	V	Special investigations and examinations	8233	18752	14610	22307	0.8494	1	0	1208
+V73	V	Special screening examination for viral and chlamydial diseases	485	977	22358	40082	0.9974	1	0	1209
+V74	V	Special screening examination for bacterial and spirochetal diseases	2515	5325	20328	35734	0.978	1	0	1210
+V75	V	Special screening examination for other infectious diseases	67	145	22776	40914	0.9994	1	0	1211
+V76	V	Special screening for malignant neoplasms	6037	14662	16806	26397	0.8738	1	0	1212
+V77	V	Special screening for endocrine, nutritional, metabolic, and immunity disorders	510	1503	22333	39556	0.9854	1	0	1213
+V78	V	Special screening for disorders of blood and blood-forming organs	267	722	22576	40337	0.994	1	0	1214
+V79	V	Special screening for mental disorders and developmental handicaps	69	161	22774	40898	0.9991	1	0	1215
+V80	V	Special screening for neurological, eye, and ear diseases	58	111	22785	40948	0.9998	1	0	1216
+V81	V	Special screening for cardiovascular, respiratory, and genitourinary diseases	705	1486	22138	39573	0.9945	1	0	1217
+V82	V	Special screening for other conditions	950	2382	21893	38677	0.9829	1	0	1218
+V83	V	Genetic carrier status	18	54	22825	41005	0.9995	1	0	1219
+V84	V	Genetic susceptibility to disease	14	93	22829	40966	0.9983	1	0	1220
+V85	V	Body mass index	483	1094	22360	39965	0.9944	1	0	1221
+V87	V	Other specified personal exposures and history presenting hazards to health	65	274	22778	40785	0.9962	1	0	1222
+V88	V	Acquired absence of other organs and tissue	104	225	22739	40834	0.9991	1	0	1223
+V89	V	Other suspected conditions not found	34	103	22809	40956	0.999	1	0	1224
+V90	V	Retained foreign body	4	11	22839	41048	0.9999	1	0	1225
+V91	V	Multiple gestation	9	30	22834	41029	0.9997	1	0	1226

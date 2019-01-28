@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+</style>
+<body>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
+<script type="text/javascript" src="js/jquery.tipsy.js"></script>
+<link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var color = d3.scale.category20();
+	
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.tsv("stage.tsv", function(error, data) {
+  data.forEach(function(d) {
+    d.rr = +d.rr;
+    d.logp = +d.logp;
+	d.p = +d.p;
+	d.id = +d.id;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.id; }));
+  y.domain(d3.extent(data, function(d) { return d.logp; })).nice();
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.id); })
+      .attr("cy", function(d) { return y(d.logp); })
+      .style("fill", function(d) { return color(d.ch); });
+
+	  //tooltip
+	  $('svg circle').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          var d = this.__data__;
+          return '(' + d.code + ') ' + d.description + ' \r\n RR: ' + d.rr + ' p: ' + d.p; 
+        }
+      });
+});
+
+</script>
