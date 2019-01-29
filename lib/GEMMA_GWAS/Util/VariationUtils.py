@@ -1,6 +1,6 @@
 import os
 import vcf
-import zipfile
+import subprocess
 
 """
     VariationUtils:
@@ -63,9 +63,20 @@ class VariationUtils:
 
         self.local_data_dir = '/kb/deps/testdata/'
         self.local_zip_file = os.path.join(self.local_data_dir,'AtPolyDB.zip')
-        print(self.local_zip_file)
-        zip_ref = zipfile.ZipFile(self.local_zip_file, 'r')
-        zip_ref.extractall(self.local_data_dir)
+        #zip_ref = zipfile.ZipFile(self.local_zip_file, 'r')
+        #zip_ref.extractall(self.local_data_dir)
+        #zip_ref.close()
+        zip_cmd = ['unzip',self.local_zip_file,'-d',self.local_data_dir]
+
+        try:
+            proc = subprocess.check_output(zip_cmd)
+        except OSError as e:
+            exit(e)
+        except ValueError as e:
+            exit(e)
+        else:
+            if not os.path.exists(os.path.join(self.local_data_dir,'genotype.ped')):
+                exit("genotype.ped does not exist")
 
         self.local_ped_file = os.path.join(self.local_data_dir,'genotype.ped')
         self.local_map_file = os.path.join(self.local_data_dir,'genotype.map')

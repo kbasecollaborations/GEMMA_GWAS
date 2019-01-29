@@ -20,39 +20,60 @@ class AssociationUtils:
             self.genome_api = GenomeAnnotationAPI(self.callback_url)
         """
 
-    def _local_mk_return_kinship(self):
-        kinship = 'kinship return'
-        return kinship
+    def _local_mk_kinship(self):
+        self.local_kinship_prefix = 'test_kinship'
+        kin_cmd = ['gemma', '-bfile', self.local_plink_prefix, '-gk', '1', '-o', self.local_kinship_prefix]
+
+        try:
+            proc = subprocess.check_output(kin_cmd, cwd=self.local_data_dir)
+        except OSError as e:
+            exit(e)
+        except ValueError as e:
+            exit(e)
+
+        self.local_kinship_file = os.path.join(self.local_data_dir,'output',self.local_kinship_prefix+'.cXX.txt')
+
+        if not os.path.exists(self.local_kinship_file):
+            exit("Kinship file does not exist: "+self.local_kinship_file)
+
+        return self.local_kinship_file
 
     def _local_get_var_file_list(self):
         return [self.local_ped_file, self.local_map_file, self.local_pheno_file]
 
     def _local_mk_plink_bin(self):
-        self.local_plink_file = os.path.join(self.local_data_dir, 'test_bin')
-        plinkvars = ['--ped '+self.local_ped_file, '--map '+self.local_map_file, '--pheno '+self.local_pheno_file, '--output '+self.local_plink_file]
+        self.local_plink_prefix = 'test_plink_bin'
+        plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',self.local_pheno_file,'--allow-no-sex','--out',self.local_plink_prefix]
         plinkcmd = ['plink']
 
         for arg in plinkvars:
             plinkcmd.append(arg)
 
         try:
-            proc = subprocess.Popen(plinkcmd)
+            proc = subprocess.check_output(plinkcmd, cwd=self.local_data_dir)
         except OSError as e:
             exit(e)
         except ValueError as e:
             exit(e)
 
-        if os.path.exists(self.local_plink_file):
-            print("----plink binary generated----")
-            print("----"+self.local_plink_file+"----\n\n")
+        self.local_plink_bed = os.path.join(self.local_data_dir, self.local_plink_prefix+'.bed')
+        self.local_plink_bam = os.path.join(self.local_data_dir, self.local_plink_prefix+'.bed')
+        self.local_plink_fam = os.path.join(self.local_data_dir, self.local_plink_prefix+'.bed')
 
-        return self.local_plink_file
+        if not os.path.exists(self.local_plink_bed) or not os.path.exists(self.local_plink_bam) or not os.path.exists(self.local_plink_fam):
+            #print("----plink binary generated----")
+            #print("----"+self.local_plink_bed+"----\n\n")
+            #print("----" + self.local_plink_bam + "----\n\n")
+            #print("----" + self.local_plink_fam + "----\n\n")
+            exit("Plink files do not exist!")
+
+        return [self.local_plink_bed, self.local_plink_bam, self.local_plink_fam]
 
     def local_run_assoc(self):
         self.local_data_dir = '/kb/deps/testdata/'
         var_files = self._local_get_var_file_list()
         plink_bin = self._local_mk_plink_bin()
-        kinmatrix = self._local_mk_return_kinship()
+        kinmatrix = self._local_mk_kinship()
 
         assoc = 'assoc returns'
         return assoc
