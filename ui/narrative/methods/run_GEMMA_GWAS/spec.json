@@ -12,7 +12,7 @@
     "parameters": [ 
         {
             "id": "Variation",
-            "optional": false,
+            "optional": true,
             "advanced": false,
             "allow_multiple": false,
             "default_values": [ "" ],
@@ -23,7 +23,7 @@
         },
         {
             "id": "Associations",
-            "optional": false,
+            "optional": true,
             "advanced": false,
             "allow_multiple": false,
             "default_values": [ "" ],
