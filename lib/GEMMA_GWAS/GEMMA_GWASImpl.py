@@ -64,7 +64,12 @@ class GEMMA_GWAS:
         self.config['ctx'] = ctx
 
         variations = VariationUtils(self.config)
-        associations = AssociationUtils(self.config)
+        local_variation = variations.return_local_vcf()
+        #print(local_variation)
+
+        associations = AssociationUtils(self.config, local_variation)
+        local_associations = associations.local_run_assoc()
+        #print(local_associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report_msg = "The variation object: "+params['Variation']+"\nThe association object:"+params['Associations']+"\n"

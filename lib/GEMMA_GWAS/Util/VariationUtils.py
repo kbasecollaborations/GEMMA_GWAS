@@ -1,5 +1,6 @@
 import os
 import vcf
+import zipfile
 
 """
     VariationUtils:
@@ -19,6 +20,7 @@ import vcf
 
 class VariationUtils:
     def __init__(self, config):
+        self.config = config
         self.scratch = config["scratch"]
         self.ctx = config['ctx'];
         self.callback_url = config["SDK_CALLBACK_URL"]
@@ -34,41 +36,66 @@ class VariationUtils:
             self.vcf_file_ref = variations['variation_file_reference'] # Shock ID? 
         """
 
-        def _get_local_vcf():
-            """
-                For local testing we will be using a test vcf file
+    def _check_file_exists(self, file):
+        """
+            Validate existence of file, raise ValueError if not, return bool
 
-                :param key: Key to search in Params
-                :returns: string filepath
-                :raises ValueError: raises an exception if file path doesn't exist
-            """
+            :returns: bool
+            :raises ValueError: raises an exception if file path doesn't exist
+        """
+        try:
+            if not os.path.exists(file):
+                raise ValueError('File '+file+' does not exist.')
+            else:
+                return True
+        except ValueError as e:
+            print(str(e))
+            return False
 
-            local_vcf_file = '/kb/testdata/test.vcf'
+    def return_local_vcf(self):
+        """
+            For local testing we will be using a test vcf file
 
-            try:
-                if not os.path.exists(local_vcf_file):
-                    raise ValueError('Local vcf file does not exist')
-            except ValueError as e:
-                exit(str(e))
+            :param key: Key to search in Params
+            :returns: string filepath
+            :raises ValueError: raises an exception if file path doesn't exist
+        """
 
-            return local_vcf_file
+        self.local_data_dir = '/kb/deps/testdata/'
+        self.local_zip_file = os.path.join(self.local_data_dir,'AtPolyDB.zip')
+        print(self.local_zip_file)
+        zip_ref = zipfile.ZipFile(self.local_zip_file, 'r')
+        zip_ref.extractall(self.local_data_dir)
 
-        def get_vcf_data(self):
-            """
-                Get VCF file and return parsed object
+        self.local_ped_file = os.path.join(self.local_data_dir,'genotype.ped')
+        self.local_map_file = os.path.join(self.local_data_dir,'genotype.map')
+        self.local_pheno_file = os.path.join(self.local_data_dir, 'LFC_phenotype')
 
-                :return: vcf.Reader object: https://pyvcf.readthedocs.io/en/latest/API.html#vcf-reader
-            """
+        self._check_file_exists(self.local_zip_file)
+        self._check_file_exists(self.local_ped_file)
+        self._check_file_exists(self.local_map_file)
+        self._check_file_exists(self.local_pheno_file)
 
-            return self.parse_vcf_data(_get_local_vcf())
+        files = [self.local_ped_file, self.local_map_file, self.local_pheno_file]
 
-        def parse_vcf_data(self, file_path):
-            """
-            Get value of key after checking for its existence
-                :param params: Params dictionary haystack
-                :param key: Key to search in Params
-                :return: Parameter Value
-                :raises ValueError: raises an exception if the key doesn"t exist
-            """
-            # TODO: Validate parsing, i.e. vcf.Reader obj
-            return vcf.Reader(open(file_path, 'r'))
+        return files
+
+    def get_vcf_data(self):
+        """
+            Get VCF file and return parsed object
+
+            :return: vcf.Reader object: https://pyvcf.readthedocs.io/en/latest/API.html#vcf-reader
+        """
+
+        return self.parse_vcf_data(_get_local_vcf())
+
+    def parse_vcf_data(self, file_path):
+        """
+        Get value of key after checking for its existence
+            :param params: Params dictionary haystack
+            :param key: Key to search in Params
+            :return: Parameter Value
+            :raises ValueError: raises an exception if the key doesn"t exist
+        """
+        # TODO: Validate parsing, i.e. vcf.Reader obj
+        return vcf.Reader(open(file_path, 'r'))
