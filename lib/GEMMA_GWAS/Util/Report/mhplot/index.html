@@ -1,98 +1,62 @@
-<!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
+<title>GWAS Pilot</title>
+<link rel="stylesheet" href="gwas.css" charset="utf-8">
+<script type="text/javascript" src="js/jquery/js/jquery-1.10.2.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="gwas.js" charset="utf-8"></script>
+
 <style>
-
-body {
-  font: 10px sans-serif;
+.hlabel {
+  font-family:"Arial Black", sans-serif;
+  font-weight:900;
+  color:#FF9900;
+  text-align:center;
+  font-size:72px;
+  margin-top:20px;
 }
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.dot {
-  stroke: #000;
+.plabel {
+color:#555555;
+font-family:"Arial Black", sans-serif;
+font-weight:900;
+font-size:20px;
 }
 
 </style>
-<body>
+</head>
+<body id=body style='margin-top:20px;display:none'>
+<table width=100% border=0 cellpadding=2 cellspacing=2>
+<tr>
+<td align=center class=hlabel>GWAS
+<tr><td align=center><span class=plabel style='position:relative;top:-15;'><i>Pilot</i></span>
+<tr><td align=center><a href=# onclick='load("snpdata.tsv")'>Click here</a> for a sample file
+<tr><td align=center><div id="scatter"></div>
+</table>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
-<script type="text/javascript" src="js/jquery.tipsy.js"></script>
-<link href="css/tipsy.css" rel="stylesheet" type="text/css" />
+<img id=loading src="image/loading.gif" style='position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;visibility:hidden' >
+</body>
+</html>
 
 <script>
+$(document).ready(function() {
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-var x = d3.scale.linear()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
-
-var color = d3.scale.category20();
-	
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-d3.tsv("stage.tsv", function(error, data) {
-  data.forEach(function(d) {
-    d.rr = +d.rr;
-    d.logp = +d.logp;
-	d.p = +d.p;
-	d.id = +d.id;
-  });
-
-  x.domain(d3.extent(data, function(d) { return d.id; }));
-  y.domain(d3.extent(data, function(d) { return d.logp; })).nice();
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-
-
-  svg.selectAll(".dot")
-      .data(data)
-    .enter().append("circle")
-      .attr("class", "dot")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.id); })
-      .attr("cy", function(d) { return y(d.logp); })
-      .style("fill", function(d) { return color(d.ch); });
-
-	  //tooltip
-	  $('svg circle').tipsy({ 
-        gravity: 'w', 
-        html: true, 
-        title: function() {
-          var d = this.__data__;
-          return '(' + d.code + ') ' + d.description + ' \r\n RR: ' + d.rr + ' p: ' + d.p; 
-        }
+      $("#body").fadeIn(4000, function() {
       });
 });
+function checkInput()
+{
+  console.log("INSIDE checkInput(), file="+$("#file").val());
+  fullPath = $("#file").val();
+  if (fullPath)
+  { var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+    var filename = fullPath.substring(startIndex);
+    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+        filename = filename.substring(1);
+    }
 
+    load(filename);
+  }
+}
 </script>

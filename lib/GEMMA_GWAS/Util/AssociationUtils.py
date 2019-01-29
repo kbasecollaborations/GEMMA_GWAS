@@ -43,7 +43,7 @@ class AssociationUtils:
 
     def _local_mk_plink_bin(self):
         self.local_plink_prefix = 'test_plink_bin'
-        plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',self.local_pheno_file,'--allow-no-sex','--out',self.local_plink_prefix]
+        plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
         plinkcmd = ['plink']
 
         for arg in plinkvars:
@@ -67,13 +67,31 @@ class AssociationUtils:
             #print("----" + self.local_plink_fam + "----\n\n")
             exit("Plink files do not exist!")
 
-        return [self.local_plink_bed, self.local_plink_bam, self.local_plink_fam]
+        return self.local_plink_prefix
 
     def local_run_assoc(self):
         self.local_data_dir = '/kb/deps/testdata/'
         var_files = self._local_get_var_file_list()
-        plink_bin = self._local_mk_plink_bin()
+        plink_prefix = self._local_mk_plink_bin()
         kinmatrix = self._local_mk_kinship()
 
-        assoc = 'assoc returns'
-        return assoc
+        self.local_assoc_results_file_prefix = 'gemma_assoc'
+        assoc_args = ['-bfile', plink_prefix, '-k', kinmatrix, '-lmm', '4', '-o', self.local_assoc_results_file_prefix]
+        assoc_cmd = ['gemma']
+
+        for arg in assoc_args:
+            assoc_cmd.append(arg)
+
+        try:
+            proc = subprocess.check_output(assoc_cmd, cwd=self.local_data_dir)
+        except OSError as e:
+            exit(e)
+        except ValueError as e:
+            exit(e)
+
+        self.local_assoc_results_file = os.path.join(self.local_data_dir, 'output', self.local_assoc_results_file_prefix+".assoc.txt")
+
+        if not os.path.exists(self.local_assoc_results_file):
+            exit("GEMMA results file does not exist: "+self.local_assoc_results_file)
+
+        return self.local_assoc_results_file

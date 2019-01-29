@@ -6,6 +6,7 @@ import os
 from installed_clients.KBaseReportClient import KBaseReport
 from GEMMA_GWAS.Util.VariationUtils import VariationUtils
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
+from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
 
 #END_HEADER
 
@@ -65,11 +66,11 @@ class GEMMA_GWAS:
 
         variations = VariationUtils(self.config)
         local_variation = variations.return_local_vcf()
-        #print(local_variation)
 
         associations = AssociationUtils(self.config, local_variation)
         local_associations = associations.local_run_assoc()
-        #print(local_associations)
+
+        assoc_report = GWASReportUtils(self.config)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report_msg = "The variation object: "+params['Variation']+"\nThe association object:"+params['Associations']+"\n"
@@ -89,6 +90,7 @@ class GEMMA_GWAS:
                              'output is not type dict as required.')
         # return the results
         return [output]
+
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",

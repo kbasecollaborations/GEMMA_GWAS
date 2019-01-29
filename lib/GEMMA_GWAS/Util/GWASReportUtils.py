@@ -12,7 +12,7 @@ class GWASReportUtils:
         self.scratch = config["scratch"]
         self.ctx = config['ctx'];
         self.callback_url = config["SDK_CALLBACK_URL"]
-        self.htmldir = os.path.join(os.path.getcwd(), 'Report/mhplot/')
+        self.htmldir = os.path.join('/kb/module/', '/lib/GEMMA_GWAS/Util/Report/mhplot/')
 
         print("\n\nHTMLDIR:\n\n"+str(self.htmldir)+"\n\n")
         """
