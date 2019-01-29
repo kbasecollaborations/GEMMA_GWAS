@@ -81,7 +81,7 @@ class GEMMA_GWAS:
             'message': report_msg,
             'direct_html_link_index': 0,
             'html_links': [report_html],
-            'report_object_name': 'GEMMA_GWAS_report_'+uuid.uuid4(),
+            'report_object_name': 'GEMMA_GWAS_report_'+str(uuid.uuid4()),
             'workspace_name': params['output_ws']
         })
 
