@@ -1,7 +1,7 @@
 #
 # define display information
 #
-name: GEMMA GWAS analysis
+name: GEMMA GWAS
 
 tooltip: |
     Perform genome-wide association study on genomes with coresponding phenotype data
