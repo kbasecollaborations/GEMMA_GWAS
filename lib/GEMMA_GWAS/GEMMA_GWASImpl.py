@@ -2,6 +2,7 @@
 #BEGIN_HEADER
 import logging
 import os
+import uuid
 
 from installed_clients.KBaseReportClient import KBaseReport
 from GEMMA_GWAS.Util.VariationUtils import VariationUtils
@@ -71,13 +72,19 @@ class GEMMA_GWAS:
         local_associations = associations.local_run_assoc()
 
         assoc_report = GWASReportUtils(self.config)
-        report_html_dir = assoc_report.mk_html_report(local_associations)
+        report_html= assoc_report.mk_html_report(local_associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report_msg = "The variation object: "+params['Variation']+"\nThe association object:"+params['Associations']+"\n"
-        report_info = report.create({'report': {'objects_created':[],
-                                                'text_message': report_msg},
-                                                'workspace_name': params['output_ws']})
+
+        report_info = report.create_extended_report({
+            'message': report_msg,
+            'direct_html_link_index': 0,
+            'html_links': [report_html],
+            'report_object_name': 'GEMMA_GWAS_report_'+uuid.uuid4(),
+            'workspace_name': params['output_ws']
+        })
+
         output = {
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],

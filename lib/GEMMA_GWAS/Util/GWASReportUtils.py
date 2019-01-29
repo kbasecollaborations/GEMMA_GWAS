@@ -50,4 +50,4 @@ class GWASReportUtils:
         self.local_assoc_results_file = assoc_file
         self._filter_local_assoc_results(assoc_file)
 
-        return self.htmldir
+        return {'path': self.htmldir, 'name': 'index.html', 'description': 'Manhattan plot of GEMMA GWAS association tests'}
