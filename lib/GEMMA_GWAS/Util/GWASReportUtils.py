@@ -1,6 +1,8 @@
 import os
 import json
 import csv
+import shutil
+import logging
 
 """
     GWASReportUtils:
@@ -10,10 +12,12 @@ import csv
 
 class GWASReportUtils:
     def __init__(self, config):
+        self.config = config
         self.scratch = config["scratch"]
         self.ctx = config['ctx'];
         self.callback_url = config["SDK_CALLBACK_URL"]
-        self.htmldir = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot/')
+        #self.htmldir = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot')
+        self.htmldir = os.path.join(self.scratch,'mhplot')
 
         """
             Might need these later down the road:
@@ -46,8 +50,24 @@ class GWASReportUtils:
 
         return self.local_filtered_tsv_file
 
+    def _copy_html_to_scratch(self):
+        dst = self.htmldir
+        src = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot')
+
+        try:
+            shutil.copytree(src, dst)
+        except OSError as why:
+            exit('src: '+src+'\ndst: '+dst+'\nerror: '+str(why))
+
     def mk_html_report(self, assoc_file):
         self.local_assoc_results_file = assoc_file
+        self._copy_html_to_scratch()
         self._filter_local_assoc_results(assoc_file)
 
-        return {'path': self.htmldir, 'name': 'index.html', 'description': 'Manhattan plot of GEMMA GWAS association tests'}
+        html_return = {
+            'path': self.htmldir,
+            'name': "index.html",
+            'description': 'Manhattan plot of GEMMA GWAS association tests'
+        }
+
+        return html_return

@@ -72,15 +72,17 @@ class GEMMA_GWAS:
         local_associations = associations.local_run_assoc()
 
         assoc_report = GWASReportUtils(self.config)
-        report_html= assoc_report.mk_html_report(local_associations)
+        report_html = assoc_report.mk_html_report(local_associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report_msg = "The variation object: "+str(params['Variation'])+"\nThe association object:"+str(params['Associations'])+"\n"
 
         report_info = report.create_extended_report({
             'message': report_msg,
+            'direct_html': None,
             'direct_html_link_index': 0,
             'html_links': [report_html],
+            'file_links': [],
             'report_object_name': 'GEMMA_GWAS_report_'+str(uuid.uuid4()),
             'workspace_name': params['output_ws']
         })
