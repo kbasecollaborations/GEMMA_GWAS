@@ -31,22 +31,27 @@ class GWASReportUtils:
         """
 
     def _filter_local_assoc_results(self, assoc_file):
-        tsv_unfilered = csv.reader(open(assoc_file, 'r'), delimiter='\t')
+        gemma_results = open(assoc_file, 'r', newline='')
+        tsv_unfiltered = csv.reader(gemma_results, delimiter='\t')
+        next(tsv_unfiltered, None) # skip old csv headers
 
-        tsv_sorted = sorted(tsv_unfilered, key=lambda row: row[8])
+        tsv_sorted = sorted(tsv_unfiltered, key=lambda row: float(row[13]))
 
-        tsv_filtered_headers = ['SNP', 'CHR', 'BP', 'P']
-        self.local_filtered_tsv_file = os.path.join(self.htmldir,'snpdata.tsv')
-        tsv_filtered = csv.writer(open(self.local_filtered_tsv_file,'w'),delimiter='\t')
-        tsv_filtered.writerow(tsv_filtered_headers)
-
+        tsv_filtered_headers = "SNP\tCHR\tBP\tP\n"
+        self.local_filtered_tsv_file = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot','snpdata.tsv')
         assoc_entry_limit = 5000
-        k = 0
 
-        for snp in tsv_unfilered:
-            if k < assoc_entry_limit:
-                tsv_filtered.writerow([row[1],row[0],row[2],row[8]])
-            k+=1
+        with open(self.local_filtered_tsv_file,'w') as tsv_filtered:
+            tsv_filtered.write(tsv_filtered_headers)
+
+            k = 0
+            for snp in tsv_sorted:
+                if k < assoc_entry_limit:
+                    logging.info(k)
+                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[8]+"\n")
+                    k += 1
+
+            tsv_filtered.close()
 
         return self.local_filtered_tsv_file
 
@@ -61,8 +66,14 @@ class GWASReportUtils:
 
     def mk_html_report(self, assoc_file):
         self.local_assoc_results_file = assoc_file
-        self._copy_html_to_scratch()
         self._filter_local_assoc_results(assoc_file)
+        self._copy_html_to_scratch()
+
+        logging.info("\n\n\nfiltered:\n")
+        os.system("wc -l "+os.path.join(self.htmldir, 'snpdata.tsv'))
+        logging.info("\n\n\nunfiltered:\n")
+        os.system("wc -l " + assoc_file)
+        logging.info("\n\n")
 
         html_return = {
             'path': self.htmldir,
