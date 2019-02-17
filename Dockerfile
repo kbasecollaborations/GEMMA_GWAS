@@ -30,6 +30,7 @@ RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/tes
 #     && apt-get install -y python3-minimal python3-pip
 
 RUN pip install --upgrade pip \
+	&& pip install --upgrade requests \
     && pip install -q pyvcf
 
 RUN mkdir /data

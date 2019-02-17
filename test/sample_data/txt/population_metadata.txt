@@ -1,0 +1,2 @@
+Genome id	Population description	Population Object name	Originator	pubmed	comments
+kb|g.3899	Arabidopsis thaliana Gwas population Atwell et al., 198 individuals	Athalianapopulation1	atwell et al.	PMC3023908	This is a test

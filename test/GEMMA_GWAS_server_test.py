@@ -96,8 +96,9 @@ class GEMMA_GWASTest(unittest.TestCase):
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
 
-        ret = self.serviceImpl.run_GEMMA_GWAS(self.getContext(), {
-            'output_ws': self.wsName,
-            'Variation': '3/fake/1',
-            'Associations': '4/fake/2'
+        ret = self.serviceImpl.run_gemma_association(self.getContext(), {
+            #'workspace_name': self.wsName,
+            'workspace_name': 'pranjan77:narrative_1549050842078',
+            'variation': '24237/115/1',
+            'trait_matrix': '24237/125/1'
         })

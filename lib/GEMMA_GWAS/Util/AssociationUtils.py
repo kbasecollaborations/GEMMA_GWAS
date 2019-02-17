@@ -4,8 +4,6 @@ import os
 class AssociationUtils:
     def __init__(self, config, files):
         self.scratch = config["scratch"]
-        self.ctx = config['ctx']
-        self.callback_url = config["SDK_CALLBACK_URL"]
         self.local_ped_file = files[0]
         self.local_map_file = files[1]
         self.local_pheno_file = files[2]
@@ -84,9 +82,7 @@ class AssociationUtils:
 
         try:
             proc = subprocess.check_output(assoc_cmd, cwd=self.local_data_dir)
-        except OSError as e:
-            exit(e)
-        except ValueError as e:
+        except (OSError, ValueError) as e:
             exit(e)
 
         self.local_assoc_results_file = os.path.join(self.local_data_dir, 'output', self.local_assoc_results_file_prefix+".assoc.txt")

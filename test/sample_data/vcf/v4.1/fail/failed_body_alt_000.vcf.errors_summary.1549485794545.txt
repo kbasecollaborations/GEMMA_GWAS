@@ -1,0 +1,3 @@
+According to the VCF specification, the input file is not valid
+Error: Alternate is not a single dot or a comma-separated list of bases. This occurs 1 time(s), first time in line 4.
+Warning: A valid 'reference' entry is not listed in the meta section. This occurs 1 time(s), first time in line 4.

@@ -338,10 +338,10 @@ class Application(object):
         self.serverlog.set_log_level(6)
         self.rpc_service = JSONRPCServiceCustom()
         self.method_authentication = dict()
-        self.rpc_service.add(impl_GEMMA_GWAS.run_GEMMA_GWAS,
-                             name='GEMMA_GWAS.run_GEMMA_GWAS',
+        self.rpc_service.add(impl_GEMMA_GWAS.run_gemma_association,
+                             name='GEMMA_GWAS.run_gemma_association',
                              types=[dict])
-        self.method_authentication['GEMMA_GWAS.run_GEMMA_GWAS'] = 'required'  # noqa
+        self.method_authentication['GEMMA_GWAS.run_gemma_association'] = 'required'  # noqa
         self.rpc_service.add(impl_GEMMA_GWAS.status,
                              name='GEMMA_GWAS.status',
                              types=[dict])

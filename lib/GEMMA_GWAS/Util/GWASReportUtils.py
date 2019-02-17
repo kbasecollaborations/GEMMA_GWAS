@@ -47,7 +47,7 @@ class GWASReportUtils:
             k = 0
             for snp in tsv_sorted:
                 if k < assoc_entry_limit:
-                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[8]+"\n")
+                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
                     k += 1
 
             tsv_filtered.close()

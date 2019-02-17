@@ -4,8 +4,8 @@ import logging
 import os
 import uuid
 
+from installed_clients.VariationUtilClient import VariationUtil
 from installed_clients.KBaseReportClient import KBaseReport
-from GEMMA_GWAS.Util.VariationUtils import VariationUtils
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
 from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
 
@@ -28,8 +28,8 @@ class GEMMA_GWAS:
     # the latter method is running.
     ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = ""
-    GIT_COMMIT_HASH = ""
+    GIT_URL = "https://github.com/rroutsong/GEMMA_GWAS.git"
+    GIT_COMMIT_HASH = "8050c6b68bc8248777501cc97ba4cde31a85aa74"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -51,31 +51,34 @@ class GEMMA_GWAS:
         pass
 
 
-    def run_GEMMA_GWAS(self, ctx, params):
+    def run_gemma_association(self, ctx, params):
         """
         :param params: instance of type "GemmaGwasInput" -> structure:
-           parameter "output_ws" of String, parameter "Variation" of type
-           "obj_ref" (An X/Y/Z style reference), parameter "Associations" of
-           type "obj_ref" (An X/Y/Z style reference)
+           parameter "workspace_name" of String, parameter "trait_matrix" of
+           type "trait_ref" (KBase style object reference X/Y/Z to a
+           KBaseMatrices.TraitMatrix structure @id ws
+           KBaseMatrices.TraitMatrix), parameter "variation" of type
+           "var_ref" (KBase style object reference X/Y/Z to a @id ws
+           KBaseGwasData.Variations)
         :returns: instance of type "GwasResults" -> structure: parameter
            "report_name" of String, parameter "report_ref" of String
         """
         # ctx is the context object
         # return variables are: output
-        #BEGIN run_GEMMA_GWAS
-        self.config['ctx'] = ctx
+        #BEGIN run_gemma_association
 
-        variations = VariationUtils(self.config)
-        local_variation = variations.return_local_vcf()
+        variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
+        variation_file = variations.get_variation_as_vcf(params['variation'])
 
-        associations = AssociationUtils(self.config, local_variation)
+        associations = AssociationUtils(self.config, variation_file)
         local_associations = associations.local_run_assoc()
 
         assoc_report = GWASReportUtils(self.config)
         report_html = assoc_report.mk_html_report(local_associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
-        report_msg = "The variation object: "+str(params['Variation'])+"\nThe association object:"+str(params['Associations'])+"\n"
+        report_msg = "The variation object: " + str(params['Variation']) + "\nThe association object:" + str(
+            params['Associations']) + "\n"
 
         report_info = report.create_extended_report({
             'message': report_msg,
@@ -83,8 +86,8 @@ class GEMMA_GWAS:
             'direct_html_link_index': 0,
             'html_links': [report_html],
             'file_links': [],
-            'report_object_name': 'GEMMA_GWAS_report_'+str(uuid.uuid4()),
-            'workspace_name': params['output_ws']
+            'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
+            'workspace_name': params['workspace_name']
         })
 
         output = {
@@ -92,15 +95,15 @@ class GEMMA_GWAS:
             'report_ref': report_info['ref'],
             'ws': params['output_ws']
         }
-        #END run_GEMMA_GWAS
+
+        #END run_gemma_association
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method run_GEMMA_GWAS return value ' +
+            raise ValueError('Method run_gemma_association return value ' +
                              'output is not type dict as required.')
         # return the results
         return [output]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",

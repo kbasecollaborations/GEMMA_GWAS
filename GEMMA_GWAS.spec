@@ -3,28 +3,28 @@ A KBase module: GEMMA_GWAS
 */
 
 module GEMMA_GWAS {
-    /* An X/Y/Z style reference */
-    typedef string obj_ref;
+    /*
+        KBase style object reference X/Y/Z to a KBaseMatrices.TraitMatrix structure
+            @id ws KBaseMatrices.TraitMatrix
+    */
+    typedef string trait_ref;
+
+    /*
+        KBase style object reference X/Y/Z to a
+            @id ws KBaseGwasData.Variations
+    */
+    typedef string var_ref;
 
 	typedef structure {
-	    string output_ws;
-		obj_ref Variation;
-		obj_ref Associations;
-		/*
-		    TODO:
-		    GWAS parameters for end-user customization of GWAS analysis.
-		*/
+	    string workspace_name;
+		trait_ref trait_matrix;
+		var_ref variation;
 	} GemmaGwasInput;
 
     typedef structure {
         string report_name;
         string report_ref;
-        /*
-            TODO:
-            Output viewer for GWAS results
-        */
     } GwasResults;
 
-
-    funcdef run_GEMMA_GWAS(GemmaGwasInput params) returns (GwasResults output) authentication required;
+    funcdef run_gemma_association(GemmaGwasInput params) returns (GwasResults output) authentication required;
 };

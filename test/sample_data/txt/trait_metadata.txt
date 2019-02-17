@@ -1,0 +1,3 @@
+trait name	protocol	Trait ontology	gwaspopulation object id	originator	pubmed id	unit of measurement
+FLC	RNA was extracted from leaves after 4 wks of growth. FLC gene expression levels were determined by Northern hybridization quantified relative to $Beta;-TUBULIN expression; Growth in greenhouse, 20-22 degC, 16hrs daylight	TO:0002616   	Athalianapopulation1	atwell et al	PMC3023908	mean
+FRI	RNA was extracted from leaves after 4 wks of growth. FRI gene expression levels were determined by Northern hybridization quantified relative to $Beta;-TUBULIN expression; Growth in greenhouse, 20-22 degC, 16hrs daylight	TO:0002616   	Athalianapopulation1	atwell et al	PMC3023908	mean
