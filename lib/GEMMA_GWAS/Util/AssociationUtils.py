@@ -32,10 +32,7 @@ class AssociationUtils:
         col_attr_map_ids = self.dfu.get_objects({'object_refs': [col_attr_map_ref]})['data'][0]['data']['instances']
 
         for id_dict in col_attr_map_ids:
-            if col_attr_map_ids[id_dict][1]:
-                iids[col_attr_map_ids[id_dict][0]] = col_attr_map_ids[id_dict][1]
-            else:
-                iids[col_attr_map_ids[id_dict][0]] = "NA"
+            iids[col_attr_map_ids[id_dict][0]] = col_attr_map_ids[id_dict][1]
 
         return iids
 
@@ -55,11 +52,11 @@ class AssociationUtils:
                 raise ValueError('Retrieved family-ids, within-family-ids, and phenotype \
                     length of values mismatch')
 
-            pheno_tsv_headers = "FID\tIID"
+            pheno_tsv_headers = "FID IID"
 
             # TODO: Account for multiple phenotypes
             for id in phenotypeids:
-                pheno_tsv_headers += "\t"+id.upper()
+                pheno_tsv_headers += " \""+id.upper()+"\""
 
             pheno_tsv_headers += '\n'
 
@@ -68,36 +65,39 @@ class AssociationUtils:
 
                 for x in range(0, len(fids)):
                     # TODO: Account for multiple phenotypes
-                    f.write(fids[x]+"\t"+iids[fids[x]]+"\t"+str(phenotypevals[x])+"\n")
+                    if iids[fids[x]]:
+                        f.write(fids[x] + " " + iids[fids[x]] + " " + str(phenotypevals[x]) + "\n")
+                    else:
+                        f.write(fids[x] + " " + fids[x] + " " + str(phenotypevals[x]) + "\n")
                 f.close()
             return phenotype_file_path
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
                              ').  Supported types is KBaseMatrices.TraitMatrix')
 
-    def _mk_kinship(self):
-        self.local_kinship_prefix = 'test_kinship'
-        kin_cmd = ['gemma', '-bfile', self.local_plink_prefix, '-gk', '1', '-o', self.local_kinship_prefix]
+    def _mk_kinship(self, plink_prefix):
+        kinship_prefix = 'kinship'
+        kin_cmd = ['gemma', '-bfile', os.path.join(self.scratch, plink_prefix), '-gk', '1', '-o', kinship_prefix]
 
         try:
-            proc = subprocess.check_output(kin_cmd, cwd=self.local_data_dir)
-        except OSError as e:
+            proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
+            proc.wait()
+        except Exception:
             exit(e)
-        except ValueError as e:
-            exit(e)
 
-        self.local_kinship_file = os.path.join(self.local_data_dir,'output',self.local_kinship_prefix+'.cXX.txt')
+        kinship_file = os.path.join(self.scratch, 'output', kinship_prefix+'.cXX.txt')
 
-        if not os.path.exists(self.local_kinship_file):
-            exit("Kinship file does not exist: "+self.local_kinship_file)
+        if not os.path.exists(kinship_file):
+            exit("Kinship file does not exist: "+kinship_file)
 
-        return self.local_kinship_file
+        return kinship_file
 
     def _mk_plink_bin(self, phenotype):
         plink_prefix = 'plink_variation'
         """
             plink flags for .ped .map and phenotype tsv into plink
-            plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
+            plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',
+                    self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
         """
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
                      phenotype, '--allow-no-sex', '--out', plink_prefix]
@@ -113,38 +113,51 @@ class AssociationUtils:
             exit(e)
 
         plink_bed = os.path.join(self.scratch, plink_prefix+'.bed')
-        plink_bam = os.path.join(self.scratch, plink_prefix+'.bam')
+        plink_bim = os.path.join(self.scratch, plink_prefix+'.bim')
         plink_fam = os.path.join(self.scratch, plink_prefix+'.fam')
 
-        if not os.path.exists(plink_bed) or not os.path.exists(plink_bam) or not os.path.exists(plink_fam):
-            #print("----plink binary generated----")
-            #print("----"+self.local_plink_bed+"----\n\n")
-            #print("----" + self.local_plink_bam + "----\n\n")
-            #print("----" + self.local_plink_fam + "----\n\n")
-            raise IOError("Plink files do not exist!")
+        if not os.path.exists(plink_bed):
+            raise IOError('Plink bed doesn\'t exist')
+        else:
+            print("----plink binary generated----")
+            print("----" + plink_bed + "----\n")
 
-        return [plink_bed, plink_bam, plink_fam]
+
+        if not os.path.exists(plink_bim):
+            raise IOError('Plink bim doesn\'t exist')
+        else:
+            print("----" + plink_bim + "----\n")
+
+        if not os.path.exists(plink_fam):
+            raise IOError('Plink fam doesn\'t exist')
+        else:
+            print("----" + plink_fam + "----\n")
+
+        return plink_prefix
 
     def run_assoc_exp(self, trait_matrix_ref):
         phenotype = self._mk_phenotype_from_trait_matrix(trait_matrix_ref)
         plink_prefix = self._mk_plink_bin(phenotype)
-        kinmatrix = self._mk_kinship()
+        kinmatrix = self._mk_kinship(plink_prefix)
 
-        self.local_assoc_results_file_prefix = 'gemma_assoc'
-        assoc_args = ['-bfile', plink_prefix, '-k', kinmatrix, '-lmm', '4', '-o', self.local_assoc_results_file_prefix]
+        assoc_file_prefix = 'gemma_assoc'
+        assoc_args = ['-bfile', plink_prefix, '-k', kinmatrix, '-lmm', '4', '-o', assoc_file_prefix]
         assoc_cmd = ['gemma']
 
         for arg in assoc_args:
             assoc_cmd.append(arg)
 
         try:
-            proc = subprocess.check_output(assoc_cmd, cwd=self.local_data_dir)
-        except (OSError, ValueError) as e:
+            proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+            proc.wait()
+        except Exception:
             exit(e)
 
-        self.local_assoc_results_file = os.path.join(self.local_data_dir, 'output', self.local_assoc_results_file_prefix+".assoc.txt")
+        assoc_results_file = os.path.join(self.scratch, 'output', assoc_file_prefix+".assoc.txt")
 
-        if not os.path.exists(self.local_assoc_results_file):
-            exit("GEMMA results file does not exist: "+self.local_assoc_results_file)
+        if not os.path.exists(assoc_results_file):
+            exit("GEMMA results file does not exist: "+assoc_results_file)
+        else:
+            print("--- gemma results generated: " + assoc_results_file + "--- \n")
 
-        return self.local_assoc_results_file
+        return assoc_results_file

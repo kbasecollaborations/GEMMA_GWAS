@@ -83,11 +83,11 @@ class GEMMA_GWAS:
 
         associations.run_assoc_exp(params['trait_matrix'])
 
-        #assoc_report = GWASReportUtils(self.config)
-        #report_html = assoc_report.mk_html_report(local_associations)
+        assoc_report = GWASReportUtils(self.config)
+        report_html = assoc_report.mk_html_report(associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
-        report_msg = "The variation object: " + str(params['Variation']) + "\nThe association object:" + str(
+        report_msg = "The variation object: " + str(params['variation']) + "\nThe association object:" + str(
             params['Associations']) + "\n"
 
         report_info = report.create_extended_report({
