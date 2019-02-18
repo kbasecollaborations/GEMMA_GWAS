@@ -14,48 +14,61 @@ class GWASReportUtils:
     def __init__(self, config):
         self.config = config
         self.scratch = config["scratch"]
-        self.ctx = config['ctx'];
         self.callback_url = config["SDK_CALLBACK_URL"]
-        shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot', self.scratch)
+        shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
     def _filter_local_assoc_results(self, assoc_file):
-        gemma_results = open(assoc_file, 'r', newline='')
-        tsv_unfiltered = csv.reader(gemma_results, delimiter='\t')
-        next(tsv_unfiltered, None) # skip old csv headers
+        tsv_unfiltered = csv.reader(open(assoc_file, 'r', newline=''), delimiter='\t')
+        # skip old csv headers
+        next(tsv_unfiltered, None)
 
-        tsv_sorted = sorted(tsv_unfiltered, key=lambda row: float(row[13]))
+        # gemma assoc results columns:
+        # 0 - chr - chromosome numbers
+        # 1 - rs - snp ids
+        # 2 - ps - base pair positions on the chromosome
+        # 3 - n_miss - number of missing individuals for a given snp
+        # 4 - allele1 - minor allele
+        # 5 - allele0 - major allele
+        # 6 - af - allele frequency
+        # 7 - beta - beta estimates
+        # 8 - se - standard errors for beta
+        # 9 - logl_H1 -
+        # 10 - l_remle - remle estimates for lambda
+        # 11 - l_mle -
+        # 12 - p_wald - p value from the Wald test
+        # 13 - p_lrt - likelihood ratio test
+        # 14 - p_score - p score test
 
-        tsv_filtered_headers = "SNP\tCHR\tBP\tP\n"
-        self.local_filtered_tsv_file = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot','snpdata.tsv')
+        tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
+
+        tsv_filtered_headers = "SNP\tCHR\tBP\tP\tAF\n"
+        filtered_tsv_file = os.path.join(self.htmldir, 'snpdata.tsv')
         assoc_entry_limit = 5000
+        assoc_details = []
 
-        with open(self.local_filtered_tsv_file,'w') as tsv_filtered:
+        with open(filtered_tsv_file,'w') as tsv_filtered:
             tsv_filtered.write(tsv_filtered_headers)
 
             k = 0
-            for snp in tsv_sorted:
-                if k < assoc_entry_limit:
+
+            if len(tsv_sorted) > assoc_entry_limit:
+                for snp in tsv_sorted:
+                    if k < assoc_entry_limit:
+                        tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
+                        k += 1
+                    assoc_details.append((snp[1], snp[0], snp[2], snp[13], float(0.0)))
+            else:
+                for snp in tsv_sorted:
                     tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
-                    k += 1
+                    assoc_details.append((snp[1], snp[0], snp[2], snp[13], float(0.0)))
 
             tsv_filtered.close()
 
-        return self.local_filtered_tsv_file
+        return assoc_details
 
-    def _copy_html_to_scratch(self):
-        dst = self.htmldir
-        src = os.path.join('/kb/module', 'lib/GEMMA_GWAS/Util/Report/mhplot')
-
-        try:
-            shutil.copytree(src, dst)
-        except OSError as why:
-            exit('src: '+src+'\ndst: '+dst+'\nerror: '+str(why))
-
-    def mk_html_report(self, assoc_file):
-        self.local_assoc_results_file = assoc_file
+    def _mk_html_report(self, assoc_file):
         self._filter_local_assoc_results(assoc_file)
-        self._copy_html_to_scratch()
 
         logging.info("\n\n\nfiltered:\n")
         os.system("wc -l "+os.path.join(self.htmldir, 'snpdata.tsv'))
@@ -70,3 +83,33 @@ class GWASReportUtils:
         }
 
         return html_return
+
+    def _save_assoc_obj(self, params, assoc_details):
+
+        assoc = {
+            'description': 
+        }
+
+        assoc_obj_ref = '0/0/0'
+
+        return assoc_obj_ref
+
+    def mk_output(self, params, assoc_file):
+        assoc_details = self._mk_html_report(assoc_file)
+        assoc_obj = self._save_assoc_obj(params, assoc_details)
+
+        reportobj = {}
+
+        """
+        report_info = report.create_extended_report({
+            'message': report_msg,
+            'direct_html': None,
+            'direct_html_link_index': 0,
+            'html_links': [report_html],
+            'file_links': [],
+            'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
+            'workspace_name': params['workspace_name']
+        })
+        """
+
+        return reportobj

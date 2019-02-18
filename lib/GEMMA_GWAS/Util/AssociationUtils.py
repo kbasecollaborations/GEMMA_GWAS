@@ -69,6 +69,7 @@ class AssociationUtils:
                         f.write(fids[x] + " " + iids[fids[x]] + " " + str(phenotypevals[x]) + "\n")
                     else:
                         f.write(fids[x] + " " + fids[x] + " " + str(phenotypevals[x]) + "\n")
+
                 f.close()
             return phenotype_file_path
         else:
@@ -109,7 +110,7 @@ class AssociationUtils:
         try:
             proc = subprocess.Popen(plinkcmd, cwd=self.scratch)
             proc.wait()
-        except:
+        except Exception:
             exit(e)
 
         plink_bed = os.path.join(self.scratch, plink_prefix+'.bed')

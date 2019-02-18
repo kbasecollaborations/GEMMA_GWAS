@@ -81,30 +81,21 @@ class GEMMA_GWAS:
         if 'trait_matrix' not in params:
             raise ValueError('Trait matrix KBase reference not set.')
 
-        associations.run_assoc_exp(params['trait_matrix'])
+        assoc_file = associations.run_assoc_exp(params['trait_matrix'])
 
         assoc_report = GWASReportUtils(self.config)
-        report_html = assoc_report.mk_html_report(associations)
+        report_obj = assoc_report.mk_output(params, assoc_file)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
-        report_msg = "The variation object: " + str(params['variation']) + "\nThe association object:" + str(
-            params['Associations']) + "\n"
+        report_msg = "The variation object: " + str(params['variation']) + "\nThe association object:" + "\n"
 
-        report_info = report.create_extended_report({
-            'message': report_msg,
-            'direct_html': None,
-            'direct_html_link_index': 0,
-            'html_links': [report_html],
-            'file_links': [],
-            'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
-            'workspace_name': params['workspace_name']
-        })
-
+        """
         output = {
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
             'ws': params['output_ws']
         }
+        """
 
         #END run_gemma_association
 
