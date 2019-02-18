@@ -4,8 +4,8 @@ import logging
 import os
 import uuid
 
-from installed_clients.VariationUtilClient import VariationUtil
 from installed_clients.KBaseReportClient import KBaseReport
+from installed_clients.VariationUtilClient import VariationUtil
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
 from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
 
@@ -67,14 +67,24 @@ class GEMMA_GWAS:
         # return variables are: output
         #BEGIN run_gemma_association
 
+        if 'variation' not in params:
+            raise ValueError('Variation KBase reference not set.')
+
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
-        variation_file = variations.get_variation_as_vcf(params['variation'])
+        variation_info = variations.get_variation_as_vcf({
+            'variation_ref' : params['variation'],
+            'filename': os.path.join(self.config['scratch'], 'variation.vcf')
+        })
 
-        associations = AssociationUtils(self.config, variation_file)
-        local_associations = associations.local_run_assoc()
+        associations = AssociationUtils(self.config, variation_info['path'])
 
-        assoc_report = GWASReportUtils(self.config)
-        report_html = assoc_report.mk_html_report(local_associations)
+        if 'trait_matrix' not in params:
+            raise ValueError('Trait matrix KBase reference not set.')
+
+        associations.run_assoc_exp(params['trait_matrix'])
+
+        #assoc_report = GWASReportUtils(self.config)
+        #report_html = assoc_report.mk_html_report(local_associations)
 
         report = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report_msg = "The variation object: " + str(params['Variation']) + "\nThe association object:" + str(
