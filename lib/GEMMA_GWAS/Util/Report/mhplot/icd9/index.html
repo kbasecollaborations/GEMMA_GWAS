@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+</style>
+<body>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery.tipsy.js"></script>
+<link href="tipsy.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var color = d3.scale.category20();
+	
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.tsv("snpdata.tsv", function(error, data) {
+  data.forEach(function(d) {
+    d.snp = +d.SNP;
+    d.ch = +d.CHR;
+	d.id = +d.BP;
+	d.p = +d.P;
+	d.logp = -Math.log(d.p);
+  });
+
+  // pad the x domain
+  var paddedxdomain = [];
+  var paddedydomain = [];
+
+  xdomain = d3.extent(data, function(d) { return d.id; })
+  // paddedxdomain[0] = Math.floor(xdomain[0] - (0.40*xdomain[0]));
+  paddedxdomain[0] = Math.floor(xdomain[0] - (1.50*xdomain[0]));
+  paddedxdomain[1] = Math.ceil(xdomain[1] + (0.10*xdomain[1]));
+
+  ydomain = d3.extent(data, function(d) { return d.logp; })
+  paddedydomain[0] = Math.floor(ydomain[0] - (0.10*ydomain[0]));
+  paddedydomain[1] = Math.ceil(ydomain[1] + (0.10*ydomain[1]));
+
+  x.domain(paddedxdomain);
+  y.domain(paddedydomain).nice();
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  svg.append('line')
+      .attr('x1',x(0))
+      .attr('x2',x(paddedxdomain[1]))
+      .attr('y1',y(0.5))
+      .attr('y2',y(0.5))
+      .attr('stroke', "gray");
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 2.0)
+      .attr("cx", function(d) { return x(d.id); })
+      .attr("cy", function(d) { return y(d.logp); })
+      .style("fill", function(d) { return color(d.ch); });
+
+	  //tooltip
+	  $('svg circle').tipsy({
+        gravity: 'w',
+        html: true,
+        title: function() {
+          var d = this.__data__;
+          return "SNP: " + d.SNP + "<br/>CHR: " + d.ch + "<br/>Position: " + d.id  + "<br/>pvalue: " + d.P + "<br/>";
+        }
+      });
+});
+
+
+</script>

@@ -55,11 +55,11 @@ class GWASReportUtils:
                     if k < assoc_entry_limit:
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
                         k += 1
-                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(0.0)))
+                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
             else:
                 for snp in tsv_sorted:
                     tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
-                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(0.0)))
+                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
 
             tsv_filtered.close()
 
@@ -118,7 +118,7 @@ class GWASReportUtils:
         assoc_obj = self._save_assoc_obj(params, assoc_details_list)
 
         reportobj = {
-            'message': "The variation object: " + str(params['variation']) + "\nThe association object:" +
+            'message': "The variation object: " + str(params['variation']) + "\nThe association object: " +
                        str(assoc_obj),
             'objects_created': [{'ref': assoc_obj, 'description': 'Association GWAS object from GEMMA algorithm.'}],
             'direct_html': None,
