@@ -3,22 +3,20 @@ import json
 import csv
 import shutil
 import logging
+import uuid
 
-"""
-    GWASReportUtils:
-    
-    
-"""
+from installed_clients.DataFileUtilClient import DataFileUtil
 
 class GWASReportUtils:
     def __init__(self, config):
         self.config = config
         self.scratch = config["scratch"]
         self.callback_url = config["SDK_CALLBACK_URL"]
+        self.dfu = DataFileUtil(self.callback_url)
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
-    def _filter_local_assoc_results(self, assoc_file):
+    def _filter_assoc_results(self, assoc_file):
         tsv_unfiltered = csv.reader(open(assoc_file, 'r', newline=''), delimiter='\t')
         # skip old csv headers
         next(tsv_unfiltered, None)
@@ -57,18 +55,18 @@ class GWASReportUtils:
                     if k < assoc_entry_limit:
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
                         k += 1
-                    assoc_details.append((snp[1], snp[0], snp[2], snp[13], float(0.0)))
+                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(0.0)))
             else:
                 for snp in tsv_sorted:
                     tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
-                    assoc_details.append((snp[1], snp[0], snp[2], snp[13], float(0.0)))
+                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(0.0)))
 
             tsv_filtered.close()
 
         return assoc_details
 
     def _mk_html_report(self, assoc_file):
-        self._filter_local_assoc_results(assoc_file)
+        assoc_results = self._filter_assoc_results(assoc_file)
 
         logging.info("\n\n\nfiltered:\n")
         os.system("wc -l "+os.path.join(self.htmldir, 'snpdata.tsv'))
@@ -82,21 +80,44 @@ class GWASReportUtils:
             'description': 'Manhattan plot of GEMMA GWAS association tests'
         }
 
-        return html_return
+        return html_return, assoc_results
 
-    def _save_assoc_obj(self, params, assoc_details):
+    def _save_assoc_obj(self, params, assoc_details_list):
+        assoc_details = {
+            'traits': "trait description",
+            'association_results': assoc_details_list
+        }
 
         assoc = {
-            'description': 
+            'description': 'test description',
+            'variation_id': params['variation'],
+            'trait_ref': params['trait_matrix'],
+            'association_details': [assoc_details]
         }
+
+        if 'assoc_obj_name' in params:
+            assoc_obj_name = params['assoc_obj_name']
+        else:
+            assoc_obj_name = 'assoc_obj_'+str(uuid.uuid4())
+
+        assoc_obj = self.dfu.save_objects({
+            'id': self.dfu.ws_name_to_id(params['workspace_name']),
+            'objects': [{
+                'type': 'KBaseGwasData.Associations',
+                'data': assoc,
+                'name': assoc_obj_name
+            }]
+        })[0]
+
+        exit(assoc_obj)
 
         assoc_obj_ref = '0/0/0'
 
         return assoc_obj_ref
 
     def mk_output(self, params, assoc_file):
-        assoc_details = self._mk_html_report(assoc_file)
-        assoc_obj = self._save_assoc_obj(params, assoc_details)
+        html_info, assoc_details_list = self._mk_html_report(assoc_file)
+        assoc_obj = self._save_assoc_obj(params, assoc_details_list)
 
         reportobj = {}
 
