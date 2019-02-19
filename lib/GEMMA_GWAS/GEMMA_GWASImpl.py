@@ -86,16 +86,14 @@ class GEMMA_GWAS:
         assoc_report = GWASReportUtils(self.config)
         report_obj = assoc_report.mk_output(params, assoc_file)
 
-        report = KBaseReport(self.config['SDK_CALLBACK_URL'])
-        report_msg = "The variation object: " + str(params['variation']) + "\nThe association object:" + "\n"
+        report_client = KBaseReport(self.config['SDK_CALLBACK_URL'])
+        report = report_client.create_extended_report(report_obj)
 
-        """
         output = {
-            'report_name': report_info['name'],
-            'report_ref': report_info['ref'],
-            'ws': params['output_ws']
+            'report_name': report['name'],
+            'report_ref': report['ref'],
+            'ws': params['workspace_name']
         }
-        """
 
         #END run_gemma_association
 

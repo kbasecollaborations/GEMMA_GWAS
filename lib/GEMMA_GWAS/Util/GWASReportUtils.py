@@ -109,9 +109,7 @@ class GWASReportUtils:
             }]
         })[0]
 
-        exit(assoc_obj)
-
-        assoc_obj_ref = '0/0/0'
+        assoc_obj_ref = str(assoc_obj[6]) + "/" + str(assoc_obj[0]) + "/" + str(assoc_obj[4])
 
         return assoc_obj_ref
 
@@ -119,18 +117,16 @@ class GWASReportUtils:
         html_info, assoc_details_list = self._mk_html_report(assoc_file)
         assoc_obj = self._save_assoc_obj(params, assoc_details_list)
 
-        reportobj = {}
-
-        """
-        report_info = report.create_extended_report({
-            'message': report_msg,
+        reportobj = {
+            'message': "The variation object: " + str(params['variation']) + "\nThe association object:" +
+                       str(assoc_obj),
+            'objects_created': [{'ref': assoc_obj, 'description': 'Association GWAS object from GEMMA algorithm.'}],
             'direct_html': None,
             'direct_html_link_index': 0,
-            'html_links': [report_html],
+            'html_links': [html_info],
             'file_links': [],
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']
-        })
-        """
+        }
 
         return reportobj
