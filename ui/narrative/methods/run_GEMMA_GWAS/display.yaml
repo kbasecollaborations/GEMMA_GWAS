@@ -26,19 +26,27 @@ suggestions:
 parameters :
     Variation :
         ui-name : |
-            First parameter
+            Variation
         short-hint : |
-            The first parameter
+            KBase variation object to use for GWAS.
         long-hint  : |
-            The first parameter that needs to be entered to drive the method. This might be the first of many.
+            KBase variation object to use for GWAS, containing references to the original variant format file.
 
     Trait Matrix :
         ui-name: |
-            First parameter
+            Trait Matrix
         short-hint: |
             The first parameter
         long-hint: |
             The first parameter that needs to be entered to drive the method. This might be the first of many.
+
+    assoc_obj_name :
+        ui-name: |
+            Output name
+        short-hint: |
+            Name for the created association object
+        long-hint: |
+            Output name for the association object that is created by running GEMMA_GWAS.
 
 description : |
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar efficitur felis, quis tincidunt sem congue at. Vivamus ornare feugiat faucibus. Fusce tincidunt mattis nunc, nec varius purus convallis quis. Nulla facilisi. In at magna dolor. Suspendisse sit amet felis at arcu auctor dapibus vitae pharetra dui. Nam semper mi quis tortor fermentum mollis. Donec a arcu pharetra, rutrum dolor vitae, rutrum mauris. Donec ornare fringilla sagittis. Nam laoreet est in elementum malesuada. Vestibulum id mi eget urna hendrerit feugiat. Donec et ultrices nulla. Phasellus diam eros, dapibus at tempus nec, semper vel ante.</p>

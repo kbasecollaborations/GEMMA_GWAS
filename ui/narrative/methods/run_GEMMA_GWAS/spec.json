@@ -31,6 +31,17 @@
             "text_options": {
                 "valid_ws_types": [ "KBaseMatrices.TraitMatrix" ]
             }
+        },
+        {
+            "id": "assoc_obj_name",
+            "optional": true,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "" ]
+            }
         }
     ],
     "behavior": {
@@ -50,6 +61,9 @@
                     "input_parameter": "Trait Matrix",
                     "target_property": "trait_matrix",
                     "target_type_transform": "resolved-ref"
+                },{
+                    "input_parameter": "assoc_obj_name",
+                    "target_property": "assoc_obj_name"
                 }
             ],
             "output_mapping": [
