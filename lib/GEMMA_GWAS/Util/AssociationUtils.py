@@ -1,5 +1,6 @@
 import subprocess
 import os
+import operator
 from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
@@ -8,7 +9,8 @@ from installed_clients.WorkspaceClient import Workspace
 class AssociationUtils:
     def __init__(self, config, varfiles):
         self.dfu = DataFileUtil(config['SDK_CALLBACK_URL'])
-        self.wsc = Workspace(config['SDK_CALLBACK_URL'])
+        #self.wsc = Workspace(config['SDK_CALLBACK_URL'])
+        self.wsc = Workspace("https://appdev.kbase.us/services/ws")
         self.scratch = config["scratch"]
         self._process_varfiles(varfiles)
 
@@ -101,7 +103,7 @@ class AssociationUtils:
                     self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
         """
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
-                     phenotype, '--allow-no-sex', '--out', plink_prefix]
+                     phenotype, '--allow-no-sex','--allow-extra-chr', '--out', plink_prefix]
         plinkcmd = ['plink']
 
         for arg in plinkvars:
@@ -136,8 +138,8 @@ class AssociationUtils:
 
         return plink_prefix
 
-    def run_assoc_exp(self, trait_matrix_ref):
-        phenotype = self._mk_phenotype_from_trait_matrix(trait_matrix_ref)
+    def run_assoc_exp(self, params):
+        phenotype = self._mk_phenotype_from_trait_matrix(params['trait_matrix'])
         plink_prefix = self._mk_plink_bin(phenotype)
         kinmatrix = self._mk_kinship(plink_prefix)
 

@@ -16,7 +16,7 @@ class GWASReportUtils:
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
-    def _filter_assoc_results(self, assoc_file):
+    def _filter_assoc_results(self, assoc_file, var_ref):
         tsv_unfiltered = csv.reader(open(assoc_file, 'r', newline=''), delimiter='\t')
         # skip old csv headers
         next(tsv_unfiltered, None)
@@ -37,13 +37,53 @@ class GWASReportUtils:
         # 12 - p_wald - p value from the Wald test
         # 13 - p_lrt - likelihood ratio test
         # 14 - p_score - p score test
-
         tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
 
         tsv_filtered_headers = "SNP\tCHR\tBP\tP\tAF\n"
         filtered_tsv_file = os.path.join(self.htmldir, 'snpdata.tsv')
         assoc_entry_limit = 5000
         assoc_details = []
+
+        # correct lengths for scatter plot
+        assembly = self.dfu.get_objects({'object_refs': [var_ref]})['data'][0]
+        # TODO: change to assembly_ref, change data model
+        assembly_ref = assembly['data']['assemby_ref']
+
+        assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
+        contigs = assembly_obj['data']['contigs']
+        contig_ids = []
+
+        for contig in contigs:
+            if contig.upper().startswith('CHR'):
+                try:
+                    int(contig[3:])
+                    contig_ids.append(int(contig[3:]))
+                except ValueError:
+                    pass
+            else:
+                try:
+                    int(contig)
+                    contig_ids.append(int(contig))
+                except ValueError:
+                    pass
+
+        contig_ids.sort()
+        contig_baselengths = {}
+
+        """
+
+        for id in contig_ids:
+            try:
+                contig_baselengths[id] = contigs[id]['length']
+            except IndexError:
+                try:
+                    contig_baselengths[id] = contigs[str(id)]['length']
+                except IndexError:
+                    try:
+                        contig_baselengths[id] = contigs['Chr'+str(id)]['length']
+                    except IndexError as err:
+                        exit(err)
+        """
 
         with open(filtered_tsv_file,'w') as tsv_filtered:
             tsv_filtered.write(tsv_filtered_headers)
@@ -65,8 +105,8 @@ class GWASReportUtils:
 
         return assoc_details
 
-    def _mk_html_report(self, assoc_file):
-        assoc_results = self._filter_assoc_results(assoc_file)
+    def _mk_html_report(self, assoc_file, var_ref):
+        assoc_results = self._filter_assoc_results(assoc_file, var_ref)
 
         logging.info("\n\n\nfiltered:\n")
         os.system("wc -l "+os.path.join(self.htmldir, 'snpdata.tsv'))
@@ -114,7 +154,7 @@ class GWASReportUtils:
         return assoc_obj_ref
 
     def mk_output(self, params, assoc_file):
-        html_info, assoc_details_list = self._mk_html_report(assoc_file)
+        html_info, assoc_details_list = self._mk_html_report(assoc_file, params['variation'])
         assoc_obj = self._save_assoc_obj(params, assoc_details_list)
 
         reportobj = {

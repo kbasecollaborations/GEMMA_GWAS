@@ -81,7 +81,7 @@ class GEMMA_GWAS:
         if 'trait_matrix' not in params:
             raise ValueError('Trait matrix KBase reference not set.')
 
-        assoc_file = associations.run_assoc_exp(params['trait_matrix'])
+        assoc_file = associations.run_assoc_exp(params)
 
         assoc_report = GWASReportUtils(self.config)
         report_obj = assoc_report.mk_output(params, assoc_file)
