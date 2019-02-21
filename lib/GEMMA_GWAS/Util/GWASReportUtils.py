@@ -5,6 +5,8 @@ import shutil
 import logging
 import uuid
 
+from pprint import pprint as pp
+
 from installed_clients.DataFileUtilClient import DataFileUtil
 
 class GWASReportUtils:
@@ -39,7 +41,7 @@ class GWASReportUtils:
         # 14 - p_score - p score test
         tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
 
-        tsv_filtered_headers = "SNP\tCHR\tBP\tP\tAF\n"
+        tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
         filtered_tsv_file = os.path.join(self.htmldir, 'snpdata.tsv')
         assoc_entry_limit = 5000
         assoc_details = []
@@ -69,21 +71,18 @@ class GWASReportUtils:
 
         contig_ids.sort()
         contig_baselengths = {}
-
-        """
+        prev_len = 0
 
         for id in contig_ids:
             try:
-                contig_baselengths[id] = contigs[id]['length']
-            except IndexError:
+                contig_baselengths[id] = prev_len
+                prev_len += contigs[str(id)]['length']
+            except KeyError:
                 try:
-                    contig_baselengths[id] = contigs[str(id)]['length']
-                except IndexError:
-                    try:
-                        contig_baselengths[id] = contigs['Chr'+str(id)]['length']
-                    except IndexError as err:
-                        exit(err)
-        """
+                    contig_baselengths[id] = prev_len
+                    prev_len += contigs['Chr'+str(id)]['length']
+                except KeyError as e:
+                    exit(e)
 
         with open(filtered_tsv_file,'w') as tsv_filtered:
             tsv_filtered.write(tsv_filtered_headers)
@@ -93,12 +92,14 @@ class GWASReportUtils:
             if len(tsv_sorted) > assoc_entry_limit:
                 for snp in tsv_sorted:
                     if k < assoc_entry_limit:
-                        tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
+                        tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
+                                           + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
                         k += 1
                     assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
             else:
                 for snp in tsv_sorted:
-                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\n")
+                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
+                                       + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
                     assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
 
             tsv_filtered.close()

@@ -50,6 +50,11 @@ class AssociationUtils:
             # obj_name = trait_matrix_obj['info'][1]
             phenotype_file_path = os.path.join(self.scratch, 'phenotype.txt')
 
+            # TODO: fix this validation, all fids from trait matrix should be in variation
+            #  but not vice-versa, check and make sure all trait ids from trait matrix are
+            #  in the trait meta attribute mapping and all genotype ids are in the population
+            #  meta atrribute mapping
+
             if not len(fids) == len(iids) or not len(iids) == len(phenotypevals):
                 raise ValueError('Retrieved family-ids, within-family-ids, and phenotype \
                     length of values mismatch')
@@ -70,7 +75,7 @@ class AssociationUtils:
                     if iids[fids[x]]:
                         f.write(fids[x] + " " + iids[fids[x]] + " " + str(phenotypevals[x]) + "\n")
                     else:
-                        f.write(fids[x] + " " + fids[x] + " " + str(phenotypevals[x]) + "\n")
+                        f.write(fids[x] + " NA " + str(phenotypevals[x]) + "\n")
 
                 f.close()
             return phenotype_file_path
