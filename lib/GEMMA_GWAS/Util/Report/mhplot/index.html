@@ -4,6 +4,7 @@
 <title>GWAS Pilot</title>
 <link rel="stylesheet" href="gwas.css" charset="utf-8">
 <!-- <script type="text/javascript" src="js/jquery/js/jquery-1.10.2.min.js"></script> -->
+<script src="pheno.js" charset="utf-8"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -36,6 +37,7 @@ font-size:20px;
 </table>
 
 <img id=loading src="image/loading.gif" style='position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;visibility:hidden' >
+
 </body>
 </html>
 
@@ -46,7 +48,7 @@ $(document).ready(function() {
     }
 
     load(inputs[0]);
-
+    
     var title = inputs[0].replace('snpdata', '').replace('.tsv', '');
 
     $("#plot-title").innerHTML = "<h2>"+title+"</h2>";

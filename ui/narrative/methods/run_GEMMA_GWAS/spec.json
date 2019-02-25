@@ -6,8 +6,8 @@
     "contact": "",
     "categories": ["active"],
     "widgets": {
-        "input": null,
-        "output": "no-display"
+        "input": "kbaseNarrativeMethodInput",
+        "output" : "no-display"
     },
     "parameters": [ 
         {
