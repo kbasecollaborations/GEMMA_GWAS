@@ -28,11 +28,10 @@ font-size:20px;
 </style>
 </head>
 <body id=body style='margin-top:20px;'>
+<div id="plot-title"></div>
 <table width=100% border=0 cellpadding=2 cellspacing=2>
 <tr>
 <td align=center class=hlabel>
-<tr><td align=center>
-<tr><td align=center>
 <tr><td align=center><div id="scatter"></div>
 </table>
 
@@ -42,7 +41,32 @@ font-size:20px;
 
 <script>
 $(document).ready(function() {
-    load("snpdata.tsv")
+    if(typeof inputs == 'undefined') {
+        console.log("Failed to load phenotype GWAS data! Check GEMMA outputs.");
+    }
+
+    load(inputs[0]);
+
+    var title = inputs[0].replace('snpdata', '').replace('.tsv', '');
+
+    $("#plot-title").innerHTML = "<h2>"+title+"</h2>";
+
+    phenotypedropdown = "<select name=\"phenotypes-selector\" id=\"phenotypes-selector\">";
+
+    for (var i =0; i<inputs.length; i++) {
+        phenotype = inputs[i].replace('snpdata', '').replace('.tsv', '');
+
+        phenotypedropdown += "<option value=\"" + inputs[i] + "\">" + phenotype + "</option>";
+    }
+
+    $("body").append(phenotypedropdown);
+
+    $("#phenotypes-selector").change(function() {
+       var changeto = $(this).children("option:selected").val();
+       var titlechangeto = changeto.replace('snpdata', '').replace('.tsv', '');
+       $("#plot-title").innerHTML = "<h2>"+titlechangeto+"</h2>";
+       load(changeto);
+    });
 });
 function checkInput()
 {
