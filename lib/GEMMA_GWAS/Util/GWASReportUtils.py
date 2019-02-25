@@ -18,8 +18,8 @@ class GWASReportUtils:
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
-    def _filter_assoc_results(self, assoc_file, var_ref):
-        tsv_unfiltered = csv.reader(open(assoc_file, 'r', newline=''), delimiter='\t')
+    def _filter_assoc_results(self, trait_info, var_ref):
+        tsv_unfiltered = csv.reader(open(trait_info['gemma'], 'r', newline=''), delimiter='\t')
         # skip old csv headers
         next(tsv_unfiltered, None)
 
@@ -42,7 +42,7 @@ class GWASReportUtils:
         tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
 
         tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
-        filtered_tsv_file = os.path.join(self.htmldir, 'snpdata.tsv')
+        filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
         assoc_entry_limit = 5000
         assoc_details = []
 
@@ -106,13 +106,13 @@ class GWASReportUtils:
 
         return assoc_details
 
-    def _mk_html_report(self, assoc_file, var_ref):
-        assoc_results = self._filter_assoc_results(assoc_file, var_ref)
+    def _mk_html_report(self, trait_info, var_ref):
+        assoc_results = self._filter_assoc_results(trait_info, var_ref)
 
         logging.info("\n\n\nfiltered:\n")
-        os.system("wc -l "+os.path.join(self.htmldir, 'snpdata.tsv'))
+        os.system("wc -l "+os.path.join(self.htmldir, 'snpdata' + str(trait_info['id']) + '.tsv'))
         logging.info("\n\n\nunfiltered:\n")
-        os.system("wc -l " + assoc_file)
+        os.system("wc -l " + trait_info['gemma'])
         logging.info("\n\n")
 
         html_return = {
@@ -123,17 +123,20 @@ class GWASReportUtils:
 
         return html_return, assoc_results
 
-    def _save_assoc_obj(self, params, assoc_details_list):
-        assoc_details = {
-            'traits': "trait description",
-            'association_results': assoc_details_list
-        }
+    def _save_assoc_obj(self, params, assoc_results, assoc_details_list):
+        assoc_details = []
+        for x in range(0, len(assoc_details_list)):
+            assoc_details_entry = {
+                'traits': assoc_results[x]['id'],
+                'association_results': assoc_details_list[x]
+            }
+            assoc_details.append(assoc_details_entry)
 
         assoc = {
             'description': 'test description',
             'variation_id': params['variation'],
             'trait_ref': params['trait_matrix'],
-            'association_details': [assoc_details]
+            'association_details': assoc_details
         }
 
         if 'assoc_obj_name' in params:
@@ -154,9 +157,27 @@ class GWASReportUtils:
 
         return assoc_obj_ref
 
-    def mk_output(self, params, assoc_file):
-        html_info, assoc_details_list = self._mk_html_report(assoc_file, params['variation'])
-        assoc_obj = self._save_assoc_obj(params, assoc_details_list)
+    def mk_output(self, params, assoc_results):
+        assoc_details = []
+        html_info = []
+        js_pheno_inputs = []
+        for x in range(0, len(assoc_results)):
+            html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results[x],
+                                                                        params['variation'])
+            assoc_details.append(assoc_details_entry)
+            html_info.append(html_info_entry)
+            js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
+
+        with open(os.path.join(self.htmldir, 'pheno.js'), 'w') as f:
+            f.write("var inputs = ['")
+            for x in range(0, len(js_pheno_inputs)):
+                if x is (len(js_pheno_inputs)-1):
+                    f.write(js_pheno_inputs[x] + "'];\n")
+                else:
+                    f.write(js_pheno_inputs[x]+"', '")
+            f.close()
+
+        assoc_obj = self._save_assoc_obj(params, assoc_results, assoc_details)
 
         reportobj = {
             'message': "The variation object: " + str(params['variation']) + "\nThe association object: " +
@@ -164,7 +185,7 @@ class GWASReportUtils:
             'objects_created': [{'ref': assoc_obj, 'description': 'Association GWAS object from GEMMA algorithm.'}],
             'direct_html': None,
             'direct_html_link_index': 0,
-            'html_links': [html_info],
+            'html_links': html_info,
             'file_links': [],
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']

@@ -38,134 +38,158 @@ class AssociationUtils:
 
         return iids
 
-    def _mk_phenotype_from_trait_matrix(self, trait_matrix_ref):
+    def _get_fid_master_list(self, row_attribute_ref):
+        row_attr_ids = self.dfu.get_objects({'object_refs': [row_attribute_ref]})['data'][0]['data']['instances']
+        fids = list(row_attr_ids.keys())
+
+        if not fids:
+            raise ValueError("Error retrieving fids from sample attribute object")
+
+        return fids
+
+    def _mk_phenotypes_from_trait_matrix(self, trait_matrix_ref):
         trait_matrix_obj = self.dfu.get_objects({'object_refs': [trait_matrix_ref]})['data'][0]
 
         ws_type = trait_matrix_obj['info'][2]
         if 'KBaseMatrices.TraitMatrix' in ws_type:
             fids = trait_matrix_obj['data']['data']['col_ids']
             iids = self._get_iids(trait_matrix_obj['data']['col_attributemapping_ref'])
-            phenotypevals = trait_matrix_obj['data']['data']['values'][0]
+            fid_master_list = self._get_fid_master_list(trait_matrix_obj['data']['col_attributemapping_ref'])
+
             phenotypeids = trait_matrix_obj['data']['data']['row_ids']
-            # obj_name = trait_matrix_obj['info'][1]
-            phenotype_file_path = os.path.join(self.scratch, 'phenotype.txt')
 
-            # TODO: fix this validation, all fids from trait matrix should be in variation
-            #  but not vice-versa, check and make sure all trait ids from trait matrix are
-            #  in the trait meta attribute mapping and all genotype ids are in the population
-            #  meta atrribute mapping
+            phenotype_files = {}
 
-            if not len(fids) == len(iids) or not len(iids) == len(phenotypevals):
-                raise ValueError('Retrieved family-ids, within-family-ids, and phenotype \
-                    length of values mismatch')
+            for x in range(0, len(phenotypeids)):
+                phenotype_files[x] = {}
 
-            pheno_tsv_headers = "FID IID"
+                phenotype_files[x]['id'] = phenotypeids[x]
+                phenotypevals = trait_matrix_obj['data']['data']['values'][x]
 
-            # TODO: Account for multiple phenotypes
-            for id in phenotypeids:
-                pheno_tsv_headers += " \""+id.upper()+"\""
+                for fid in fids:
+                    fids_not_documented = []
+                    if fid not in fid_master_list:
+                        fids_not_documented.append(fids_not_documented)
 
-            pheno_tsv_headers += '\n'
+                    if fids_not_documented:
+                        fids_not_listed = ', '.join(fids_not_documented)
+                        raise ValueError('Fids: ' + fids_not_listed +'. Are not listed in the' \
+                                         ' sample attribute mapping meta information object.')
 
-            with open(phenotype_file_path, 'w') as f:
-                f.write(pheno_tsv_headers)
+                single_pheno_file_path = os.path.join(self.scratch, 'pheno'+str(x)+'.txt')
 
-                for x in range(0, len(fids)):
-                    # TODO: Account for multiple phenotypes
-                    if iids[fids[x]]:
-                        f.write(fids[x] + " " + iids[fids[x]] + " " + str(phenotypevals[x]) + "\n")
-                    else:
-                        f.write(fids[x] + " NA " + str(phenotypevals[x]) + "\n")
+                pheno_tsv_headers = "FID IID " + phenotypeids[x] + "\n"
 
-                f.close()
-            return phenotype_file_path
+                with open(single_pheno_file_path, 'w') as f:
+                    f.write(pheno_tsv_headers)
+                    for k in range(0, len(fids)):
+                        f.write(fids[k] + " " + fids[k] + " " + str(phenotypevals[k]) + "\n")
+                        """
+                        if iids[fids[k]]:
+                            f.write(fids[k] + " " + iids[fids[k]] + " " + str(phenotypevals[k]) + "\n")
+                        else:
+                            f.write(fids[k] + " NA " + str(phenotypevals[k]) + "\n")
+                        """
+                    f.close()
+                    phenotype_files[x]['file'] = single_pheno_file_path
+
+            return phenotype_files
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
                              ').  Supported types is KBaseMatrices.TraitMatrix')
 
-    def _mk_kinship(self, plink_prefix):
-        kinship_prefix = 'kinship'
-        kin_cmd = ['gemma', '-bfile', os.path.join(self.scratch, plink_prefix), '-gk', '1', '-o', kinship_prefix]
+    def _mk_kinship(self, plink_prefixes):
+        kinship_base_prefix = 'kinship'
 
-        try:
-            proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
-            proc.wait()
-        except Exception:
-            exit(e)
+        for x in range(0, len(plink_prefixes)):
+            kin_cmd = ['gemma', '-bfile', os.path.join(self.scratch, plink_prefixes[x]['plink']), '-gk', '1', '-o', kinship_base_prefix+str(x)]
 
-        kinship_file = os.path.join(self.scratch, 'output', kinship_prefix+'.cXX.txt')
+            try:
+                proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
+                proc.wait()
+            except Exception as e:
+                exit(e)
 
-        if not os.path.exists(kinship_file):
-            exit("Kinship file does not exist: "+kinship_file)
+            plink_prefixes[x]['kinship'] = os.path.join(self.scratch, 'output', kinship_base_prefix+str(x)+'.cXX.txt')
 
-        return kinship_file
+            if not os.path.exists(plink_prefixes[x]['kinship']):
+                exit("Kinship file does not exist: "+plink_prefixes[x]['kinship'])
 
-    def _mk_plink_bin(self, phenotype):
-        plink_prefix = 'plink_variation'
+        return plink_prefixes
+
+    def _mk_plink_bin(self, phenotypes):
+        plink_base_prefix = 'plink_variation'
         """
             plink flags for .ped .map and phenotype tsv into plink
             plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',
                     self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
         """
-        plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
-                     phenotype, '--allow-no-sex','--allow-extra-chr', '--out', plink_prefix]
-        plinkcmd = ['plink']
+        plink_prefixes = []
+        for x in range(0, len(phenotypes)):
+            plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
+                         phenotypes[x]['file'], '--allow-no-sex','--allow-extra-chr', '--out', plink_base_prefix+str(x)]
+            plinkcmd = ['plink']
 
-        for arg in plinkvars:
-            plinkcmd.append(arg)
+            for arg in plinkvars:
+                plinkcmd.append(arg)
 
-        try:
-            proc = subprocess.Popen(plinkcmd, cwd=self.scratch)
-            proc.wait()
-        except Exception:
-            exit(e)
+            try:
+                proc = subprocess.Popen(plinkcmd, cwd=self.scratch)
+                proc.wait()
+            except Exception as e:
+                exit(e)
 
-        plink_bed = os.path.join(self.scratch, plink_prefix+'.bed')
-        plink_bim = os.path.join(self.scratch, plink_prefix+'.bim')
-        plink_fam = os.path.join(self.scratch, plink_prefix+'.fam')
+            phenotypes[x]['plink'] = plink_base_prefix+str(x)
+            plink_bed = os.path.join(self.scratch, plink_base_prefix+str(x)+'.bed')
+            plink_bim = os.path.join(self.scratch, plink_base_prefix+str(x)+'.bim')
+            plink_fam = os.path.join(self.scratch, plink_base_prefix+str(x)+'.fam')
 
-        if not os.path.exists(plink_bed):
-            raise IOError('Plink bed doesn\'t exist')
-        else:
-            print("----plink binary generated----")
-            print("----" + plink_bed + "----\n")
+            if not os.path.exists(plink_bed):
+                raise IOError('Plink bed doesn\'t exist')
+            else:
+                plink_prefixes.append(plink_base_prefix+str(x))
+                print("----pheno type: "+os.path.basename(phenotypes[x]['file'])[:-4]+"----")
+                print("----plink binary generated----")
+                print("----" + plink_bed + "----")
 
+            if not os.path.exists(plink_bim):
+                raise IOError('Plink bim doesn\'t exist')
+            else:
+                print("----" + plink_bim + "----")
 
-        if not os.path.exists(plink_bim):
-            raise IOError('Plink bim doesn\'t exist')
-        else:
-            print("----" + plink_bim + "----\n")
+            if not os.path.exists(plink_fam):
+                raise IOError('Plink fam doesn\'t exist')
+            else:
+                print("----" + plink_fam + "----\n")
 
-        if not os.path.exists(plink_fam):
-            raise IOError('Plink fam doesn\'t exist')
-        else:
-            print("----" + plink_fam + "----\n")
-
-        return plink_prefix
+        return phenotypes
 
     def run_assoc_exp(self, params):
-        phenotype = self._mk_phenotype_from_trait_matrix(params['trait_matrix'])
-        plink_prefix = self._mk_plink_bin(phenotype)
-        kinmatrix = self._mk_kinship(plink_prefix)
+        phenotype = self._mk_phenotypes_from_trait_matrix(params['trait_matrix'])
+        plink_prefixes = self._mk_plink_bin(phenotype)
+        kinmatrix = self._mk_kinship(plink_prefixes)
 
-        assoc_file_prefix = 'gemma_assoc'
-        assoc_args = ['-bfile', plink_prefix, '-k', kinmatrix, '-lmm', '4', '-o', assoc_file_prefix]
-        assoc_cmd = ['gemma']
+        for x in range(0, len(kinmatrix)):
+            assoc_base_file_prefix = 'gemma_assoc'
+            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-o', assoc_base_file_prefix+str(x)]
+            assoc_cmd = ['gemma']
 
-        for arg in assoc_args:
-            assoc_cmd.append(arg)
+            for arg in assoc_args:
+                assoc_cmd.append(arg)
 
-        try:
-            proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
-            proc.wait()
-        except Exception:
-            exit(e)
+            try:
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+                proc.wait()
+            except Exception:
+                exit(e)
 
-        assoc_results_file = os.path.join(self.scratch, 'output', assoc_file_prefix+".assoc.txt")
+            assoc_results = kinmatrix
 
-        if not os.path.exists(assoc_results_file):
-            exit("GEMMA results file does not exist: "+assoc_results_file)
-        else:
-            print("--- gemma results generated: " + assoc_results_file + "--- \n")
+            assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix+str(x)+".assoc.txt")
 
-        return assoc_results_file
+            if not os.path.exists(assoc_results[x]['gemma']):
+                exit("GEMMA results file does not exist: "+assoc_results[x]['gemma'])
+            else:
+                print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
+
+        return assoc_results
