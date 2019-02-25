@@ -161,12 +161,17 @@ class GWASReportUtils:
         assoc_details = []
         html_info = []
         js_pheno_inputs = []
+        file_links = []
         for x in range(0, len(assoc_results)):
             html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results[x],
                                                                         params['variation'])
             assoc_details.append(assoc_details_entry)
             html_info.append(html_info_entry)
             js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
+            file_links.append({
+                'path': os.path.join(self.htmldir,'snpdata'+str(assoc_results[x]['id'])+'.tsv'),
+                'name': 'GEMMA Association results for phenotype '+str(assoc_results[x]['id'])+'.'
+            })
 
         with open(os.path.join(self.htmldir, 'pheno.js'), 'w') as f:
             f.write("var inputs = ['")
@@ -186,7 +191,7 @@ class GWASReportUtils:
             'direct_html': None,
             'direct_html_link_index': 0,
             'html_links': html_info,
-            'file_links': [],
+            'file_links': file_links,
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']
         }

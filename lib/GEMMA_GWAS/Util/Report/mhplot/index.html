@@ -51,7 +51,7 @@ $(document).ready(function() {
 
     var title = inputs[0].replace('snpdata', '').replace('.tsv', '');
 
-    $("#plot-title").innerHTML = "<h2>"+title+"</h2>";
+    $("#plot-title").html("<h2>Phenotype: "+title+"</h2>");
 
     phenotypedropdown = "<select name=\"phenotypes-selector\" id=\"phenotypes-selector\">";
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
     $("#phenotypes-selector").change(function() {
        var changeto = $(this).children("option:selected").val();
        var titlechangeto = changeto.replace('snpdata', '').replace('.tsv', '');
-       $("#plot-title").innerHTML = "<h2>"+titlechangeto+"</h2>";
+       $("#plot-title").html("<h2>Phenotype: "+titlechangeto+"</h2>");
        load(changeto);
     });
 });
