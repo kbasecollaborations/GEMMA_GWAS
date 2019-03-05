@@ -7,6 +7,7 @@ import uuid
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.VariationUtilClient import VariationUtil
+from GEMMA_GWAS.Util.InputUtils import InputUtils
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
 from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
 
@@ -52,9 +53,6 @@ class GEMMA_GWAS:
         #END_CONSTRUCTOR
         pass
 
-    def validate_input_params(self, params):
-        exit(params)
-
     def run_gemma_association(self, ctx, params):
         """
         :param params: instance of type "GemmaGwasInput" -> structure:
@@ -78,21 +76,25 @@ class GEMMA_GWAS:
         if 'trait_matrix' not in params:
             raise ValueError('Trait matrix KBase reference not set.')
 
-        self.validate_input_params(params)
+        # Validate linear mixed model selection
+        InputUtils(self.config).validate(params)
 
+        # Get Variation file
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref' : params['variation'],
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
 
+        # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])
-
         assoc_file = associations.run_assoc_exp(params)
 
+        # Generate association report
         assoc_report = GWASReportUtils(self.config)
         report_obj = assoc_report.mk_output(params, assoc_file)
 
+        # Send report
         report_client = KBaseReport(self.config['SDK_CALLBACK_URL'])
         report = report_client.create_extended_report(report_obj)
 

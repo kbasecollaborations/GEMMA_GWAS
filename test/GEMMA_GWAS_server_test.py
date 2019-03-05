@@ -107,7 +107,8 @@ class GEMMA_GWASTest(unittest.TestCase):
             # Two trait testing narrative
             'workspace_name': 'rmr:narrative_1550791707920',
             'variation': '25488/8/1',
-            'trait_matrix': '25488/6/1'
+            'trait_matrix': '25488/6/1',
+            'model': 'q'
         })
 
 
