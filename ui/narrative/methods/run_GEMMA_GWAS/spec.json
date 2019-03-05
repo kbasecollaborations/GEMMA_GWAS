@@ -89,6 +89,9 @@
                 },{
                     "input_parameter": "assoc_obj_name",
                     "target_property": "assoc_obj_name"
+                },{
+                    "input_parameter": "Model",
+                    "target_property": "model"
                 }
             ],
             "output_mapping": [

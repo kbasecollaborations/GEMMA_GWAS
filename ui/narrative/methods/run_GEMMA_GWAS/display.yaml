@@ -48,6 +48,14 @@ parameters :
         long-hint: |
             Output name for the association object that is created by running GEMMA_GWAS.
 
+    Model :
+        ui-name: |
+            GEMMA Mixed model algorithm selection
+        short-hint: |
+            Select either linear univariate mixed model or linear multivariate mixed model
+        long-hint: |
+            For multiple phenotypes you can select either one, with a single phenotype you must select univariate.
+
 description : |
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar efficitur felis, quis tincidunt sem congue at. Vivamus ornare feugiat faucibus. Fusce tincidunt mattis nunc, nec varius purus convallis quis. Nulla facilisi. In at magna dolor. Suspendisse sit amet felis at arcu auctor dapibus vitae pharetra dui. Nam semper mi quis tortor fermentum mollis. Donec a arcu pharetra, rutrum dolor vitae, rutrum mauris. Donec ornare fringilla sagittis. Nam laoreet est in elementum malesuada. Vestibulum id mi eget urna hendrerit feugiat. Donec et ultrices nulla. Phasellus diam eros, dapibus at tempus nec, semper vel ante.</p>
 

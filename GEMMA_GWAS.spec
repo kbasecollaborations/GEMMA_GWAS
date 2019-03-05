@@ -20,6 +20,7 @@ module GEMMA_GWAS {
 	    string assoc_obj_name;
 		trait_ref trait_matrix;
 		var_ref variation;
+		string model;
 	} GemmaGwasInput;
 
     typedef structure {

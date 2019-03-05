@@ -70,6 +70,9 @@ class GEMMA_GWAS:
         if 'variation' not in params:
             raise ValueError('Variation KBase reference not set.')
 
+        if 'model' not in params:
+            raise ValueError('GEMMA linear mixed model not selected.')
+
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref' : params['variation'],
