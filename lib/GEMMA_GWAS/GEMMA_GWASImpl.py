@@ -5,6 +5,7 @@ import os
 import uuid
 
 from installed_clients.KBaseReportClient import KBaseReport
+from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.VariationUtilClient import VariationUtil
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
 from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
@@ -42,6 +43,7 @@ class GEMMA_GWAS:
         self.config['SDK_CALLBACK_URL'] = os.environ['SDK_CALLBACK_URL']
         self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
         self.config['test_data_dir'] = os.path.abspath('/kb/testdata')
+        self.dfu = DataFileUtil(self.config['SDK_CALLBACK_URL'])
         # self.config['scratch'] is the tmp directory
 
         logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
@@ -50,6 +52,8 @@ class GEMMA_GWAS:
         #END_CONSTRUCTOR
         pass
 
+    def validate_input_params(self, params):
+        exit(params)
 
     def run_gemma_association(self, ctx, params):
         """
@@ -69,9 +73,12 @@ class GEMMA_GWAS:
 
         if 'variation' not in params:
             raise ValueError('Variation KBase reference not set.')
-
         if 'model' not in params:
             raise ValueError('GEMMA linear mixed model not selected.')
+        if 'trait_matrix' not in params:
+            raise ValueError('Trait matrix KBase reference not set.')
+
+        self.validate_input_params(params)
 
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
@@ -80,9 +87,6 @@ class GEMMA_GWAS:
         })
 
         associations = AssociationUtils(self.config, variation_info['path'])
-
-        if 'trait_matrix' not in params:
-            raise ValueError('Trait matrix KBase reference not set.')
 
         assoc_file = associations.run_assoc_exp(params)
 
