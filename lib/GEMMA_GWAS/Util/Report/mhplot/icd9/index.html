@@ -58,7 +58,7 @@ d3.tsv("snpdata.tsv", function(error, data) {
   data.forEach(function(d) {
     d.snp = +d.SNP;
     d.ch = +d.CHR;
-	d.id = +d.BP;
+	d.id = +d.POS;
 	d.p = +d.P;
 	d.logp = -Math.log(d.p);
   });

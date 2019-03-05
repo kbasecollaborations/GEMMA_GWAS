@@ -43,7 +43,31 @@
                 "valid_ws_types" : [ "KBaseGwasData.Associations" ],
                 "is_output_name" : true
             }
-        }
+        },
+        {
+			"id": "Model",
+			"optional": true,
+			"advanced": false,
+			"allow_multiple": false,
+			"default_values": [ 0 ],
+			"field_type": "dropdown",
+				"dropdown_options": {
+					"options": [
+						{
+							"value": 0,
+							"display": "Univariate",
+							"id": "model_uni",
+							"ui-name": "model_uni"
+						},
+						{
+							"value": 1,
+							"display": "Multivariate",
+							"id": "model_multi",
+							"ui-name": "model_multi"
+						}
+					]
+				}
+		}
     ],
     "behavior": {
         "service-mapping": {
