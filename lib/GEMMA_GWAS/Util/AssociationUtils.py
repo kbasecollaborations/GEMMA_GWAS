@@ -100,7 +100,16 @@ class AssociationUtils:
                 with open(single_pheno_file_path, 'w') as f:
                     f.write(pheno_tsv_headers)
                     for k in range(0, len(fids)):
-                        f.write(fids[k] + " " + fids[k] + " " + str(phenotypevals[k]) + "\n")
+                        if phenotypevals[k] == 1:
+                            phenoval = '1'
+                        elif phenotypevals[k] == 0:
+                            phenoval = '0'
+                        elif str(phenotypevals[k]).upper() == 'NONE':
+                            phenoval = 'NA'
+                        else:
+                            phenoval = str(phenotypevals[k])
+
+                        f.write(fids[k] + " " + fids[k] + " " + phenoval + "\n")
                         """
                         if iids[fids[k]]:
                             f.write(fids[k] + " " + iids[fids[k]] + " " + str(phenotypevals[k]) + "\n")
@@ -164,6 +173,10 @@ class AssociationUtils:
                     for j in range(0, len(phenotypevals)):
                         if str(phenotypevals[j][k]).upper() is 'NONE':
                             famline += " -9"
+                        elif phenotypevals[j][k] == 1:
+                            famline += " 1"
+                        elif phenotypevals[j][k] == 0:
+                            famline += " 0"
                         else:
                             famline += " " + str(phenotypevals[j][k])
                     f.write(famline+"\n")
@@ -360,19 +373,16 @@ class AssociationUtils:
                         assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix +
                                                                  kinmatrix[x]['id']+'.assoc.txt')
                     else:
-                        assoc_results[x]['gemma'] = ''
+                        print('Failed to run gemma association:\n')
+                        pp(new_assoc_cmd)
+                        assoc_results[x]['gemma'] = 'fail'
                 else:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
                                                              kinmatrix[x]['id']+'.assoc.txt')
             except Exception as e:
                 exit(e)
 
-            failed_phenos = []
-
-            if not os.path.exists(assoc_results[x]['gemma']):
-                #exit("GEMMA results file does not exist: "+assoc_results[x]['gemma'])
-                failed_phenos.append(assoc_results[x]['id'])
-            else:
+            if os.path.exists(assoc_results[x]['gemma']):
                 print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
 
         return assoc_results

@@ -19,92 +19,98 @@ class GWASReportUtils:
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
     def _filter_assoc_results(self, trait_info, var_ref):
-        tsv_unfiltered = csv.reader(open(trait_info['gemma'], 'r', newline=''), delimiter='\t')
-        # skip old csv headers
-        next(tsv_unfiltered, None)
+        if trait_info['gemma'] == '':
+            exit(trait_info['id']+" has an empty gemma element.")
 
-        # gemma assoc results columns:
-        # 0 - chr - chromosome numbers
-        # 1 - rs - snp ids
-        # 2 - ps - base pair positions on the chromosome
-        # 3 - n_miss - number of missing individuals for a given snp
-        # 4 - allele1 - minor allele
-        # 5 - allele0 - major allele
-        # 6 - af - allele frequency
-        # 7 - beta - beta estimates
-        # 8 - se - standard errors for beta
-        # 9 - logl_H1 -
-        # 10 - l_remle - remle estimates for lambda
-        # 11 - l_mle -
-        # 12 - p_wald - p value from the Wald test
-        # 13 - p_lrt - likelihood ratio test
-        # 14 - p_score - p score test
-        tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
+        if not trait_info['gemma'] == 'fail':
+            tsv_unfiltered = csv.reader(open(trait_info['gemma'], 'r', newline=''), delimiter='\t')
+            # skip old csv headers
+            next(tsv_unfiltered, None)
 
-        tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
-        filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
-        assoc_entry_limit = 5000
-        assoc_details = []
+            # gemma assoc results columns:
+            # 0 - chr - chromosome numbers
+            # 1 - rs - snp ids
+            # 2 - ps - base pair positions on the chromosome
+            # 3 - n_miss - number of missing individuals for a given snp
+            # 4 - allele1 - minor allele
+            # 5 - allele0 - major allele
+            # 6 - af - allele frequency
+            # 7 - beta - beta estimates
+            # 8 - se - standard errors for beta
+            # 9 - logl_H1 -
+            # 10 - l_remle - remle estimates for lambda
+            # 11 - l_mle -
+            # 12 - p_wald - p value from the Wald test
+            # 13 - p_lrt - likelihood ratio test
+            # 14 - p_score - p score test
+            tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
 
-        # correct lengths for scatter plot
-        assembly = self.dfu.get_objects({'object_refs': [var_ref]})['data'][0]
-        # TODO: change to assembly_ref, change data model
-        assembly_ref = assembly['data']['assemby_ref']
+            tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
+            filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
+            assoc_entry_limit = 5000
+            assoc_details = []
 
-        assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
-        contigs = assembly_obj['data']['contigs']
-        contig_ids = []
+            # correct lengths for scatter plot
+            assembly = self.dfu.get_objects({'object_refs': [var_ref]})['data'][0]
+            # TODO: change to assembly_ref, change data model
+            assembly_ref = assembly['data']['assemby_ref']
 
-        for contig in contigs:
-            if contig.upper().startswith('CHR'):
-                try:
-                    int(contig[3:])
-                    contig_ids.append(int(contig[3:]))
-                except ValueError:
-                    pass
-            else:
-                try:
-                    int(contig)
-                    contig_ids.append(int(contig))
-                except ValueError:
-                    pass
+            assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
+            contigs = assembly_obj['data']['contigs']
+            contig_ids = []
 
-        contig_ids.sort()
-        contig_baselengths = {}
-        prev_len = 0
+            for contig in contigs:
+                if contig.upper().startswith('CHR'):
+                    try:
+                        int(contig[3:])
+                        contig_ids.append(int(contig[3:]))
+                    except ValueError:
+                        pass
+                else:
+                    try:
+                        int(contig)
+                        contig_ids.append(int(contig))
+                    except ValueError:
+                        pass
 
-        for id in contig_ids:
-            try:
-                contig_baselengths[id] = prev_len
-                prev_len += contigs[str(id)]['length']
-            except KeyError:
+            contig_ids.sort()
+            contig_baselengths = {}
+            prev_len = 0
+
+            for id in contig_ids:
                 try:
                     contig_baselengths[id] = prev_len
-                    prev_len += contigs['Chr'+str(id)]['length']
-                except KeyError as e:
-                    exit(e)
+                    prev_len += contigs[str(id)]['length']
+                except KeyError:
+                    try:
+                        contig_baselengths[id] = prev_len
+                        prev_len += contigs['Chr'+str(id)]['length']
+                    except KeyError as e:
+                        exit(e)
 
-        with open(filtered_tsv_file,'w') as tsv_filtered:
-            tsv_filtered.write(tsv_filtered_headers)
+            with open(filtered_tsv_file,'w') as tsv_filtered:
+                tsv_filtered.write(tsv_filtered_headers)
 
-            k = 0
+                k = 0
 
-            if len(tsv_sorted) > assoc_entry_limit:
-                for snp in tsv_sorted:
-                    if k < assoc_entry_limit:
+                if len(tsv_sorted) > assoc_entry_limit:
+                    for snp in tsv_sorted:
+                        if k < assoc_entry_limit:
+                            tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
+                                               + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
+                            k += 1
+                        assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
+                else:
+                    for snp in tsv_sorted:
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
                                            + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
-                        k += 1
-                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
-            else:
-                for snp in tsv_sorted:
-                    tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
-                                       + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
-                    assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
+                        assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
 
-            tsv_filtered.close()
+                tsv_filtered.close()
 
-        return assoc_details
+            return assoc_details
+        else:
+            return False
 
     def _mk_html_report(self, trait_info, var_ref):
         assoc_results = self._filter_assoc_results(trait_info, var_ref)
@@ -162,10 +168,14 @@ class GWASReportUtils:
         html_info = []
         js_pheno_inputs = []
         file_links = []
+        failed_phenos = []
         for x in range(0, len(assoc_results)):
             html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results[x],
                                                                         params['variation'])
-            assoc_details.append(assoc_details_entry)
+            if assoc_details_entry:
+                assoc_details.append(assoc_details_entry)
+            else:
+                failed_phenos.append(assoc_results[x]['id'])
             html_info.append(html_info_entry)
             js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
             file_links.append({
@@ -184,9 +194,18 @@ class GWASReportUtils:
 
         assoc_obj = self._save_assoc_obj(params, assoc_results, assoc_details)
 
+        if failed_phenos:
+            reportmsg = "The variation object: " + str(params['variation']) + "\n"+ \
+                        "The association object: " + str(assoc_obj) + "\n" \
+                        "Some phenotypes failed association testing:" + "\n"
+            for pheno in failed_phenos:
+                reportmsg += pheno
+        else:
+            reportmsg = "The variation object: " + str(params['variation']) + "\n" + \
+                        "The association object: " + str(assoc_obj) + "\n"
+
         reportobj = {
-            'message': "The variation object: " + str(params['variation']) + "\nThe association object: " +
-                       str(assoc_obj),
+            'message': reportmsg,
             'objects_created': [{'ref': assoc_obj, 'description': 'Association GWAS object from GEMMA algorithm.'}],
             'direct_html': None,
             'direct_html_link_index': 0,
