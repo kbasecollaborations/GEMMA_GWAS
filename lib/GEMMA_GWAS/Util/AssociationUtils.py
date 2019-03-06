@@ -330,8 +330,8 @@ class AssociationUtils:
 
         for x in range(0, len(kinmatrix)):
             assoc_base_file_prefix = 'gemma_assoc'
-            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-o',
-                          assoc_base_file_prefix + kinmatrix[x]['id'] + ".assoc.txt"]
+            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-debug', '-o',
+                          assoc_base_file_prefix + kinmatrix[x]['id']]
             assoc_cmd = ['gemma']
 
             for arg in assoc_args:
@@ -346,8 +346,8 @@ class AssociationUtils:
                 if proc.returncode is -2:
                     # brent error
                     newkinship = self._mk_standardized_kinship(kinmatrix[x])
-                    new_assoc_cmd = ['gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4', '-o',
-                                     assoc_base_file_prefix + kinmatrix[x]['id'] + ".assoc.txt"]
+                    new_assoc_cmd = ['gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4','-debug', '-o',
+                                     assoc_base_file_prefix + kinmatrix[x]['id']]
 
                     try:
                         newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch)
@@ -358,12 +358,12 @@ class AssociationUtils:
                     if not newproc.returncode is -2:
                         # brent error
                         assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix +
-                                                                 kinmatrix[x]['id'] + ".assoc.txt")
+                                                                 kinmatrix[x]['id'])
                     else:
                         assoc_results[x]['gemma'] = ''
                 else:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
-                                                             kinmatrix[x]['id'] + ".assoc.txt")
+                                                             kinmatrix[x]['id'])
             except Exception as e:
                 exit(e)
 

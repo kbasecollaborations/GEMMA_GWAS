@@ -15,6 +15,12 @@ module GEMMA_GWAS {
     */
     typedef string var_ref;
 
+    /*
+        KBase style object reference X/Y/Z to a
+            @id ws KBaseGwasData.Associations
+    */
+    typedef string assoc_ref;
+
 	typedef structure {
 	    string workspace_name;
 	    string assoc_obj_name;
@@ -26,6 +32,7 @@ module GEMMA_GWAS {
     typedef structure {
         string report_name;
         string report_ref;
+        assoc_ref association_obj;
     } GwasResults;
 
     funcdef run_gemma_association(GemmaGwasInput params) returns (GwasResults output) authentication required;
