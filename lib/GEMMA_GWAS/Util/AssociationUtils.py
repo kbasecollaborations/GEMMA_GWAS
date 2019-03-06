@@ -358,12 +358,12 @@ class AssociationUtils:
                     if not newproc.returncode is -2:
                         # brent error
                         assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix +
-                                                                 kinmatrix[x]['id'])
+                                                                 kinmatrix[x]['id']+'.assoc.txt')
                     else:
                         assoc_results[x]['gemma'] = ''
                 else:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
-                                                             kinmatrix[x]['id'])
+                                                             kinmatrix[x]['id']+'.assoc.txt')
             except Exception as e:
                 exit(e)
 
