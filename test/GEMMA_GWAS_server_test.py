@@ -128,7 +128,10 @@ class GEMMA_GWASTest(unittest.TestCase):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Twenty trait testing narrative
             'workspace_name': 'rmr:narrative_1550791707920',
-            'variation': '25488/26/1',
+            # Small variation
+            # 'variation': '25488/26/1',
+            # Large variation
+            'variation': '25488/28/1',
             'trait_matrix': '25488/36/1',
             'model': 0
         })

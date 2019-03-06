@@ -330,7 +330,8 @@ class AssociationUtils:
 
         for x in range(0, len(kinmatrix)):
             assoc_base_file_prefix = 'gemma_assoc'
-            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-o', assoc_base_file_prefix+str(x)]
+            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-o',
+                          assoc_base_file_prefix + kinmatrix[x]['id'] + ".assoc.txt"]
             assoc_cmd = ['gemma']
 
             for arg in assoc_args:
@@ -343,9 +344,10 @@ class AssociationUtils:
                 proc.wait()
 
                 if proc.returncode is -2:
+                    # brent error
                     newkinship = self._mk_standardized_kinship(kinmatrix[x])
                     new_assoc_cmd = ['gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4', '-o',
-                                  assoc_base_file_prefix + str(x)]
+                                     assoc_base_file_prefix + kinmatrix[x]['id'] + ".assoc.txt"]
 
                     try:
                         newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch)
