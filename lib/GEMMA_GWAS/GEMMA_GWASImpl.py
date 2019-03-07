@@ -86,6 +86,8 @@ class GEMMA_GWAS:
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
 
+        # variation_info['path'] = '/path/to/local/vcf'
+
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])
         assoc_file = associations.run_assoc_exp(params)

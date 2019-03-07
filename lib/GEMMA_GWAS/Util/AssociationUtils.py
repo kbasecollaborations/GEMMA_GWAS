@@ -2,6 +2,7 @@ import subprocess
 import os
 import operator
 import shutil
+import csv
 from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
@@ -237,17 +238,38 @@ class AssociationUtils:
 
         return kinship_file
 
+    def _check_pheno_case_control(self, phenotypefile):
+        # phenofile can be assumed to be a 3 column space-delimted file since,
+        # this method is only used in the
+
+        phenovals = []
+        with open(phenotypefile, 'r') as f:
+            pheno = csv.reader(f, delimiter=' ')
+            # skip headers
+            next(pheno)
+            for row in pheno:
+                phenovals.append(row[2])
+
+        phenoset = set(phenovals)
+
+        if phenoset == {'0', '1', 'NA'}:
+            return '--1'
+        else:
+            return False
+
     def _mk_plink_bin_uni(self, phenotypes):
         plink_base_prefix = 'plink_variation'
-        """
-            plink flags for .ped .map and phenotype tsv into plink
-            plinkvars = ['--make-bed','--ped',self.local_ped_file,'--map',self.local_map_file,'--pheno',
-                    self.local_pheno_file,'--allow-no-sex','--chr','1','--out',self.local_plink_prefix]
-        """
         plink_prefixes = []
         for x in range(0, len(phenotypes)):
-            plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
-                         phenotypes[x]['file'], '--allow-no-sex','--allow-extra-chr', '--out', plink_base_prefix+str(x)]
+            cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
+            plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['file'], '--allow-no-sex', '--allow-extra-chr']
+
+            if cc_flag:
+                plinkvars.append(cc_flag)
+
+            plinkvars.append('--out')
+            plinkvars.append(plink_base_prefix+str(x))
+
             plinkcmd = ['plink']
 
             for arg in plinkvars:
@@ -281,7 +303,6 @@ class AssociationUtils:
                 raise IOError('Plink fam doesn\'t exist')
             else:
                 print("----" + plink_fam + "----\n")
-
         return phenotypes
 
     def _mk_plink_bin_multi(self, phenotypes):
@@ -323,6 +344,9 @@ class AssociationUtils:
             if os.path.exists(phenotypes['multi']['file']):
                 shutil.copyfile(phenotypes['multi']['file'], plink_fam)
                 phenotypes['multi']['file'] = plink_fam
+
+                # if case/control phenotypes are mixed with quantitative pheno
+                self._validate_phenotype_multivariate(plink_fam)
                 print("----" + plink_fam + "----\n")
             else:
                 raise ValueError('Constructed multi-phenotype fam file was not created previously.')
@@ -374,7 +398,6 @@ class AssociationUtils:
                                                                  kinmatrix[x]['id']+'.assoc.txt')
                     else:
                         print('Failed to run gemma association:\n')
-                        pp(new_assoc_cmd)
                         assoc_results[x]['gemma'] = 'fail'
                 else:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
