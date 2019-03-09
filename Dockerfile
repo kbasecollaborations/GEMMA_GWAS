@@ -29,6 +29,8 @@ RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/tes
 # RUN apt-get update -y \
 #     && apt-get install -y python3-minimal python3-pip
 
+RUN apt-get install -y vim
+
 RUN pip install --upgrade pip \
 	&& pip install --upgrade requests \
     && pip install -q pyvcf

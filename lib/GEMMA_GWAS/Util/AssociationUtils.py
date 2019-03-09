@@ -165,43 +165,32 @@ class AssociationUtils:
                     raise ValueError('Fids: ' + fids_not_listed + '. Are not listed in the' \
                                                                   ' sample attribute mapping meta information object.')
 
-            phenotype_files['multi']['pheno'] = os.path.join(self.scratch, 'multi.bimbam')
+            phenotype_files['multi']['pheno'] = os.path.join(self.scratch, 'multi.pheno')
             phenotypevals = trait_matrix_obj['data']['data']['values']
 
             with open(phenotype_files['multi']['pheno'], 'w') as f:
+                headerline = "FID IID "+phenotype_files['multi']['id']
+                f.write(headerline+"\n")
+
                 for k in range(0, len(fids)):
                     fline = ""
                     # This line is the beginning of the .fam file for plink
                     # phenotype files, instead we are using bimbam phenotype
                     # file format for gemma multivariate analysis
                     # fline = fids[k] + " " + fids[k] + " 0 0 0 "
+                    fline = fids[k] + " " + fids[k]
 
                     for j in range(0, len(phenotypevals)):
                         if str(phenotypevals[j][k]).rstrip().lstrip().upper() is 'NONE':
-                            if fline == "":
-                                fline += "NA"
-                            else:
-                                fline += " NA"
+                            fline += " NA"
                         elif phenotypevals[j][k] == None:
-                            if fline == "":
-                                fline += "NA"
-                            else:
-                                fline += " NA"
+                            fline += " NA"
                         elif phenotypevals[j][k] == 1:
-                            if fline == "":
-                                fline += "1"
-                            else:
-                                fline += " 1"
+                            fline += " 1"
                         elif phenotypevals[j][k] == 0:
-                            if fline == "":
-                                fline += "0"
-                            else:
-                                fline += " 0"
+                            fline += " 0"
                         else:
-                            if fline == "":
-                                fline += str(phenotypevals[j][k])
-                            else:
-                                fline += " "+str(phenotypevals[j][k])
+                            fline += " "+str(phenotypevals[j][k])
                     f.write(fline+"\n")
                 f.close()
             return phenotype_files
@@ -215,7 +204,6 @@ class AssociationUtils:
             kin_cmd = ['gemma', '-bfile', plink_prefixes['multi']['plink'], '-gk', '1', '-o',
                        'kinship-multi']
 
-            exit(kin_cmd)
             try:
                 proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
                 proc.wait()
@@ -329,9 +317,23 @@ class AssociationUtils:
         return phenotypes
 
     def _mk_plink_bin_multi(self, phenotypes):
+        """
+        :param phenotypes:
+        :return:
+        """
+
+        """
+        For multivariate analysis need to use plink2 and plink2 flags, this plink1.9 call will no work
+        and causes kinship matrix issues
+    
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-no-sex', '--allow-extra-chr', '--out',
                      'plink_multi']
         plinkcmd = ['plink']
+        """
+
+        plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes['multi']['pheno'], '--double-id', \
+                     '--allow-no-sex', '--allow-extra-chr', '--out', 'plink_multi']
+        plinkcmd = ['plink2']
 
         for arg in plinkvars:
             plinkcmd.append(arg)
@@ -392,12 +394,11 @@ class AssociationUtils:
                         exit(e)
 
                     if not newproc.returncode is -2:
-                        # brent error
                         assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix +
                                                                  kinmatrix[x]['id']+'.assoc.txt')
                     else:
                         print('Failed to run gemma association:\n')
-                        assoc_results[x]['gemma'] = 'fail'
+                        exit('GEMMA Association failed.')
                 else:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
                                                              kinmatrix[x]['id']+'.assoc.txt')
@@ -409,21 +410,49 @@ class AssociationUtils:
 
         return assoc_results
 
-    def run_gemma_assoc_mutli(self, kinmatrix):
+    def run_gemma_assoc_multi(self, kinmatrix):
         if not 'multi' in kinmatrix:
             raise ValueError('Attempted to run a multivariate gemma analysis on a univariate dataset')
 
-        assoc_base_file_prefix = 'gemma_assoc'
-        assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-p', kinmatrix[x][''], '-predict', '-lmm', '4', '-debug', '-o',
-                      assoc_base_file_prefix + kinmatrix[x]['id']]
+        assoc_args = ['-bfile', kinmatrix['multi']['plink'], '-k', kinmatrix['multi']['kinship'], '-predict', \
+                      '-lmm', '4', '-debug', '-o', 'gemma_multi_assoc']
         assoc_cmd = ['gemma']
 
         for arg in assoc_args:
             assoc_cmd.append(arg)
 
-        exit(assoc_cmd)
-
         assoc_results = kinmatrix
+
+        try:
+            proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+            proc.wait()
+
+            if proc.returncode is -2:
+                # brent error
+                newkinship = self._mk_standardized_kinship(kinmatrix['multi'])
+                new_assoc_cmd = ['gemma', '-bfile', kinmatrix['multi']['plink'], '-k', newkinship, '-lmm', '4', '-debug',
+                                 '-o', 'gemma_multi_assoc']
+                try:
+                    newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch)
+                    newproc.wait()
+                except Exception as e:
+                    exit(e)
+
+                if not newproc.returncode is -2:
+                    assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', 'gemma_multi_assoc.assoc.txt')
+                else:
+                    print('Failed to run gemma association:\n')
+                    exit('GEMMA Association failed.')
+            else:
+                assoc_results['multi']['gemma'] = os.path.join(self.scratch, 'output', 'output',
+                                                               'gemma_multi_assoc.assoc.txt.assoc.txt')
+        except Exception as e:
+            exit(e)
+
+        if os.path.exists(assoc_results['multi']['gemma']):
+            print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
+
+        return assoc_results
 
     def run_assoc_exp(self, params):
         if params['model'] is 0:
