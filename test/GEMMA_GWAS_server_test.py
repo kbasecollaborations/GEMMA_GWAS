@@ -114,7 +114,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/6/1',
             'model': 0
         })
-
+    """
     def test_GEMMA_GWAS_two_multi(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Two trait testing narrative
@@ -135,3 +135,4 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/36/1',
             'model': 0
         })
+    """

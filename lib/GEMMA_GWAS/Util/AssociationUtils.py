@@ -165,24 +165,45 @@ class AssociationUtils:
                     raise ValueError('Fids: ' + fids_not_listed + '. Are not listed in the' \
                                                                   ' sample attribute mapping meta information object.')
 
-            phenotype_files['multi']['file'] = os.path.join(self.scratch, 'multi.fam')
+            phenotype_files['multi']['pheno'] = os.path.join(self.scratch, 'multi.bimbam')
             phenotypevals = trait_matrix_obj['data']['data']['values']
 
-            with open(phenotype_files['multi']['file'], 'w') as f:
+            with open(phenotype_files['multi']['pheno'], 'w') as f:
                 for k in range(0, len(fids)):
-                    famline = fids[k] + " " + fids[k] + " 0 0 0 "
-                    for j in range(0, len(phenotypevals)):
-                        if str(phenotypevals[j][k]).upper() is 'NONE':
-                            famline += " -9"
-                        elif phenotypevals[j][k] == 1:
-                            famline += " 1"
-                        elif phenotypevals[j][k] == 0:
-                            famline += " 0"
-                        else:
-                            famline += " " + str(phenotypevals[j][k])
-                    f.write(famline+"\n")
-                f.close()
+                    fline = ""
+                    # This line is the beginning of the .fam file for plink
+                    # phenotype files, instead we are using bimbam phenotype
+                    # file format for gemma multivariate analysis
+                    # fline = fids[k] + " " + fids[k] + " 0 0 0 "
 
+                    for j in range(0, len(phenotypevals)):
+                        if str(phenotypevals[j][k]).rstrip().lstrip().upper() is 'NONE':
+                            if fline == "":
+                                fline += "NA"
+                            else:
+                                fline += " NA"
+                        elif phenotypevals[j][k] == None:
+                            if fline == "":
+                                fline += "NA"
+                            else:
+                                fline += " NA"
+                        elif phenotypevals[j][k] == 1:
+                            if fline == "":
+                                fline += "1"
+                            else:
+                                fline += " 1"
+                        elif phenotypevals[j][k] == 0:
+                            if fline == "":
+                                fline += "0"
+                            else:
+                                fline += " 0"
+                        else:
+                            if fline == "":
+                                fline += str(phenotypevals[j][k])
+                            else:
+                                fline += " "+str(phenotypevals[j][k])
+                    f.write(fline+"\n")
+                f.close()
             return phenotype_files
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
@@ -191,8 +212,10 @@ class AssociationUtils:
     def _mk_centered_kinship(self, plink_prefixes):
         if 'multi' in plink_prefixes:
             # multivariate analysis
-            kin_cmd = ['gemma', '-bfile', os.path.join(self.scratch, plink_prefixes['multi']['plink']), '-gk', '1', '-o',
+            kin_cmd = ['gemma', '-bfile', plink_prefixes['multi']['plink'], '-gk', '1', '-o',
                        'kinship-multi']
+
+            exit(kin_cmd)
             try:
                 proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
                 proc.wait()
@@ -202,13 +225,13 @@ class AssociationUtils:
             plink_prefixes['multi']['kinship'] = os.path.join(self.scratch, 'output', 'kinship-multi.cXX.txt')
 
             if not os.path.exists(plink_prefixes['multi']['kinship']):
-                exit("Kinship file does not exist: " + plink_prefixes[x]['kinship'])
+                exit("Kinship file does not exist: " + plink_prefixes['multi']['kinship'])
         else:
             # univariate analysis
             kinship_base_prefix = 'kinship'
 
             for x in range(0, len(plink_prefixes)):
-                kin_cmd = ['gemma', '-bfile', os.path.join(self.scratch, plink_prefixes[x]['plink']), '-gk', '1', '-o', kinship_base_prefix+str(x)]
+                kin_cmd = ['gemma', '-bfile', plink_prefixes[x]['plink'], '-gk', '1', '-o', kinship_base_prefix+str(x)]
 
                 try:
                     proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
@@ -306,8 +329,7 @@ class AssociationUtils:
         return phenotypes
 
     def _mk_plink_bin_multi(self, phenotypes):
-        plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno',
-                     phenotypes['multi']['file'], '--all-pheno', '--allow-no-sex', '--allow-extra-chr', '--out',
+        plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-no-sex', '--allow-extra-chr', '--out',
                      'plink_multi']
         plinkcmd = ['plink']
 
@@ -323,7 +345,6 @@ class AssociationUtils:
         phenotypes['multi']['plink'] = 'plink_multi'
         plink_bed = os.path.join(self.scratch, 'plink_multi.bed')
         plink_bim = os.path.join(self.scratch, 'plink_multi.bim')
-        plink_fam = os.path.join(self.scratch, 'plink_multi.fam')
 
         if not os.path.exists(plink_bed):
             raise IOError('Plink bed doesn\'t exist')
@@ -337,33 +358,11 @@ class AssociationUtils:
         else:
             print("----" + plink_bim + "----")
 
-        if not os.path.exists(plink_fam):
-            raise IOError('Plink fam doesn\'t exist')
-        else:
-            os.remove(plink_fam)
-            if os.path.exists(phenotypes['multi']['file']):
-                shutil.copyfile(phenotypes['multi']['file'], plink_fam)
-                phenotypes['multi']['file'] = plink_fam
-
-                # if case/control phenotypes are mixed with quantitative pheno
-                self._validate_phenotype_multivariate(plink_fam)
-                print("----" + plink_fam + "----\n")
-            else:
-                raise ValueError('Constructed multi-phenotype fam file was not created previously.')
-
         return phenotypes
 
-    def run_assoc_exp(self, params):
-        if params['model'] is 0:
-            # univariate analysis
-            phenotype = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
-            plink_prefixes = self._mk_plink_bin_uni(phenotype)
-        else:
-            # mutlivariate analysis
-            phenotype = self._mk_phenos_from_trait_matrix_multi(params['trait_matrix'])
-            plink_prefixes = self._mk_plink_bin_multi(phenotype)
-
-        kinmatrix = self._mk_centered_kinship(plink_prefixes)
+    def run_gemma_assoc_uni(self, kinmatrix):
+        if 'multi' in kinmatrix:
+            raise ValueError('Attempted to run a univariate gemma analysis on a multivariate dataset')
 
         for x in range(0, len(kinmatrix)):
             assoc_base_file_prefix = 'gemma_assoc'
@@ -409,3 +408,35 @@ class AssociationUtils:
                 print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
 
         return assoc_results
+
+    def run_gemma_assoc_mutli(self, kinmatrix):
+        if not 'multi' in kinmatrix:
+            raise ValueError('Attempted to run a multivariate gemma analysis on a univariate dataset')
+
+        assoc_base_file_prefix = 'gemma_assoc'
+        assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-p', kinmatrix[x][''], '-predict', '-lmm', '4', '-debug', '-o',
+                      assoc_base_file_prefix + kinmatrix[x]['id']]
+        assoc_cmd = ['gemma']
+
+        for arg in assoc_args:
+            assoc_cmd.append(arg)
+
+        exit(assoc_cmd)
+
+        assoc_results = kinmatrix
+
+    def run_assoc_exp(self, params):
+        if params['model'] is 0:
+            # univariate analysis
+            phenotype = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
+            plink = self._mk_plink_bin_uni(phenotype)
+            kinmatrix = self._mk_centered_kinship(plink)
+            gemma = self.run_gemma_assoc_uni(kinmatrix)
+        else:
+            # mutlivariate analysis
+            phenotype = self._mk_phenos_from_trait_matrix_multi(params['trait_matrix'])
+            plink = self._mk_plink_bin_multi(phenotype)
+            kinmatrix = self._mk_centered_kinship(plink)
+            gemma = self.run_gemma_assoc_multi(kinmatrix)
+
+        return gemma
