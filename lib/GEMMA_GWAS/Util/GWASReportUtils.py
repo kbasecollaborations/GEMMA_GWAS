@@ -18,7 +18,7 @@ class GWASReportUtils:
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
-    def _filter_assoc_results(self, trait_info, var_ref):
+    def _filter_assoc_results(self, trait_info, var_ref, model):
         if trait_info['gemma'] == '':
             exit(trait_info['id']+" has an empty gemma element.")
 
@@ -46,7 +46,14 @@ class GWASReportUtils:
             tsv_sorted = sorted(tsv_unfiltered, key=lambda col: float(col[12]))
 
             tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
-            filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
+
+            if model is 0:
+                filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
+            elif model is 1:
+                filtered_tsv_file = os.path.join(self.htmldir, 'snpdata-multi.tsv')
+            else:
+                raise ValueError('GEMMA Linear Mixed Model not set from UI.')
+
             assoc_entry_limit = 5000
             assoc_details = []
 
@@ -112,11 +119,16 @@ class GWASReportUtils:
         else:
             return False
 
-    def _mk_html_report(self, trait_info, var_ref):
-        assoc_results = self._filter_assoc_results(trait_info, var_ref)
+    def _mk_html_report(self, trait_info, var_ref, model):
+        assoc_results = self._filter_assoc_results(trait_info, var_ref, model)
 
         logging.info("\n\n\nfiltered:\n")
-        os.system("wc -l "+os.path.join(self.htmldir, 'snpdata' + str(trait_info['id']) + '.tsv'))
+        if model is 0:
+            os.system("wc -l "+os.path.join(self.htmldir, 'snpdata' + str(trait_info['id']) + '.tsv'))
+        elif model is 1:
+            os.system("wc -l " + os.path.join(self.htmldir, 'snpdata-multi.tsv'))
+        else:
+            raise ValueError('GEMMA Linear Mixed Model not set from UI.')
         logging.info("\n\n\nunfiltered:\n")
         os.system("wc -l " + trait_info['gemma'])
         logging.info("\n\n")
@@ -131,10 +143,17 @@ class GWASReportUtils:
 
     def _save_assoc_obj(self, params, assoc_results, assoc_details_list):
         assoc_details = []
-        for x in range(0, len(assoc_details_list)):
+        if params['model'] is 0:
+            for x in range(0, len(assoc_details_list)):
+                assoc_details_entry = {
+                    'traits': assoc_results[x]['id'],
+                    'association_results': assoc_details_list[x]
+                }
+                assoc_details.append(assoc_details_entry)
+        elif params['model'] is 1:
             assoc_details_entry = {
-                'traits': assoc_results[x]['id'],
-                'association_results': assoc_details_list[x]
+                'traits': assoc_results['multi']['id'],
+                'association_results': assoc_details_list[0]
             }
             assoc_details.append(assoc_details_entry)
 
@@ -169,19 +188,37 @@ class GWASReportUtils:
         js_pheno_inputs = []
         file_links = []
         failed_phenos = []
-        for x in range(0, len(assoc_results)):
-            html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results[x],
-                                                                        params['variation'])
+
+        if params['model'] is 0:
+            for x in range(0, len(assoc_results)):
+                html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results[x],
+                                                                            params['variation'], params['model'])
+                if assoc_details_entry:
+                    assoc_details.append(assoc_details_entry)
+                else:
+                    failed_phenos.append(assoc_results[x]['id'])
+                html_info.append(html_info_entry)
+                js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
+                file_links.append({
+                    'path': os.path.join(self.htmldir,'snpdata'+str(assoc_results[x]['id'])+'.tsv'),
+                    'name': 'GEMMA Association results for phenotype '+str(assoc_results[x]['id'])+'.'
+                })
+        elif params['model'] is 1:
+            html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results['multi'],
+                                                                        params['variation'], params['model'])
             if assoc_details_entry:
                 assoc_details.append(assoc_details_entry)
             else:
-                failed_phenos.append(assoc_results[x]['id'])
+                failed_phenos.append(assoc_results['multi']['id'])
+
             html_info.append(html_info_entry)
-            js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
+            js_pheno_inputs.append('snpdata-multi.tsv')
             file_links.append({
-                'path': os.path.join(self.htmldir,'snpdata'+str(assoc_results[x]['id'])+'.tsv'),
-                'name': 'GEMMA Association results for phenotype '+str(assoc_results[x]['id'])+'.'
+                'path': os.path.join(self.htmldir, 'snpdata-multi.tsv'),
+                'name': 'GEMMA Association results for phenotypes: ' + str(assoc_results['multi']['id']) + '.'
             })
+        else:
+            raise ValueError('GEMMA linear mixed model is not set.')
 
         with open(os.path.join(self.htmldir, 'pheno.js'), 'w') as f:
             f.write("var inputs = ['")

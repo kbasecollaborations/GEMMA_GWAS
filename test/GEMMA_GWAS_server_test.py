@@ -85,7 +85,6 @@ class GEMMA_GWASTest(unittest.TestCase):
         self.assertTrue(os.path.isfile(os.path.join(test_data_dir, geno_test_data_zip)))
         self.assertTrue(os.path.isfile(os.path.join(test_data_dir, pheno_test_data)))
 
-    """    
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
         # self.getWsClient().save_objects({'workspace': self.getWsName(),
@@ -114,7 +113,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/6/1',
             'model': 0
         })
-    """
+
     def test_GEMMA_GWAS_two_multi(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Two trait testing narrative
@@ -123,7 +122,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/6/1',
             'model': 1
         })
-    """
+
     def test_GEMMA_GWAS_twenty_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Twenty trait testing narrative
@@ -135,4 +134,3 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/36/1',
             'model': 0
         })
-    """

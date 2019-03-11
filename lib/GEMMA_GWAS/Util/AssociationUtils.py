@@ -414,7 +414,7 @@ class AssociationUtils:
         if not 'multi' in kinmatrix:
             raise ValueError('Attempted to run a multivariate gemma analysis on a univariate dataset')
 
-        assoc_args = ['-bfile', kinmatrix['multi']['plink'], '-k', kinmatrix['multi']['kinship'], '-predict', \
+        assoc_args = ['-bfile', kinmatrix['multi']['plink'], '-k', kinmatrix['multi']['kinship'],
                       '-lmm', '4', '-debug', '-o', 'gemma_multi_assoc']
         assoc_cmd = ['gemma']
 
@@ -444,13 +444,12 @@ class AssociationUtils:
                     print('Failed to run gemma association:\n')
                     exit('GEMMA Association failed.')
             else:
-                assoc_results['multi']['gemma'] = os.path.join(self.scratch, 'output', 'output',
-                                                               'gemma_multi_assoc.assoc.txt.assoc.txt')
+                assoc_results['multi']['gemma'] = os.path.join(self.scratch, 'output', 'gemma_multi_assoc.assoc.txt')
         except Exception as e:
             exit(e)
 
         if os.path.exists(assoc_results['multi']['gemma']):
-            print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
+            print("--- gemma results generated: " + assoc_results['multi']['gemma'] + "--- \n")
 
         return assoc_results
 

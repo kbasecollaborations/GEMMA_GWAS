@@ -29,7 +29,7 @@ class GEMMA_GWAS:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
     GIT_URL = "https://github.com/rroutsong/GEMMA_GWAS.git"
     GIT_COMMIT_HASH = "8050c6b68bc8248777501cc97ba4cde31a85aa74"
 
@@ -80,16 +80,14 @@ class GEMMA_GWAS:
         InputUtils(self.config).validate(params)
 
         # Get Variation file
-        """
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref' : params['variation'],
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
-        """
 
         # For faster tests, let's use a local file vcf
-        variation_info = {'path': '/kb/module/work/variation.vcf'}
+        # variation_info = {'path': '/kb/module/work/variation.vcf'}
 
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])
