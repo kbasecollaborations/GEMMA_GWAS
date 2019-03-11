@@ -15,6 +15,8 @@ class GWASReportUtils:
         self.scratch = config["scratch"]
         self.callback_url = config["SDK_CALLBACK_URL"]
         self.dfu = DataFileUtil(self.callback_url)
+        if os.path.isdir(os.path.join(self.scratch,'mhplot')):
+            shutil.rmtree(os.path.join(self.scratch,'mhplot'))
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
 
