@@ -25,11 +25,9 @@ RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/tes
 #RUN curl $plinkurl -o /kb/module/deps/plink.zip
 #RUN curl $gemmaurl -o /kb/module/deps/gemma.zip
 
-# python libraries
-# RUN apt-get update -y \
-#     && apt-get install -y python3-minimal python3-pip
-
-RUN apt-get install -y vim
+RUN apt-get update -y \
+    && apt-get install -y vim \
+	&& apt-get install -y bcftools
 
 RUN pip install --upgrade pip \
 	&& pip install --upgrade requests \
