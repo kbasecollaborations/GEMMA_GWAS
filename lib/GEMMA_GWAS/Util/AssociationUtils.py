@@ -332,8 +332,8 @@ class AssociationUtils:
         plinkcmd = ['plink']
         """
 
-        plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes['multi']['pheno'], '--double-id', \
-                     '--allow-extra-chr', '--out', 'plink_multi']
+        plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes['multi']['pheno'], '--double-id',
+                     '--vcf-require-gt', '--max-alleles', '2', '--allow-extra-chr', '--out', 'plink_multi']
         plinkcmd = ['plink2']
 
         for arg in plinkvars:
