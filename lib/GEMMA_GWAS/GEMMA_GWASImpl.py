@@ -7,6 +7,7 @@ import uuid
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.VariationUtilClient import VariationUtil
+
 from GEMMA_GWAS.Util.InputUtils import InputUtils
 from GEMMA_GWAS.Util.AssociationUtils import AssociationUtils
 from GEMMA_GWAS.Util.GWASReportUtils import GWASReportUtils
