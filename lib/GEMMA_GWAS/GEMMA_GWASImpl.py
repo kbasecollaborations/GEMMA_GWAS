@@ -74,11 +74,12 @@ class GEMMA_GWAS:
             raise ValueError('Variation KBase reference not set.')
         if 'model' not in params:
             raise ValueError('GEMMA linear mixed model not selected.')
+        if not isinstance(params['model'], int):
+            params['model'] = int(params['model'])
         if 'trait_matrix' not in params:
             raise ValueError('Trait matrix KBase reference not set.')
 
-        params['model'] = int(params['model'])
-        print('Model is '+params['model'])
+        print('Model is '+str(params['model']))
 
         # Validate linear mixed model selection
         InputUtils(self.config).validate(params)
