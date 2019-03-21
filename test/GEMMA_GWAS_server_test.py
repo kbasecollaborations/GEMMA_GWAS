@@ -3,6 +3,7 @@ import os
 import time
 import unittest
 import subprocess
+import shutil
 from configparser import ConfigParser
 
 from GEMMA_GWAS.GEMMA_GWASImpl import GEMMA_GWAS
@@ -10,6 +11,7 @@ from GEMMA_GWAS.GEMMA_GWASServer import MethodContext
 from GEMMA_GWAS.authclient import KBaseAuth as _KBaseAuth
 
 from installed_clients.WorkspaceClient import Workspace
+from installed_clients.snp2geneClient import snp2gene
 
 class GEMMA_GWASTest(unittest.TestCase):
 
@@ -44,6 +46,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
         suffix = int(time.time() * 1000)
         cls.wsName = "test_ContigFilter_" + str(suffix)
+        cls.snp2gene = snp2gene(cls.callback_url)
         ret = cls.wsClient.create_workspace({'workspace': cls.wsName})  # noqa
 
     @classmethod
@@ -72,18 +75,17 @@ class GEMMA_GWASTest(unittest.TestCase):
         self.assertEqual(gemma, 0)
         FNULL.close()
 
-    def test_dummy_data(self):
-        """
-            Test if A. thaliana GWAS test data exists and is readable
+    def test_SNP2GENE(self):
+        shutil.copy('/kb/module/test/sample_data/snpdata-example.tsv', os.path.join(self.scratch, 'snpdata-example.tsv'))
+        gwas_results = os.path.join(self.scratch, 'snpdata-example.tsv')
+        params = {
+            'genome_obj': '25404/2/1',
+            'gwas_result_file': gwas_results,
+            'workspace_name': self.wsName
+        }
 
-        """
-        test_data_dir = '/kb/deps/testdata/'
-        geno_test_data_zip = 'AtPolyDB.zip'
-        pheno_test_data = 'LFC_phenotype'
+        print(self.snp2gene.annotate_gwas_results(params))
 
-        self.assertTrue(os.path.isdir(test_data_dir))
-        self.assertTrue(os.path.isfile(os.path.join(test_data_dir, geno_test_data_zip)))
-        self.assertTrue(os.path.isfile(os.path.join(test_data_dir, pheno_test_data)))
 
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
@@ -107,7 +109,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '26322/28/1',
             'model': 0
         })
-    """    
+    """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Two trait testing narrative

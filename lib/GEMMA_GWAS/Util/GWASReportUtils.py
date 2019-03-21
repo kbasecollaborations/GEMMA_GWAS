@@ -8,6 +8,7 @@ import uuid
 from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
+from installed_clients.snp2geneClient import snp2gene
 
 class GWASReportUtils:
     def __init__(self, config):
@@ -15,6 +16,7 @@ class GWASReportUtils:
         self.scratch = config["scratch"]
         self.callback_url = config["SDK_CALLBACK_URL"]
         self.dfu = DataFileUtil(self.callback_url)
+        self.snp2gene = snp2gene(self.callback_url)
         if os.path.isdir(os.path.join(self.scratch,'mhplot')):
             shutil.rmtree(os.path.join(self.scratch,'mhplot'))
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
@@ -63,6 +65,7 @@ class GWASReportUtils:
             assembly = self.dfu.get_objects({'object_refs': [var_ref]})['data'][0]
             # TODO: change to assembly_ref, change data model
             assembly_ref = assembly['data']['assemby_ref']
+            genome_ref = assembly['data']['genome_ref']
 
             assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
             contigs = assembly_obj['data']['contigs']
@@ -116,6 +119,13 @@ class GWASReportUtils:
                         assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
 
                 tsv_filtered.close()
+
+
+            # annotate gwas result file
+            self.snp2gene.annotate_gwas_results({
+                'genome_obj': genome_ref,
+                'gwas_results_file': tsv_filtered
+            })
 
             return assoc_details
         else:

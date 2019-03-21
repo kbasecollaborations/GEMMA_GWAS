@@ -7,6 +7,10 @@
   "type" : "sdk",
   "version_tag" : "release"
 }, {
+  "module_name" : "snp2gene",
+  "type" : "sdk",
+  "version_tag" : "dev"
+}, {
   "module_name" : "VariationUtil",
   "type" : "sdk",
   "version_tag" : "dev"
