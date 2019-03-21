@@ -74,18 +74,17 @@ class GEMMA_GWASTest(unittest.TestCase):
         # otherwise CalledProcessError is raised
         self.assertEqual(gemma, 0)
         FNULL.close()
-
+    """
     def test_SNP2GENE(self):
         shutil.copy('/kb/module/test/sample_data/snpdata-example.tsv', os.path.join(self.scratch, 'snpdata-example.tsv'))
         gwas_results = os.path.join(self.scratch, 'snpdata-example.tsv')
         params = {
             'genome_obj': '25404/2/1',
-            'gwas_result_file': gwas_results,
-            'workspace_name': self.wsName
+            'gwas_result_file': gwas_results
         }
 
-        print(self.snp2gene.annotate_gwas_results(params))
-
+        self.snp2gene.annotate_gwas_results(params)
+    """
 
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
@@ -109,6 +108,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '26322/28/1',
             'model': 0
         })
+    
     """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
