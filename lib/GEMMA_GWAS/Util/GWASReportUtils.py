@@ -72,6 +72,8 @@ class GWASReportUtils:
             contig_baselengths = {}
             prev_len = 0
 
+            pp(contig_ids)
+
             for id in contig_ids:
                 contig_baselengths[id] = prev_len
                 prev_len += contigs[id]['length']
