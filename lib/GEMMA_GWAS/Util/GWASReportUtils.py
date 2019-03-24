@@ -124,7 +124,7 @@ class GWASReportUtils:
                 tsv_filtered.close()
 
             # annotate gwas result file
-             self.snp2gene.annotate_gwas_results({
+            self.snp2gene.annotate_gwas_results({
                 'genome_obj': genome_ref,
                 'gwas_result_file': filtered_tsv_file
             })
