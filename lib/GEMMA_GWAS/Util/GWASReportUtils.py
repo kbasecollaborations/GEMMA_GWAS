@@ -94,7 +94,12 @@ class GWASReportUtils:
                                 try:
                                     globalbase = int(contig_baselengths['Chr'+str(snp[0])])
                                 except KeyError as e:
-                                    globalbase = 0
+                                    try:
+                                        globalbase = int(contig_baselengths['Chr0' + str(snp[0])])
+                                    except KeyError as e:
+                                        pp(contig_baselengths)
+                                        pp(snp[0])
+                                        raise KeyError(e)
 
                         if k < assoc_entry_limit:
                             tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
@@ -112,10 +117,13 @@ class GWASReportUtils:
                             except KeyError:
                                 try:
                                     globalbase = int(contig_baselengths['Chr' + str(snp[0])])
-                                except KeyError as e:
-                                    pp(contig_baselengths)
-                                    pp(snp[0])
-                                    raise KeyError(e)
+                                except KeyError:
+                                    try:
+                                        globalbase = int(contig_baselengths['Chr0' + str(snp[0])])
+                                    except KeyError as e:
+                                        pp(contig_baselengths)
+                                        pp(snp[0])
+                                        raise KeyError(e)
 
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
                                            + str((globalbase+int(snp[2]))) + "\n")
