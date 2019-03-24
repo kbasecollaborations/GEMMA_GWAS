@@ -67,7 +67,7 @@ class GWASReportUtils:
 
             assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
             contigs = assembly_obj['data']['contigs']
-            contig_ids = list(contigs.keys()).sort()
+            contig_ids = list(contigs.keys())
             contig_ids.sort()
 
             contig_baselengths = {}
