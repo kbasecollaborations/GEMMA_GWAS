@@ -120,8 +120,6 @@ class GWASReportUtils:
 
                 tsv_filtered.close()
 
-            pp({ 'genome_obj': genome_ref, 'gwas_result_file': tsv_filtered })
-
             # annotate gwas result file
             self.snp2gene.annotate_gwas_results({
                 'genome_obj': genome_ref,
