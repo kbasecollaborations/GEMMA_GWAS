@@ -87,12 +87,9 @@ class GEMMA_GWAS:
         # Get Variation file
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
-            'variation_ref' : params['variation'],
+            'variation_ref': params['variation'],
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
-
-        # For faster tests, let's use a local file vcf
-        # variation_info = {'path': '/kb/module/work/variation.vcf'}
 
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])

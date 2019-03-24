@@ -3,7 +3,6 @@ import os
 import operator
 import shutil
 import csv
-from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
@@ -412,7 +411,7 @@ class AssociationUtils:
         return assoc_results
 
     def run_gemma_assoc_multi(self, kinmatrix):
-        if not 'multi' in kinmatrix:
+        if 'multi' not in kinmatrix:
             raise ValueError('Attempted to run a multivariate gemma analysis on a univariate dataset')
 
         assoc_args = ['-bfile', kinmatrix['multi']['plink'], '-k', kinmatrix['multi']['kinship'],

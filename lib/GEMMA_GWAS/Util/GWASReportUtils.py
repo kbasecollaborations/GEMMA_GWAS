@@ -2,10 +2,7 @@ import os
 import json
 import csv
 import shutil
-import logging
 import uuid
-
-from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.snp2geneClient import snp2gene
@@ -133,6 +130,8 @@ class GWASReportUtils:
     def _mk_html_report(self, trait_info, var_ref, model):
         assoc_results = self._filter_assoc_results(trait_info, var_ref, model)
 
+        """ 
+        TODO: change output here, actually parse # variants for FDR and Bonferoni
         logging.info("\n\n\nfiltered:\n")
         if model is 0:
             os.system("wc -l "+os.path.join(self.htmldir, 'snpdata' + str(trait_info['id']) + '.tsv'))
@@ -143,6 +142,7 @@ class GWASReportUtils:
         logging.info("\n\n\nunfiltered:\n")
         os.system("wc -l " + trait_info['gemma'])
         logging.info("\n\n")
+        """
 
         html_return = {
             'path': self.htmldir,
