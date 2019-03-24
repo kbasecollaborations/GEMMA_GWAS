@@ -86,16 +86,17 @@ class GWASReportUtils:
             contig_baselengths = {}
             prev_len = 0
 
+            from pprint import pprint as pp
+            pp(contig_ids)
+            exit()
+
             for id in contig_ids:
                 try:
                     contig_baselengths[id] = prev_len
                     prev_len += contigs[str(id)]['length']
                 except KeyError:
-                    try:
-                        contig_baselengths[id] = prev_len
-                        prev_len += contigs['Chr'+str(id)]['length']
-                    except KeyError as e:
-                        exit(e)
+                    contig_baselengths[id] = prev_len
+                    prev_len += contigs['Chr'+str(id)]['length']
 
             with open(filtered_tsv_file,'w') as tsv_filtered:
                 tsv_filtered.write(tsv_filtered_headers)
