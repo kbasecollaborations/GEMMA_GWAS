@@ -5,12 +5,14 @@ import unittest
 import subprocess
 import shutil
 from configparser import ConfigParser
+from pprint import pprint as pp
 
 from GEMMA_GWAS.GEMMA_GWASImpl import GEMMA_GWAS
 from GEMMA_GWAS.GEMMA_GWASServer import MethodContext
 from GEMMA_GWAS.authclient import KBaseAuth as _KBaseAuth
 
 from installed_clients.WorkspaceClient import Workspace
+from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.snp2geneClient import snp2gene
 
 class GEMMA_GWASTest(unittest.TestCase):
@@ -47,6 +49,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         suffix = int(time.time() * 1000)
         cls.wsName = "test_ContigFilter_" + str(suffix)
         cls.snp2gene = snp2gene(cls.callback_url)
+        cls.dfu = DataFileUtil(cls.callback_url)
         ret = cls.wsClient.create_workspace({'workspace': cls.wsName})  # noqa
 
     @classmethod
@@ -59,6 +62,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
+    """
     def test_plink_install(self):
         FNULL = open(os.devnull, 'w')
         plink = subprocess.check_call(['plink', '--help'],stdout=FNULL,stderr=subprocess.STDOUT)
@@ -74,7 +78,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         # otherwise CalledProcessError is raised
         self.assertEqual(gemma, 0)
         FNULL.close()
-    """
+    
     def test_SNP2GENE(self):
         shutil.copy('/kb/module/test/sample_data/snpdata-example.tsv', os.path.join(self.scratch, 'snpdata-example.tsv'))
         gwas_results = os.path.join(self.scratch, 'snpdata-example.tsv')
@@ -85,6 +89,20 @@ class GEMMA_GWASTest(unittest.TestCase):
 
         self.snp2gene.annotate_gwas_results(params)
     """
+
+    def test_baselengths(self):
+        assembly_obj = self.dfu.get_objects({'object_refs': ['26587/11/1']})['data'][0]
+        contigs = assembly_obj['data']['contigs']
+        contig_ids = list(contigs.keys())
+        contig_ids.sort()
+
+        contig_baselengths = {}
+        for id in contig_ids:
+            contig_baselengths[id] = contigs[id]['length']
+
+        prev_len = 0
+
+        pp(contig_baselengths)
 
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
@@ -109,7 +127,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             #'trait_matrix': '26587/9/1',
             #'model': 0
         })
-    
+
     """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
