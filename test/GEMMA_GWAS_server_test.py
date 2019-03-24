@@ -100,12 +100,13 @@ class GEMMA_GWASTest(unittest.TestCase):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Single trait testing narrative
             # Univariate analysis
-            # 'workspace_name': 'pranjan77:narrative_1549050842078',
-            # 'variation': '24237/115/1',
-            # 'trait_matrix': '24237/125/1',
-            'workspace_name': 'rmr:narrative_1552612680986',
-            'variation': '26322/20/1',
-            'trait_matrix': '26322/28/1',
+            #'workspace_name': 'rmr:narrative_1552612680986',
+            #'variation': '26322/20/1',
+            #'trait_matrix': '26322/28/1',
+            #'model': 0
+            'workspace_name': 'rmr:narrative_1553198822567',
+            'variation': '26587/16/1',
+            'trait_matrix': '26587/9/1',
             'model': 0
         })
     
