@@ -94,9 +94,7 @@ class GWASReportUtils:
                                 try:
                                     globalbase = int(contig_baselengths['Chr'+str(snp[0])])
                                 except KeyError as e:
-                                    pp(contig_baselengths)
-                                    pp(snp[0])
-                                    raise KeyError(e)
+                                    globalbase = 0
 
                         if k < assoc_entry_limit:
                             tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \

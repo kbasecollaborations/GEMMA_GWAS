@@ -88,7 +88,6 @@ class GEMMA_GWASTest(unittest.TestCase):
         }
 
         self.snp2gene.annotate_gwas_results(params)
-    """
 
     def test_baselengths(self):
         assembly_obj = self.dfu.get_objects({'object_refs': ['26587/11/1']})['data'][0]
@@ -103,6 +102,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         prev_len = 0
 
         pp(contig_baselengths)
+    """
 
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
