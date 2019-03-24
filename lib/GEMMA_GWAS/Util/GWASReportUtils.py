@@ -66,37 +66,19 @@ class GWASReportUtils:
 
             assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
             contigs = assembly_obj['data']['contigs']
-            contig_ids = []
-
-            for contig in contigs:
-                if contig.upper().startswith('CHR'):
-                    try:
-                        int(contig[3:])
-                        contig_ids.append(int(contig[3:]))
-                    except ValueError:
-                        pass
-                else:
-                    try:
-                        int(contig)
-                        contig_ids.append(int(contig))
-                    except ValueError:
-                        pass
+            contig_ids = list(contigs.keys())
 
             contig_ids.sort()
             contig_baselengths = {}
             prev_len = 0
 
-            from pprint import pprint as pp
-            pp(contig_ids)
-            exit()
-
             for id in contig_ids:
-                try:
-                    contig_baselengths[id] = prev_len
-                    prev_len += contigs[str(id)]['length']
-                except KeyError:
-                    contig_baselengths[id] = prev_len
-                    prev_len += contigs['Chr'+str(id)]['length']
+                contig_baselengths[id] = prev_len
+                prev_len += contigs[id]['length']
+
+            from pprint import pprint as pp
+            pp(contig_baselengths)
+            exit()
 
             with open(filtered_tsv_file,'w') as tsv_filtered:
                 tsv_filtered.write(tsv_filtered_headers)
