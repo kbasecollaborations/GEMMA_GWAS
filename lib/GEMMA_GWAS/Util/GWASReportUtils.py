@@ -3,6 +3,7 @@ import json
 import csv
 import shutil
 import uuid
+from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.snp2geneClient import snp2gene
@@ -66,21 +67,14 @@ class GWASReportUtils:
 
             assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
             contigs = assembly_obj['data']['contigs']
-            contig_ids = list(contigs.keys())
+            contig_ids = list(contigs.keys()).sort()
 
-            contig_ids.sort()
             contig_baselengths = {}
             prev_len = 0
-
-            pp(contig_ids)
 
             for id in contig_ids:
                 contig_baselengths[id] = prev_len
                 prev_len += contigs[id]['length']
-
-            from pprint import pprint as pp
-            pp(contig_baselengths)
-            exit()
 
             with open(filtered_tsv_file,'w') as tsv_filtered:
                 tsv_filtered.write(tsv_filtered_headers)
@@ -89,15 +83,43 @@ class GWASReportUtils:
 
                 if len(tsv_sorted) > assoc_entry_limit:
                     for snp in tsv_sorted:
+
+                        try:
+                            globalbase = int(contig_baselengths[snp[0]])
+                        except KeyError:
+                            try:
+                                globalbase = int(contig_baselengths[int(snp[0])])
+                            except KeyError:
+                                try:
+                                    globalbase = int(contig_baselengths['Chr'+str(snp[0])])
+                                except KeyError as e:
+                                    pp(contig_baselengths)
+                                    pp(snp[0])
+                                    raise KeyError(e)
+
                         if k < assoc_entry_limit:
                             tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
-                                               + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
+                                               + str((globalbase+int(snp[2]))) + "\n")
                             k += 1
                         assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
                 else:
                     for snp in tsv_sorted:
+
+                        try:
+                            globalbase = int(contig_baselengths[snp[0]])
+                        except KeyError:
+                            try:
+                                globalbase = int(contig_baselengths[int(snp[0])])
+                            except KeyError:
+                                try:
+                                    globalbase = int(contig_baselengths['Chr' + str(snp[0])])
+                                except KeyError as e:
+                                    pp(contig_baselengths)
+                                    pp(snp[0])
+                                    raise KeyError(e)
+
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
-                                           + str((contig_baselengths[int(snp[0])]+int(snp[2])))+"\n")
+                                           + str((globalbase+int(snp[2]))) + "\n")
                         assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
 
                 tsv_filtered.close()
