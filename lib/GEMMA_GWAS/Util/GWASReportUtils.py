@@ -102,6 +102,12 @@ class GWASReportUtils:
                                         raise KeyError(e)
 
                         if k < assoc_entry_limit:
+                            if snp[1] is '.':
+                                if str(snp[0]).beginswith('C'):
+                                    snp[1] = str(snp[0])+'_'+str(snp[2])
+                                else:
+                                    snp[1] = 'Chr'+str(snp[0])+'_'+str(snp[2])
+
                             tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
                                                + str((globalbase+int(snp[2]))) + "\n")
                             k += 1
@@ -124,6 +130,12 @@ class GWASReportUtils:
                                         pp(contig_baselengths)
                                         pp(snp[0])
                                         raise KeyError(e)
+
+                        if snp[1] is '.':
+                            if str(snp[0]).beginswith('C'):
+                                snp[1] = str(snp[0]) + '_' + str(snp[2])
+                            else:
+                                snp[1] = 'Chr' + str(snp[0]) + '_' + str(snp[2])
 
                         tsv_filtered.write(snp[1]+"\t"+snp[0]+"\t"+snp[2]+"\t"+snp[13]+"\t" \
                                            + str((globalbase+int(snp[2]))) + "\n")
