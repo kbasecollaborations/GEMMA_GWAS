@@ -84,12 +84,12 @@ class GWASReportUtils:
 
                 if len(tsv_sorted) > assoc_entry_limit:
                     for snp in tsv_sorted:
-
+                        # TODO: Fix Plink reassignment of Chr prefixes
                         try:
                             globalbase = int(contig_baselengths[snp[0]])
                         except KeyError:
                             try:
-                                globalbase = int(contig_baselengths[int(snp[0])])
+                                globalbase = int(contig_baselengths[snp[0].capitalize()])
                             except KeyError:
                                 try:
                                     globalbase = int(contig_baselengths['Chr'+str(snp[0])])
@@ -114,12 +114,12 @@ class GWASReportUtils:
                         assoc_details.append((snp[1], snp[0], int(snp[2]), float(snp[13]), float(snp[6])))
                 else:
                     for snp in tsv_sorted:
-
+                        # TODO: Fix Plink reassignment of Chr prefixes
                         try:
                             globalbase = int(contig_baselengths[snp[0]])
                         except KeyError:
                             try:
-                                globalbase = int(contig_baselengths[int(snp[0])])
+                                globalbase = int(contig_baselengths[snp[0].capitalize()])
                             except KeyError:
                                 try:
                                     globalbase = int(contig_baselengths['Chr' + str(snp[0])])
