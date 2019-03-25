@@ -132,7 +132,7 @@ class GWASReportUtils:
                                         raise KeyError(e)
 
                         if snp[1] is '.':
-                            if str(snp[0]).beginswith('C'):
+                            if str(snp[0]).startswith('C'):
                                 snp[1] = str(snp[0]) + '_' + str(snp[2])
                             else:
                                 snp[1] = 'Chr' + str(snp[0]) + '_' + str(snp[2])
