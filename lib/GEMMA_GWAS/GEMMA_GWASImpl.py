@@ -3,6 +3,7 @@
 import logging
 import os
 import uuid
+import time
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
@@ -85,11 +86,13 @@ class GEMMA_GWAS:
         InputUtils(self.config).validate(params)
 
         # Get Variation file
+        print(str(round(time.time(), 2)) + ": Download variation start")
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref': params['variation'],
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
+        print(str(round(time.time(), 2)) + ": Download variation end")
 
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])

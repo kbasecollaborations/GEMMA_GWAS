@@ -3,6 +3,7 @@ import os
 import operator
 import shutil
 import csv
+import time
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
@@ -67,6 +68,8 @@ class AssociationUtils:
 
         trait_matrix_obj = self.dfu.get_objects({'object_refs': [trait_matrix_ref]})['data'][0]
 
+        print(str(round(time.time(), 2)) + ": Trait matrix parsing start")
+
         ws_type = trait_matrix_obj['info'][2]
         if 'KBaseMatrices.TraitMatrix' in ws_type:
             fids = trait_matrix_obj['data']['data']['col_ids']
@@ -119,6 +122,8 @@ class AssociationUtils:
                     f.close()
                     phenotype_files[x]['file'] = single_pheno_file_path
 
+            print(str(round(time.time(), 2)) + ": Trait matrix parsing end")
+
             return phenotype_files
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
@@ -142,6 +147,8 @@ class AssociationUtils:
         """
 
         trait_matrix_obj = self.dfu.get_objects({'object_refs': [trait_matrix_ref]})['data'][0]
+
+        print(str(round(time.time(), 2)) + ": Trait matrix parsing start")
 
         ws_type = trait_matrix_obj['info'][2]
         if 'KBaseMatrices.TraitMatrix' in ws_type:
@@ -192,6 +199,9 @@ class AssociationUtils:
                             fline += " "+str(phenotypevals[j][k])
                     f.write(fline+"\n")
                 f.close()
+
+            print(str(round(time.time(), 2)) + ": Trait matrix parsing end")
+
             return phenotype_files
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
@@ -199,8 +209,9 @@ class AssociationUtils:
 
     def _mk_centered_kinship(self, plink_prefixes):
         if 'multi' in plink_prefixes:
+            print(str(round(time.time(), 2)) + ": Kinship matrices generating")
             # multivariate analysis
-            kin_cmd = ['gemma', '-bfile', plink_prefixes['multi']['plink'], '-gk', '1', '-o',
+            kin_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', plink_prefixes['multi']['plink'], '-gk', '1', '-o',
                        'kinship-multi']
 
             try:
@@ -209,6 +220,8 @@ class AssociationUtils:
             except Exception as e:
                 exit(e)
 
+            print(str(round(time.time(), 2)) + ": Kinship matrices done")
+
             plink_prefixes['multi']['kinship'] = os.path.join(self.scratch, 'output', 'kinship-multi.cXX.txt')
 
             if not os.path.exists(plink_prefixes['multi']['kinship']):
@@ -216,9 +229,10 @@ class AssociationUtils:
         else:
             # univariate analysis
             kinship_base_prefix = 'kinship'
+            print(str(round(time.time(), 2)) + ": Kinship matrices generating")
 
             for x in range(0, len(plink_prefixes)):
-                kin_cmd = ['gemma', '-bfile', plink_prefixes[x]['plink'], '-gk', '1', '-o', kinship_base_prefix+str(x)]
+                kin_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', plink_prefixes[x]['plink'], '-gk', '1', '-o', kinship_base_prefix+str(x)]
 
                 try:
                     proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
@@ -231,10 +245,13 @@ class AssociationUtils:
                 if not os.path.exists(plink_prefixes[x]['kinship']):
                     exit("Kinship file does not exist: "+plink_prefixes[x]['kinship'])
 
+            print(str(round(time.time(), 2)) + ": Kinship matrices done")
+
         return plink_prefixes
 
     def _mk_standardized_kinship(self, assoc_info):
-        kinship_cmd = ['gemma', '-bfile', os.path.join(self.scratch, assoc_info['plink']), '-gk', '2', '-o', str(assoc_info['id'])]
+        print(str(round(time.time(),2)) + ": Kinship matrix generating")
+        kinship_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', os.path.join(self.scratch, assoc_info['plink']), '-gk', '2', '-o', str(assoc_info['id'])]
         kinship_file = os.path.join(self.scratch, 'output', str(assoc_info['id'])+'.sXX.txt')
 
         try:
@@ -242,6 +259,8 @@ class AssociationUtils:
             proc.wait()
         except Exception as e:
             exit(e)
+
+        print(str(round(time.time(), 2)) + ": Kinship matrix done")
 
         if not os.path.exists(kinship_file):
             raise ValueError('Unable to create Standardized Kinship Matrix. Contact Administrator')
@@ -270,6 +289,9 @@ class AssociationUtils:
     def _mk_plink_bin_uni(self, phenotypes):
         plink_base_prefix = 'plink_variation'
         plink_prefixes = []
+
+        print(str(round(time.time(), 2)) + ": Plink encoding start")
+
         for x in range(0, len(phenotypes)):
             cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
             plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['file'],
@@ -281,7 +303,7 @@ class AssociationUtils:
             plinkvars.append('--out')
             plinkvars.append(plink_base_prefix+str(x))
 
-            plinkcmd = ['plink']
+            plinkcmd = ['/usr/bin/time', '-v', 'plink']
 
             for arg in plinkvars:
                 plinkcmd.append(arg)
@@ -314,6 +336,9 @@ class AssociationUtils:
                 raise IOError('Plink fam doesn\'t exist')
             else:
                 print("----" + plink_fam + "----\n")
+
+        print(str(round(time.time(), 2)) + ": Plink encoding end")
+
         return phenotypes
 
     def _mk_plink_bin_multi(self, phenotypes):
@@ -334,7 +359,9 @@ class AssociationUtils:
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes['multi']['pheno'], '--double-id',
                      '--vcf-require-gt', '--max-alleles', '2', '--allow-extra-chr', '--output-chr', 'chr26',
                      '--out', 'plink_multi']
-        plinkcmd = ['plink2']
+        plinkcmd = ['/usr/bin/time', '-v', 'plink2']
+
+        print(str(round(time.time(), 2)) + ": Plink encoding start")
 
         for arg in plinkvars:
             plinkcmd.append(arg)
@@ -361,17 +388,21 @@ class AssociationUtils:
         else:
             print("----" + plink_bim + "----")
 
+        print(str(round(time.time(), 2)) + ": Plink encoding end")
+
         return phenotypes
 
     def run_gemma_assoc_uni(self, kinmatrix):
         if 'multi' in kinmatrix:
             raise ValueError('Attempted to run a univariate gemma analysis on a multivariate dataset')
 
+        print(str(round(time.time(), 2)) + ": GEMMA analysis start")
+
         for x in range(0, len(kinmatrix)):
             assoc_base_file_prefix = 'gemma_assoc'
             assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-debug', '-o',
                           assoc_base_file_prefix + kinmatrix[x]['id']]
-            assoc_cmd = ['gemma']
+            assoc_cmd = ['/usr/bin/time', '-v', 'gemma']
 
             for arg in assoc_args:
                 assoc_cmd.append(arg)
@@ -385,7 +416,7 @@ class AssociationUtils:
                 if proc.returncode is -2:
                     # brent error
                     newkinship = self._mk_standardized_kinship(kinmatrix[x])
-                    new_assoc_cmd = ['gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4','-debug', '-o',
+                    new_assoc_cmd = ['/usr/bin/time', '-v', 'gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4','-debug', '-o',
                                      assoc_base_file_prefix + kinmatrix[x]['id']]
 
                     try:
@@ -409,6 +440,8 @@ class AssociationUtils:
             if os.path.exists(assoc_results[x]['gemma']):
                 print("--- gemma results generated: " + assoc_results[x]['gemma'] + "--- \n")
 
+        print(str(round(time.time(), 2)) + ": GEMMA analysis end")
+
         return assoc_results
 
     def run_gemma_assoc_multi(self, kinmatrix):
@@ -417,7 +450,9 @@ class AssociationUtils:
 
         assoc_args = ['-bfile', kinmatrix['multi']['plink'], '-k', kinmatrix['multi']['kinship'],
                       '-lmm', '4', '-debug', '-o', 'gemma_multi_assoc']
-        assoc_cmd = ['gemma']
+        assoc_cmd = ['/usr/bin/time', '-v', 'gemma']
+
+        print(str(round(time.time(), 2)) + ": GEMMA analysis start")
 
         for arg in assoc_args:
             assoc_cmd.append(arg)
@@ -451,6 +486,8 @@ class AssociationUtils:
 
         if os.path.exists(assoc_results['multi']['gemma']):
             print("--- gemma results generated: " + assoc_results['multi']['gemma'] + "--- \n")
+
+        print(str(round(time.time(), 2)) + ": GEMMA analysis end")
 
         return assoc_results
 

@@ -4,6 +4,7 @@ import time
 import unittest
 import subprocess
 import shutil
+import json
 from configparser import ConfigParser
 from pprint import pprint as pp
 
@@ -49,7 +50,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         suffix = int(time.time() * 1000)
         cls.wsName = "test_ContigFilter_" + str(suffix)
         cls.snp2gene = snp2gene(cls.callback_url)
-        cls.dfu = DataFileUtil(cls.callback_url)
+
         ret = cls.wsClient.create_workspace({'workspace': cls.wsName})  # noqa
 
     @classmethod
@@ -103,7 +104,6 @@ class GEMMA_GWASTest(unittest.TestCase):
 
         pp(contig_baselengths)
     """
-
     def test_GEMMA_GWAS_single_uni(self):
         # Prepare test objects in workspace if needed using
         # self.getWsClient().save_objects({'workspace': self.getWsName(),
@@ -122,12 +122,12 @@ class GEMMA_GWASTest(unittest.TestCase):
             'variation': '26322/20/1',
             'trait_matrix': '26322/28/1',
             'model': 0
+
             #'workspace_name': 'rmr:narrative_1553198822567',
             #'variation': '26587/16/1',
             #'trait_matrix': '26587/9/1',
             #'model': 0
         })
-
     """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {

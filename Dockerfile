@@ -27,7 +27,8 @@ RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/tes
 
 RUN apt-get update -y \
     && apt-get install -y vim \
-	&& apt-get install -y bcftools
+	&& apt-get install -y bcftools \
+	&& apt-get install -y time
 
 RUN pip install --upgrade pip \
 	&& pip install --upgrade requests \
