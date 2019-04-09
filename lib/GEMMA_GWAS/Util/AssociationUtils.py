@@ -479,7 +479,7 @@ class AssociationUtils:
             phenotype = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
             plink = self._mk_plink_bin_uni(phenotype)
             kinmatrix = self._mk_centered_kinship(plink)
-            gemma = self.run_gemm_aassoc_uni(kinmatrix)
+            gemma = self.run_gemm_assoc_uni(kinmatrix)
         else:
             # mutlivariate analysis
             phenotype = self._mk_phenos_from_trait_matrix_multi(params['trait_matrix'])

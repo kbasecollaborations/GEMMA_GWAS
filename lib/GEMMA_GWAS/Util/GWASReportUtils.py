@@ -100,11 +100,15 @@ class GWASReportUtils:
                                     except KeyError:
                                         try:
                                             globalbase = int(contig_baselengths['Chr0' + str(snp[0][-1:])])
-                                        except KeyError as e:
-                                            logging.error("Contig base length dictionary: " + str(contig_baselengths))
-                                            logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
-                                                          str(type(snp[0])))
-                                            raise KeyError(e)
+                                        except KeyError:
+                                            try:
+                                                globalbase = int(contig_baselengths['Chr' + str(snp[0][-1:])])
+                                            except KeyError as e:
+                                                logging.error(
+                                                    "Contig base length dictionary: " + str(contig_baselengths))
+                                                logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
+                                                              str(type(snp[0])))
+                                                raise KeyError(e)
 
                         if k < assoc_entry_limit:
                             if snp[1] is '.':
@@ -134,11 +138,15 @@ class GWASReportUtils:
                                     except KeyError:
                                         try:
                                             globalbase = int(contig_baselengths['Chr0' + str(snp[0][-1:])])
-                                        except KeyError as e:
-                                            logging.error("Contig base length dictionary: " + str(contig_baselengths))
-                                            logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
-                                                          str(type(snp[0])))
-                                            raise KeyError(e)
+                                        except KeyError:
+                                            try:
+                                                globalbase = int(contig_baselengths['Chr' + str(snp[0][-1:])])
+                                            except KeyError as e:
+                                                logging.error(
+                                                    "Contig base length dictionary: " + str(contig_baselengths))
+                                                logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
+                                                              str(type(snp[0])))
+                                                raise KeyError(e)
 
                         if snp[1] is '.':
                             if str(snp[0]).startswith('C'):
