@@ -3,7 +3,6 @@
 import logging
 import os
 import uuid
-import time
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.DataFileUtilClient import DataFileUtil
@@ -47,7 +46,6 @@ class GEMMA_GWAS:
         self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
         self.config['test_data_dir'] = os.path.abspath('/kb/testdata')
         self.dfu = DataFileUtil(self.config['SDK_CALLBACK_URL'])
-        # self.config['scratch'] is the tmp directory
 
         logging.basicConfig(format='%(created)s %(levelname)s: %(message)s',
                             level=logging.INFO)
@@ -80,19 +78,19 @@ class GEMMA_GWAS:
         if 'trait_matrix' not in params:
             raise ValueError('Trait matrix KBase reference not set.')
 
-        print('Model is '+str(params['model']))
+        logging.info('GEMMA linear mixed model is '+str(params['model']))
 
         # Validate linear mixed model selection
         InputUtils(self.config).validate(params)
 
         # Get Variation file
-        print(str(round(time.time(), 2)) + ": Download variation start")
+        logging.info("Downloading variation data from shock.")
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref': params['variation'],
             'filename': os.path.join(self.config['scratch'], 'variation.vcf')
         })
-        print(str(round(time.time(), 2)) + ": Download variation end")
+        logging.info("Download variation end")
 
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])

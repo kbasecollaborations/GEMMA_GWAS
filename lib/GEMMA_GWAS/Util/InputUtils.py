@@ -1,3 +1,5 @@
+import logging
+
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
 
@@ -16,13 +18,16 @@ class InputUtils:
             phenos = trait_matrix["row_ids"]
 
             if len(phenos) <= 1:
-                print('Running a univariate analysis on the '+phenos[0]+' phenotype.')
+                logging.info('Running a univariate analysis on the '+phenos[0]+' phenotype.')
                 return True
             else:
-                print('Running a univariate analysis on '+str(len(phenos))+' phenotypes: ')
+                logmsg = 'Running a univariate analysis on '+str(len(phenos))+' phenotypes:\n'
                 for pheno in phenos:
-                    print(pheno)
-                print('\n\n')
+                    logmsg += pheno + "\n"
+                logmsg += "\n"
+
+                logging.info(logmsg)
+
                 return True
         elif params['model'] is 1:
             # multivariate linear mixed model
@@ -32,10 +37,14 @@ class InputUtils:
             if len(phenos) <= 1:
                 raise ValueError('Cannot run multivariate analysis on a single/empty phenotype.')
             else:
-                print('Running a multivariate analysis on '+str(len(phenos))+' phenotypes:')
+                logmsg = 'Running a multivariate analysis on '+str(len(phenos))+' phenotypes:'
                 for pheno in phenos:
-                    print(pheno)
-                print('\n\n')
+                    logmsg += pheno + '\n'
+                logmsg += '\n'
+
+                logging.info(logmsg)
+
                 return True
         else:
+            logging.error("Model is " + params['model'] + ", of type: " + str(type(params['model'])))
             raise ValueError('Model selected is not either multivariate or univariate. Contact Module maintainer. ')
