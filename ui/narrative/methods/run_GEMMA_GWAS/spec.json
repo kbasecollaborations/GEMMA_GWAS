@@ -4,7 +4,7 @@
         "rmr"
     ],
     "contact": "",
-    "categories": ["active"],
+    "categories": ["active", "annotation"],
     "widgets": {
         "input": "kbaseNarrativeMethodInput",
         "output" : "no-display"
