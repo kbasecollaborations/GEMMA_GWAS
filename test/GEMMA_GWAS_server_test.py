@@ -51,6 +51,8 @@ class GEMMA_GWASTest(unittest.TestCase):
         cls.wsName = "test_ContigFilter_" + str(suffix)
         cls.snp2gene = snp2gene(cls.callback_url)
 
+        cls.
+
         ret = cls.wsClient.create_workspace({'workspace': cls.wsName})  # noqa
 
     @classmethod
@@ -128,6 +130,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             #'trait_matrix': '26587/9/1',
             #'model': 0
         })
+
     """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
