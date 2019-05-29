@@ -270,7 +270,7 @@ class AssociationUtils:
 
     def _check_pheno_case_control(self, phenotypefile):
         # phenofile can be assumed to be a 3 column space-delimted file since,
-        # this method is only used in the
+        # this method is only used in the univariate analysis
 
         phenovals = []
         with open(phenotypefile, 'r') as f:
@@ -282,7 +282,7 @@ class AssociationUtils:
 
         phenoset = set(phenovals)
 
-        if phenoset == {'0', '1', 'NA'}:
+        if phenoset == {'0', '1', 'NA', '2'}:
             return '--1'
         else:
             return False
