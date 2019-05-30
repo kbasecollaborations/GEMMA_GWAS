@@ -283,6 +283,7 @@ class AssociationUtils:
         phenoset = set(phenovals)
 
         if phenoset == {'0', '1', 'NA', '2'}:
+            exit('case/control')
             return '--1'
         else:
             return False
