@@ -282,9 +282,10 @@ class AssociationUtils:
 
         phenoset = set(phenovals)
 
-        exit(phenoset)
-
-        if phenoset == {'0', '1',  '2', 'NA'}:
+        if phenoset == {'0', '1',  '2', 'NA'} \
+                or phenoset == {'0', '1',  '2'} \
+                or phenoset == {'0', '1', 'NA'} \
+                or phenoset == {'0', '1'}:
             return '--1'
         else:
             return False
