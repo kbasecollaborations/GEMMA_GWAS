@@ -286,8 +286,10 @@ class AssociationUtils:
                 or phenoset == {'0', '1',  '2'} \
                 or phenoset == {'0', '1', 'NA'} \
                 or phenoset == {'0', '1'}:
+            exit('CASE CONTROL :' + str(phenoset))
             return '--1'
         else:
+            exit('NOT CASE CONTROL :' + str(phenoset))
             return False
 
     def _mk_plink_bin_uni(self, phenotypes):
