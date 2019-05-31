@@ -282,10 +282,11 @@ class AssociationUtils:
 
         phenoset = set(phenovals)
 
-        if phenoset == {'0', '1',  '2', 'NA'} \
-                or phenoset == {'0', '1',  '2'} \
-                or phenoset == {'0', '1', 'NA'} \
+        if phenoset == {'0', '1', 'NA'} \
                 or phenoset == {'0', '1'}:
+                # TODO: make decision on case/control detection
+                #or phenoset == {'0', '1',  '2', 'NA'} \
+                #or phenoset == {'0', '1',  '2'}:
             return '--1'
         else:
             return False

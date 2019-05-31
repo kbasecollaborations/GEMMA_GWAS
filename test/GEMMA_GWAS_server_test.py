@@ -51,8 +51,6 @@ class GEMMA_GWASTest(unittest.TestCase):
         cls.wsName = "test_ContigFilter_" + str(suffix)
         cls.snp2gene = snp2gene(cls.callback_url)
 
-        cls.
-
         ret = cls.wsClient.create_workspace({'workspace': cls.wsName})  # noqa
 
     @classmethod
