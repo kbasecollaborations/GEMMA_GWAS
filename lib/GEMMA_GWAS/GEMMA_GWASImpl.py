@@ -116,8 +116,10 @@ class GEMMA_GWAS:
         if not isinstance(output, dict):
             raise ValueError('Method run_gemma_association return value ' +
                              'output is not type dict as required.')
+
         # return the results
         return [output]
+
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
