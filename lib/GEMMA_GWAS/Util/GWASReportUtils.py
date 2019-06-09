@@ -236,7 +236,7 @@ class GWASReportUtils:
 
         return assoc_obj_ref
 
-    def mk_output(self, params, assoc_results):
+    def mk_output(self, params, assoc_results, assoc_stats):
         assoc_details = []
         html_info = []
         js_pheno_inputs = []
@@ -281,6 +281,8 @@ class GWASReportUtils:
                     f.write(js_pheno_inputs[x] + "'];\n")
                 else:
                     f.write(js_pheno_inputs[x]+"', '")
+
+            f.write('var ind = ' + assoc_stats['individuals'] + ';\n')
             f.close()
 
         assoc_obj = self._save_assoc_obj(params, assoc_results, assoc_details)

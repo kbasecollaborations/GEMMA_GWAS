@@ -299,8 +299,15 @@ class AssociationUtils:
 
         for x in range(0, len(phenotypes)):
             cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
+            """
+            Remove the phenotype input from plink, will create fam file downstream.
+            
+            
             plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['file'],
                          '--allow-no-sex', '--allow-extra-chr', '--output-chr', 'chr26']
+            """
+
+            plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-extra-chr']
 
             if cc_flag:
                 plinkvars.append(cc_flag)
@@ -396,8 +403,9 @@ class AssociationUtils:
             assoc_results = kinmatrix
 
             try:
-                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
                 proc.wait()
+                out, err = proc.communicate()
 
                 if proc.returncode is -2:
                     # brent error
@@ -406,8 +414,9 @@ class AssociationUtils:
                                      assoc_base_file_prefix + kinmatrix[x]['id']]
 
                     try:
-                        newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch)
+                        newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
                         newproc.wait()
+                        out, err = newproc.communicate()
                     except Exception as e:
                         exit(e)
 
@@ -424,13 +433,15 @@ class AssociationUtils:
                 logging.error('Unspecified subprocess execution error' + str(proc))
                 exit(e)
 
+        decode_out = out.decode('utf-8')
+        decode_out = decode_out.split('\n')
 
         if len(kinmatrix) is 1:
             logging.info('GEMMA univariate association analysis complete')
         else:
             logging.info('GEMMA univariate association analyses complete')
 
-        return assoc_results
+        return assoc_results, decode_out
 
     def run_gemma_assoc_multi(self, kinmatrix):
         if 'multi' not in kinmatrix:
@@ -448,25 +459,24 @@ class AssociationUtils:
         assoc_results = kinmatrix
 
         try:
-            proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+            proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
             proc.wait()
-
+            out, err = proc.communicate()
             if proc.returncode is -2:
                 # brent error
                 newkinship = self._mk_standardized_kinship(kinmatrix['multi'])
                 new_assoc_cmd = ['gemma', '-bfile', kinmatrix['multi']['plink'], '-k', newkinship, '-lmm', '4', '-debug',
                                  '-o', 'gemma_multi_assoc']
                 try:
-                    newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch)
+                    newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
                     newproc.wait()
+                    out, err = newproc.communicate()
                 except Exception as e:
                     exit(e)
-
                 if not newproc.returncode is -2:
                     assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', 'gemma_multi_assoc.assoc.txt')
                 else:
                     logging.error('Failed to run gemma association:\n' + str(newproc))
-
                     raise RuntimeError('GEMMA Association failed.')
             else:
                 assoc_results['multi']['gemma'] = os.path.join(self.scratch, 'output', 'gemma_multi_assoc.assoc.txt')
@@ -475,20 +485,36 @@ class AssociationUtils:
 
         logging.info('GEMMA multivariate association analyses complete')
 
-        return assoc_results
+        decode_out = out.decode('utf-8')
+        decode_out = decode_out.split('\n')
+
+        return assoc_results, decode_out
+
+    def process_gemma_out(self, output):
+        stats = {}
+        for line in output:
+            # ## number of analyzed individuals = XX
+            print(line)
+            if 'number of analyzed individuals' in line:
+                spline = line.split(' ')
+                stats['individuals'] = spline[6]
+        return stats
 
     def run_assoc_exp(self, params):
         if params['model'] is 0:
             # univariate analysis
+
+            plink = self._mk_plink_bin_uni()
             phenotype = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
-            plink = self._mk_plink_bin_uni(phenotype)
             kinmatrix = self._mk_centered_kinship(plink)
-            gemma = self.run_gemma_assoc_uni(kinmatrix)
+            gemma, gemma_output = self.run_gemma_assoc_uni(kinmatrix)
         else:
             # mutlivariate analysis
             phenotype = self._mk_phenos_from_trait_matrix_multi(params['trait_matrix'])
             plink = self._mk_plink_bin_multi(phenotype)
             kinmatrix = self._mk_centered_kinship(plink)
-            gemma = self.run_gemma_assoc_multi(kinmatrix)
+            gemma, gemma_output = self.run_gemma_assoc_multi(kinmatrix)
 
-        return gemma
+        stats = self.process_gemma_out(gemma_output)
+
+        return gemma, stats
