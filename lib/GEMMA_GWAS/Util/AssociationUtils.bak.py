@@ -12,7 +12,7 @@ from installed_clients.WorkspaceClient import Workspace
 class AssociationUtils:
     def __init__(self, config, varfiles):
         self.dfu = DataFileUtil(config['SDK_CALLBACK_URL'])
-        #self.wsc = Workspace(config['SDK_CALLBACK_URL'])
+
         # TODO: input variable for workspace url
         self.wsc = Workspace("https://appdev.kbase.us/services/ws")
         self.scratch = config["scratch"]
