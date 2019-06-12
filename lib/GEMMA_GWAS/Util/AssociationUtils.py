@@ -298,17 +298,10 @@ class AssociationUtils:
         logging.info('Encoding with plink.')
 
         for x in range(0, len(phenotypes)):
-            cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
-            """
-            Remove the phenotype input from plink, will create fam file downstream.
-            
-            
             plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['file'],
                          '--allow-no-sex', '--allow-extra-chr', '--output-chr', 'chr26']
-            """
 
-            plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-extra-chr']
-
+            cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
             if cc_flag:
                 plinkvars.append(cc_flag)
 
