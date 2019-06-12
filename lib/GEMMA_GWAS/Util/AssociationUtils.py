@@ -503,9 +503,8 @@ class AssociationUtils:
     def run_assoc_exp(self, params):
         if params['model'] is 0:
             # univariate analysis
-
-            plink = self._mk_plink_bin_uni()
             phenotype = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
+            plink = self._mk_plink_bin_uni(phenotype)
             kinmatrix = self._mk_centered_kinship(plink)
             gemma, gemma_output = self.run_gemma_assoc_uni(kinmatrix)
         else:
