@@ -35,7 +35,7 @@ class AssociationUtils:
             raise ValueError('Not accepting list of files as variation input yet!')
 
     def _mk_plink_bin_uni(self):
-        plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-extra-chr', '--out', self.plink_pref]
+        plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-no-sex','--allow-extra-chr', '--out', self.plink_pref]
         plinkcmd = ['plink']
 
         for arg in plinkvars:
@@ -96,35 +96,85 @@ class AssociationUtils:
         if not os.path.isdir(self.fam_directory):
             os.mkdir(os.path.join(self.scratch, 'fams'))
 
-        fam_template = pd.DataFrame.from_csv(self.plink_fam_template, sep=' ', header=None, index_col=False)
+        fam_template = pd.read_csv(self.plink_fam_template, sep=' ',
+                                   names=['fid', 'iid', 'iidf', 'iidm', 'sex', 'value'], index_col=False)
         fam_template = fam_template.replace(-9, 'NA')
-        fids = list(fam_template[0])
         fam_files = []
 
         for pheno, values in phenovals.items():
-            new_fam = fam_template
+            new_fam = fam_template  # copy template data frame
+            # pheno is the phenotype name
+            # values is a dictionary with keys of sampleid and values of phenotypic value
+            for sample, value in values.items():
+                new_fam.loc[new_fam['fid'] == int(sample)] = sample, sample, 0, 0, 0, value
 
-            for sample, val in values.items():
-                if sample in fids:
-                    new_fam.loc[new_fam[0] == sample] = [sample, sample, 0, 0, 0, val]
-
-            new_fam_path = os.path.join(self.fam_directory, pheno+'.fam')
+            new_fam_path = os.path.join(self.fam_directory, pheno + '.fam')
             new_fam.fillna(value='NA', inplace=True)
             new_fam.to_csv(new_fam_path, sep=' ', header=None, index=False)
             fam_files.append(new_fam_path)
 
         return fam_files
 
-    def mk_centered_kinship(self, plink_prefix):
+    def mk_centered_kinship_uni(self, phenovalues, famfiles):
+        # univariate analysis
+        kinship_base_prefix = 'kinship'
+        logging.info("Generating kinship matrices")
+        kinshipmatricies = []
 
-    def run_gemma_assoc_uni(self, kinship, phenovals):
+        for pheno in phenovalues:
+            kin_cmd = ['gemma', '-bfile', self.plink_pref, '-gk', '1', '-o', kinship_base_prefix + '_' + pheno]
+
+            famfile = os.path.join(self.fam_directory, pheno + '.fam')
+
+            if famfile not in famfiles:
+                raise FileNotFoundError(f'{famfile} does not exist in famfile list: {str(famfiles)}')
+
+            self._stage_fam_file(famfile)
+
+            try:
+                proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc.wait()
+                out, err = proc.communicate()
+            except Exception as e:
+                logging.error('Centered kinship generation failed')
+                raise ChildProcessError(e)
+
+            if not os.path.exists(os.path.join(self.scratch, 'output', kinship_base_prefix + '_' + pheno + '.cXX.txt')):
+                raise FileNotFoundError("Kinship file does not exist: " +
+                    os.path.join(self.scratch, 'output', kinship_base_prefix + '_' + pheno + '.cXX.txt'))
+            else:
+                kinshipmatricies.append(os.path.join(self.scratch, 'output',
+                    kinship_base_prefix + '_' + pheno + '.cXX.txt'))
+
+        logging.info("Kinship matrices generation done")
+
+
+        return kinshipmatricies
+
+    def _stage_fam_file(self, famfile):
+        if os.path.isfile(os.path.join(self.scratch, self.plink_pref + '.fam')):
+            os.remove(os.path.join(self.scratch, self.plink_pref + '.fam'))
+
+        shutil.copyfile(famfile, os.path.join(self.scratch, self.plink_pref + '.fam'))
+
+        return True
+
+    def run_gemma_assoc_uni(self, kinship, famfiles, phenotypes, plink_prefix):
+        for pheno in phenotypes:
+            famfile = os.path.join(self.fam_directory, pheno + '.fam')
+
+            if famfile not in famfiles:
+                raise FileNotFoundError(f'{famfile} does not exist in famfile list: {str(famfiles)}')
+
+            if not self._stage_fam_file(famfile):
+                raise FileNotFoundError(f'Fam file: {famfile} does not exist.')
+
         return 0
 
     def process_gemma_out(self, output):
         stats = {}
         for line in output:
-            # ## number of analyzed individuals = XX
-            print(line)
+            # number of analyzed individuals = XX
             if 'number of analyzed individuals' in line:
                 spline = line.split(' ')
                 stats['individuals'] = spline[6]
@@ -136,10 +186,10 @@ class AssociationUtils:
             plink = self._mk_plink_bin_uni()
             phenovals = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
             famfiles = self.mk_fam_files_from_phenos(phenovals)
-            kinmatrix = self.mk_centered_kinship(plink)
-            gemma, gemma_output = self.run_gemma_assoc_uni(kinmatrix, famfiles)
+            kinmatricies = self.mk_centered_kinship_uni(phenovals, famfiles)
+            gemma, gemma_output = self.run_gemma_assoc_uni(kinmatricies, famfiles, phenovals, plink)
         else:
-            raise ValueError('Only univariate analysis are supported right now.')
+            raise NotImplementedError('Only univariate analysis are supported right now.')
 
         stats = self.process_gemma_out(gemma_output)
 
