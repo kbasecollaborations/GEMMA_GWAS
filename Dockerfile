@@ -33,7 +33,7 @@ RUN apt-get update -y \
 RUN pip install --upgrade pip \
 	&& pip install --upgrade requests \
 	&& pip install pandas \
-  && pip install -q pyvcf
+    && pip install -q pyvcf
 
 RUN mkdir /data
 

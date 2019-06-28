@@ -117,12 +117,12 @@ class AssociationUtils:
 
     def mk_centered_kinship_uni(self, phenovalues, famfiles):
         # univariate analysis
-        kinship_base_prefix = 'kinship'
+        self.kinship_base_prefix = 'kinship'
         logging.info("Generating kinship matrices")
         kinshipmatricies = []
 
         for pheno in phenovalues:
-            kin_cmd = ['gemma', '-bfile', self.plink_pref, '-gk', '1', '-o', kinship_base_prefix + '_' + pheno]
+            kin_cmd = ['gemma', '-bfile', self.plink_pref, '-gk', '1', '-o', self.kinship_base_prefix + '_' + pheno]
 
             famfile = os.path.join(self.fam_directory, pheno + '.fam')
 
@@ -139,15 +139,14 @@ class AssociationUtils:
                 logging.error('Centered kinship generation failed')
                 raise ChildProcessError(e)
 
-            if not os.path.exists(os.path.join(self.scratch, 'output', kinship_base_prefix + '_' + pheno + '.cXX.txt')):
+            if not os.path.exists(os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt')):
                 raise FileNotFoundError("Kinship file does not exist: " +
-                    os.path.join(self.scratch, 'output', kinship_base_prefix + '_' + pheno + '.cXX.txt'))
+                    os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt'))
             else:
                 kinshipmatricies.append(os.path.join(self.scratch, 'output',
-                    kinship_base_prefix + '_' + pheno + '.cXX.txt'))
+                    self.kinship_base_prefix + '_' + pheno + '.cXX.txt'))
 
         logging.info("Kinship matrices generation done")
-
 
         return kinshipmatricies
 
@@ -159,9 +158,13 @@ class AssociationUtils:
 
         return True
 
-    def run_gemma_assoc_uni(self, kinship, famfiles, phenotypes, plink_prefix):
+    def run_gemma_assoc_uni(self, kinship_files, famfiles, phenotypes, plink_prefix):
+        self.assoc_base_file_prefix = 'gemma_assoc'
+        gemma_stats = {}
+        gemma_files = {}
         for pheno in phenotypes:
             famfile = os.path.join(self.fam_directory, pheno + '.fam')
+            kinship = os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt')
 
             if famfile not in famfiles:
                 raise FileNotFoundError(f'{famfile} does not exist in famfile list: {str(famfiles)}')
@@ -169,7 +172,38 @@ class AssociationUtils:
             if not self._stage_fam_file(famfile):
                 raise FileNotFoundError(f'Fam file: {famfile} does not exist.')
 
-        return 0
+            if kinship not in kinship_files:
+                raise FileNotFoundError(f'Kinship file: {kinship} does not exist.')
+
+
+            assoc_args = ['-bfile', plink_prefix, '-k', kinship, '-lmm', '1', '-o',
+                          self.assoc_base_file_prefix + '_' + pheno]
+            assoc_cmd = ['gemma']
+
+            for arg in assoc_args:
+                assoc_cmd.append(arg)
+
+            try:
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc.wait()
+                out, err = proc.communicate()
+            except Exception as e:
+                logging.error('Unspecified subprocess execution error' + str(err.decode('UTF-8')))
+                raise ChildProcessError(e)
+
+            decode_out = out.decode('utf-8')
+            decode_out = decode_out.split('\n')
+            decode_out = self.process_gemma_out(decode_out)
+
+            gemma_stats[pheno] = decode_out
+            gemma_out_file = os.path.join(self.scratch, 'output',
+                                          self.assoc_base_file_prefix + '_' + pheno + '.assoc.txt')
+            gemma_files[pheno] = gemma_out_file
+
+            if not os.path.exists(gemma_out_file):
+                raise FileNotFoundError(f'GEMMA association output not found: {gemma_out_file}')
+
+        return gemma_files, gemma_stats
 
     def process_gemma_out(self, output):
         stats = {}
@@ -178,6 +212,17 @@ class AssociationUtils:
             if 'number of analyzed individuals' in line:
                 spline = line.split(' ')
                 stats['individuals'] = spline[6]
+
+            # pve estimate =
+            if 'pve estimate =' in line:
+                spline = line.split('=')
+                stats['pve'] = spline[1]
+
+            # se(pve) =
+            if 'se(pve)' in line:
+                spline = line.split('=')
+                stats['se_pve'] = spline[1]
+
         return stats
 
     def run_assoc_exp(self, params):
@@ -191,6 +236,4 @@ class AssociationUtils:
         else:
             raise NotImplementedError('Only univariate analysis are supported right now.')
 
-        stats = self.process_gemma_out(gemma_output)
-
-        return gemma, stats
+        return gemma, gemma_output

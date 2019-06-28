@@ -123,9 +123,14 @@ class GEMMA_GWASTest(unittest.TestCase):
             #'trait_matrix': '26322/28/1',
             #'model': 0
 
-            'workspace_name': 'rmr:narrative_1552612680986',
-            'variation': '/kb/module/test/sample_data/vcf/LFC_arabidopsis.vcf',
-            'trait_matrix': '26322/28/1',
+            #'workspace_name': 'rmr:narrative_1552612680986',
+            #'variation': '/kb/module/test/sample_data/vcf/LFC_arabidopsis.vcf',
+            #'trait_matrix': '26322/28/1',
+            #'model': 0
+
+            'workspace_name': 'rmr:narrative_1559592440406',
+            'variation': '29104/23/1',
+            'trait_matrix': '29104/12/1',
             'model': 0
         })
 
