@@ -128,7 +128,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             #'variation': '29104/23/1',
             #'trait_matrix': '29104/12/1',
             #'model': 0
-            
+
             'workspace_name': 'rmr:narrative_1559592440406',
             'variation': '29104/23/1',
             'trait_matrix': '29104/12/1',
