@@ -325,13 +325,14 @@ class AssociationUtils:
             plink_fam = os.path.join(self.scratch, plink_base_prefix+str(x)+'.fam')
 
             if not os.path.exists(plink_bed):
-                raise IOError('Plink bed doesn\'t exist')
+                print(f'\n{plink_prefixes}')
+                raise IOError(f"Plink bed doesn't exist: {plink_bed}")
 
             if not os.path.exists(plink_bim):
-                raise IOError('Plink bim doesn\'t exist')
+                raise IOError(f"Plink bim doesn't exist: {plink_bim}")
 
             if not os.path.exists(plink_fam):
-                raise IOError('Plink fam doesn\'t exist')
+                raise IOError(f"Plink fam doesn't exist: {plink_fam}")
 
         logging.info('Plink encoding finished')
 
@@ -396,9 +397,10 @@ class AssociationUtils:
             assoc_results = kinmatrix
 
             try:
-                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                #proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
                 proc.wait()
-                out, err = proc.communicate()
+                #out, err = proc.communicate()
 
                 if proc.returncode is -2:
                     # brent error
@@ -426,8 +428,9 @@ class AssociationUtils:
                 logging.error('Unspecified subprocess execution error' + str(proc))
                 exit(e)
 
-        decode_out = out.decode('utf-8')
-        decode_out = decode_out.split('\n')
+        #decode_out = out.decode('utf-8')
+        #decode_out = decode_out.split('\n')
+        decode_out = 'abcdef'
 
         if len(kinmatrix) is 1:
             logging.info('GEMMA univariate association analysis complete')
