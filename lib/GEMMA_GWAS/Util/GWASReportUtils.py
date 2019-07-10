@@ -289,8 +289,10 @@ class GWASReportUtils:
                     f.write(js_pheno_inputs[x] + "'];\n")
                 else:
                     f.write(js_pheno_inputs[x]+"', '")
-
-            f.write('var ind = ' + assoc_stats['individuals'] + ';\n')
+            try:
+                f.write('var ind = ' + assoc_stats['individuals'] + ';\n')
+            except KeyError:
+                pass
             f.close()
 
         assoc_obj = self._save_assoc_obj(params, assoc_results, assoc_details)
