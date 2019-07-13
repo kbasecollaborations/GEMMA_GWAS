@@ -16,7 +16,8 @@ RUN mkdir /kb/deps
 COPY ./deps /kb/deps
 ENV PATH=$PATH:/kb/module/deps/bin
 
-RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/testdata/AtPolyDB.zip
+# Old test data set
+# RUN curl -J -L https://easygwas.ethz.ch/down/dataset/download/1/ -o /kb/deps/testdata/AtPolyDB.zip
 
 # GEMMA tools
 #ARG gemmaurl=https://github.com/genetics-statistics/GEMMA/releases/download/0.98.1/gemma-0.98.1-linux-static.gz

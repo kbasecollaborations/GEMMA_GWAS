@@ -4,32 +4,22 @@ import operator
 import shutil
 import csv
 import logging
+import hashlib
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
 
 
 class AssociationUtils:
-    def __init__(self, config, varfiles):
+    def __init__(self, config, varfile):
         self.dfu = DataFileUtil(config['SDK_CALLBACK_URL'])
         #self.wsc = Workspace(config['SDK_CALLBACK_URL'])
         self.wsc = Workspace("https://appdev.kbase.us/services/ws")
         self.scratch = config["scratch"]
-        self._process_varfiles(varfiles)
+        self._process_varfile(varfile)
 
-    def _process_varfiles(self, files):
-        if not isinstance(files, (list,)):
-            # get extension from single file
-            file_name, file_ext = os.path.splitext(files)
-            if file_ext == '.vcf':
-                if os.path.exists(files):
-                    self.varfile = files
-                else:
-                    raise IOError('Variation file provided does not exist or is not readable.')
-            else:
-                raise ValueError('Only supporting VCF variation as input right now.')
-        else:
-            raise ValueError('Not accepting list of files as variation input yet!')
+    def _process_varfile(self, file):
+        self.varfile = file
 
     def _get_iids(self, col_attr_map_ref):
         iids = {}
@@ -84,7 +74,8 @@ class AssociationUtils:
             for x in range(0, len(phenotypeids)):
                 phenotype_files[x] = {}
 
-                phenotype_files[x]['id'] = phenotypeids[x]
+                phenotype_files[x]['pheno'] = {}
+                phenotype_files[x]['pheno']['id'] = phenotypeids[x]
                 phenotypevals = trait_matrix_obj['data']['data']['values'][x]
 
                 for fid in fids:
@@ -121,7 +112,9 @@ class AssociationUtils:
                             f.write(fids[k] + " NA " + str(phenotypevals[k]) + "\n")
                         """
                     f.close()
-                    phenotype_files[x]['file'] = single_pheno_file_path
+                    phenotype_files[x]['pheno']['file'] = single_pheno_file_path
+                    phenotype_files[x]['pheno']['md5'] = \
+                        hashlib.md5(open(single_pheno_file_path, 'rb').read()).hexdigest()
 
             logging.info("Finished trait matrix parsing.")
 
@@ -241,7 +234,9 @@ class AssociationUtils:
                 except Exception as e:
                     exit(e)
 
-                plink_prefixes[x]['kinship'] = os.path.join(self.scratch, 'output', kinship_base_prefix+str(x)+'.cXX.txt')
+                plink_prefixes[x]['kinship']['file'] = os.path.join(self.scratch, 'output', kinship_base_prefix+str(x)+'.cXX.txt')
+                plink_prefixes[x]['kinship']['md5'] = \
+                    hashlib.md5(open(plink_prefixes[x]['kinship']['file'], 'rb').read()).hexdigest()
 
                 if not os.path.exists(plink_prefixes[x]['kinship']):
                     exit("Kinship file does not exist: "+plink_prefixes[x]['kinship'])
@@ -319,7 +314,7 @@ class AssociationUtils:
             except Exception as e:
                 exit(e)
 
-            phenotypes[x]['plink'] = plink_base_prefix+str(x)
+            phenotypes[x]['plink']['prefix'] = plink_base_prefix+str(x)
             plink_bed = os.path.join(self.scratch, plink_base_prefix+str(x)+'.bed')
             plink_bim = os.path.join(self.scratch, plink_base_prefix+str(x)+'.bim')
             plink_fam = os.path.join(self.scratch, plink_base_prefix+str(x)+'.fam')
@@ -333,6 +328,10 @@ class AssociationUtils:
 
             if not os.path.exists(plink_fam):
                 raise IOError(f"Plink fam doesn't exist: {plink_fam}")
+
+            phenotypes[x]['plink']['bed_md5'] = hashlib.md5(open(plink_bed, 'rb').read()).hexdigest()
+            phenotypes[x]['plink']['bim_md5'] = hashlib.md5(open(plink_bim, 'rb').read()).hexdigest()
+            phenotypes[x]['plink']['fam_md5'] = hashlib.md5(open(plink_fam, 'rb').read()).hexdigest()
 
         logging.info('Plink encoding finished')
 
@@ -405,8 +404,8 @@ class AssociationUtils:
                 if proc.returncode is -2:
                     # brent error
                     newkinship = self._mk_standardized_kinship(kinmatrix[x])
-                    new_assoc_cmd = ['/usr/bin/time', '-v', 'gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship, '-lmm', '4','-debug', '-o',
-                                     assoc_base_file_prefix + kinmatrix[x]['id']]
+                    new_assoc_cmd = ['/usr/bin/time', '-v', 'gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship,
+                                     '-lmm', '4','-debug', '-o', assoc_base_file_prefix + kinmatrix[x]['id']]
 
                     try:
                         newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
@@ -511,5 +510,7 @@ class AssociationUtils:
             gemma, gemma_output = self.run_gemma_assoc_multi(kinmatrix)
 
         stats = self.process_gemma_out(gemma_output)
+
+        exit(gemma)
 
         return gemma, stats
