@@ -5,6 +5,7 @@ import shutil
 import csv
 import logging
 import hashlib
+from pprint import pprint as pp
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
@@ -13,7 +14,6 @@ from installed_clients.WorkspaceClient import Workspace
 class AssociationUtils:
     def __init__(self, config, varfile):
         self.dfu = DataFileUtil(config['SDK_CALLBACK_URL'])
-        #self.wsc = Workspace(config['SDK_CALLBACK_URL'])
         self.wsc = Workspace("https://appdev.kbase.us/services/ws")
         self.scratch = config["scratch"]
         self._process_varfile(varfile)
@@ -226,7 +226,9 @@ class AssociationUtils:
             logging.info("Generating kinship matrices")
 
             for x in range(0, len(plink_prefixes)):
-                kin_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', plink_prefixes[x]['plink'], '-gk', '1', '-o', kinship_base_prefix+str(x)]
+                plink_prefixes[x]['kinship'] = {}
+                kin_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', plink_prefixes[x]['plink']['prefix'], '-gk',
+                           '1', '-o', kinship_base_prefix+str(x)]
 
                 try:
                     proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
@@ -234,12 +236,13 @@ class AssociationUtils:
                 except Exception as e:
                     exit(e)
 
-                plink_prefixes[x]['kinship']['file'] = os.path.join(self.scratch, 'output', kinship_base_prefix+str(x)+'.cXX.txt')
+                plink_prefixes[x]['kinship']['file'] = os.path.join(self.scratch, 'output',
+                                                                    kinship_base_prefix+str(x)+'.cXX.txt')
                 plink_prefixes[x]['kinship']['md5'] = \
                     hashlib.md5(open(plink_prefixes[x]['kinship']['file'], 'rb').read()).hexdigest()
 
-                if not os.path.exists(plink_prefixes[x]['kinship']):
-                    exit("Kinship file does not exist: "+plink_prefixes[x]['kinship'])
+                if not os.path.exists(plink_prefixes[x]['kinship']['file']):
+                    exit("Kinship file does not exist: "+plink_prefixes[x]['kinship']['file'])
 
             logging.info("Kinship matrices generation done")
 
@@ -247,7 +250,8 @@ class AssociationUtils:
 
     def _mk_standardized_kinship(self, assoc_info):
         logging.info("Generating kinship matrix.")
-        kinship_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', os.path.join(self.scratch, assoc_info['plink']), '-gk', '2', '-o', str(assoc_info['id'])]
+        kinship_cmd = ['/usr/bin/time', '-v', 'gemma', '-bfile', os.path.join(self.scratch, assoc_info['plink']),
+                       '-gk', '2', '-o', str(assoc_info['id'])]
         kinship_file = os.path.join(self.scratch, 'output', str(assoc_info['id'])+'.sXX.txt')
 
         try:
@@ -293,10 +297,11 @@ class AssociationUtils:
         logging.info('Encoding with plink.')
 
         for x in range(0, len(phenotypes)):
+            phenotypes[x]['plink'] = {}
             plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['pheno']['file'],
                          '--allow-no-sex', '--allow-extra-chr', '--output-chr', 'chr26']
 
-            cc_flag = self._check_pheno_case_control(phenotypes[x]['file'])
+            cc_flag = self._check_pheno_case_control(phenotypes[x]['pheno']['file'])
             if cc_flag:
                 plinkvars.append(cc_flag)
 
@@ -386,14 +391,15 @@ class AssociationUtils:
 
         for x in range(0, len(kinmatrix)):
             assoc_base_file_prefix = 'gemma_assoc'
-            assoc_args = ['-bfile', kinmatrix[x]['plink'], '-k', kinmatrix[x]['kinship'], '-lmm', '4', '-debug', '-o',
-                          assoc_base_file_prefix + kinmatrix[x]['id']]
+            assoc_args = ['-bfile', kinmatrix[x]['plink']['prefix'], '-k', kinmatrix[x]['kinship']['file'], '-lmm', '4',
+                          '-o', assoc_base_file_prefix + kinmatrix[x]['pheno']['id']]
             assoc_cmd = ['/usr/bin/time', '-v', 'gemma']
 
             for arg in assoc_args:
                 assoc_cmd.append(arg)
 
             assoc_results = kinmatrix
+            assoc_results[x]['gemma'] = {}
 
             try:
                 #proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
@@ -404,8 +410,9 @@ class AssociationUtils:
                 if proc.returncode is -2:
                     # brent error
                     newkinship = self._mk_standardized_kinship(kinmatrix[x])
-                    new_assoc_cmd = ['/usr/bin/time', '-v', 'gemma','-bfile', kinmatrix[x]['plink'], '-k', newkinship,
-                                     '-lmm', '4','-debug', '-o', assoc_base_file_prefix + kinmatrix[x]['id']]
+                    new_assoc_cmd = ['/usr/bin/time', '-v', 'gemma','-bfile', kinmatrix[x]['plink']['prefix'],
+                                     '-k', newkinship, '-lmm', '4','-debug', '-o',
+                                     assoc_base_file_prefix + kinmatrix[x]['pheno']['id']]
 
                     try:
                         newproc = subprocess.Popen(new_assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
@@ -415,14 +422,19 @@ class AssociationUtils:
                         exit(e)
 
                     if not newproc.returncode is -2:
-                        assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output', assoc_base_file_prefix +
-                                                                 kinmatrix[x]['id']+'.assoc.txt')
+                        assoc_results[x]['gemma']['file'] = os.path.join(self.scratch, 'output',
+                                                                         assoc_base_file_prefix +
+                                                                 kinmatrix[x]['pheno']['id']+'.assoc.txt')
+                        assoc_results[x]['gemma']['md5'] = \
+                            hashlib.md5(open(assoc_results[x]['gemma']['file'], 'rb').read()).hexdigest()
                     else:
                         logging.error('Unspecified subprocess execution error' + str(newproc))
                         raise IOError('GEMMA Association failed.')
                 else:
-                    assoc_results[x]['gemma'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
-                                                             kinmatrix[x]['id']+'.assoc.txt')
+                    assoc_results[x]['gemma']['file'] = os.path.join(self.scratch, 'output',assoc_base_file_prefix +
+                                                             kinmatrix[x]['pheno']['id']+'.assoc.txt')
+                    assoc_results[x]['gemma']['md5'] = \
+                        hashlib.md5(open(assoc_results[x]['gemma']['file'], 'rb').read()).hexdigest()
             except Exception as e:
                 logging.error('Unspecified subprocess execution error' + str(proc))
                 exit(e)
@@ -511,6 +523,6 @@ class AssociationUtils:
 
         stats = self.process_gemma_out(gemma_output)
 
-        exit(gemma)
+        pp(gemma)
 
         return gemma, stats
