@@ -88,7 +88,7 @@ class GEMMA_GWAS:
         variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
         variation_info = variations.get_variation_as_vcf({
             'variation_ref': params['variation'],
-            'filename': os.path.join(self.config['scratch'], 'variation.vcf')
+            'filename': os.path.join(self.config['scratch'], 'variation.vcf.gz')
         })
         logging.info("Download variation end")
 
