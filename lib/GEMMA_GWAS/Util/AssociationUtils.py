@@ -298,8 +298,10 @@ class AssociationUtils:
 
         for x in range(0, len(phenotypes)):
             phenotypes[x]['plink'] = {}
+            #plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['pheno']['file'],
+            #             '--allow-no-sex', '--allow-extra-chr', '--output-chr', 'chr26']
             plinkvars = ['--make-bed', '--vcf', self.varfile, '--pheno', phenotypes[x]['pheno']['file'],
-                         '--allow-no-sex', '--allow-extra-chr', '--output-chr', 'chr26']
+                         '--allow-extra-chr']
 
             cc_flag = self._check_pheno_case_control(phenotypes[x]['pheno']['file'])
             if cc_flag:
