@@ -79,7 +79,7 @@ class GEMMA_GWASTest(unittest.TestCase):
         # otherwise CalledProcessError is raised
         self.assertEqual(gemma, 0)
         FNULL.close()
-    
+
     def test_SNP2GENE(self):
         shutil.copy('/kb/module/test/sample_data/snpdata-example.tsv', os.path.join(self.scratch, 'snpdata-example.tsv'))
         gwas_results = os.path.join(self.scratch, 'snpdata-example.tsv')
@@ -118,10 +118,18 @@ class GEMMA_GWASTest(unittest.TestCase):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Single trait testing narrative
             # Univariate analysis
-            'workspace_name': 'rmr:narrative_1552612680986',
-            'variation': '26322/20/1',
-            'trait_matrix': '26322/28/1',
-            'model': 0
+
+            # Arabidopsis T. FLC GWAS
+            #'workspace_name': 'rmr:narrative_1552612680986',
+            #'variation': '26322/20/1',
+            #'trait_matrix': '26322/28/1',
+            #'model': 0
+
+            'workspace_name': 'rmr:narrative_1559592440406',
+            'variation': '29104/39/1',
+            'trait_matrix': '29104/12/1',
+            'model': 0,
+            'assoc_obj_name': 'part3_1000vcf_test_gwas'
         })
 
     """

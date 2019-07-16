@@ -94,6 +94,7 @@ class GEMMA_GWAS:
                 'variation_ref': params['variation'],
                 'filename': os.path.join(self.config['scratch'], 'variation.vcf')
             })
+            
         logging.info("Download variation end")
 
         # Run association tests

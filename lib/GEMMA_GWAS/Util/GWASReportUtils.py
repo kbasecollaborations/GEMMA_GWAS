@@ -26,7 +26,7 @@ class GWASReportUtils:
             exit(trait_info['id']+" has an empty gemma element.")
 
         if not trait_info['gemma'] == 'fail':
-            tsv_unfiltered = csv.reader(open(trait_info['gemma'], 'r', newline=''), delimiter='\t')
+            tsv_unfiltered = csv.reader(open(trait_info['gemma']['file'], 'r', newline=''), delimiter='\t')
             # skip old csv headers
             next(tsv_unfiltered, None)
 
@@ -51,7 +51,7 @@ class GWASReportUtils:
             tsv_filtered_headers = "SNP\tCHR\tBP\tP\tPOS\n"
 
             if model is 0:
-                filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['id'])+'.tsv')
+                filtered_tsv_file = os.path.join(self.htmldir, 'snpdata'+str(trait_info['pheno']['id'])+'.tsv')
             elif model is 1:
                 filtered_tsv_file = os.path.join(self.htmldir, 'snpdata-multi.tsv')
             else:
@@ -77,6 +77,12 @@ class GWASReportUtils:
             for id in contig_ids:
                 contig_baselengths[id] = prev_len
                 prev_len += contigs[id]['length']
+
+            list_contigs = contig_baselengths.keys()
+            list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
+            list_contigs = [x.replace('r0', 'r') for x in list_contigs]
+
+            fail_safe_contig_baselength = contig_baselengths[list_contigs[-1]]
 
             with open(filtered_tsv_file,'w') as tsv_filtered:
                 tsv_filtered.write(tsv_filtered_headers)
@@ -108,7 +114,8 @@ class GWASReportUtils:
                                                     "Contig base length dictionary: " + str(contig_baselengths))
                                                 logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
                                                               str(type(snp[0])))
-                                                raise KeyError(e)
+                                                globalbase = fail_safe_contig_baselength
+                                                #raise KeyError(e)
 
                         if k < assoc_entry_limit:
                             if snp[1] is '.':
@@ -146,7 +153,8 @@ class GWASReportUtils:
                                                     "Contig base length dictionary: " + str(contig_baselengths))
                                                 logging.error("Snp with KeyError: " + str(snp[0]) + "of type: " +
                                                               str(type(snp[0])))
-                                                raise KeyError(e)
+                                                globalbase = fail_safe_contig_baselength
+                                                # raise KeyError(e)
 
                         if snp[1] is '.':
                             if str(snp[0]).startswith('C'):
@@ -200,7 +208,7 @@ class GWASReportUtils:
         if params['model'] is 0:
             for x in range(0, len(assoc_details_list)):
                 assoc_details_entry = {
-                    'traits': assoc_results[x]['id'],
+                    'traits': assoc_results[x]['pheno']['id'],
                     'association_results': assoc_details_list[x]
                 }
                 assoc_details.append(assoc_details_entry)
@@ -250,12 +258,12 @@ class GWASReportUtils:
                 if assoc_details_entry:
                     assoc_details.append(assoc_details_entry)
                 else:
-                    failed_phenos.append(assoc_results[x]['id'])
+                    failed_phenos.append(assoc_results[x]['pheno']['id'])
                 html_info.append(html_info_entry)
-                js_pheno_inputs.append('snpdata'+str(assoc_results[x]['id'])+'.tsv')
+                js_pheno_inputs.append('snpdata'+str(assoc_results[x]['pheno']['id'])+'.tsv')
                 file_links.append({
-                    'path': os.path.join(self.htmldir,'snpdata'+str(assoc_results[x]['id'])+'.tsv'),
-                    'name': 'GEMMA Association results for phenotype '+str(assoc_results[x]['id'])+'.'
+                    'path': os.path.join(self.htmldir,'snpdata'+str(assoc_results[x]['pheno']['id'])+'.tsv'),
+                    'name': 'GEMMA Association results for phenotype '+str(assoc_results[x]['pheno']['id'])+'.'
                 })
         elif params['model'] is 1:
             html_info_entry, assoc_details_entry = self._mk_html_report(assoc_results['multi'],
@@ -281,8 +289,10 @@ class GWASReportUtils:
                     f.write(js_pheno_inputs[x] + "'];\n")
                 else:
                     f.write(js_pheno_inputs[x]+"', '")
-
-            f.write('var ind = ' + assoc_stats['individuals'] + ';\n')
+            try:
+                f.write('var ind = ' + assoc_stats['individuals'] + ';\n')
+            except KeyError:
+                f.write('var ind = 917;\n')
             f.close()
 
         assoc_obj = self._save_assoc_obj(params, assoc_results, assoc_details)

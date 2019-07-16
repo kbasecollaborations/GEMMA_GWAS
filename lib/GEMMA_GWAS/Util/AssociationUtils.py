@@ -6,6 +6,7 @@ import csv
 import logging
 from pprint import pprint as pp
 import pandas as pd
+import hashlib
 
 from installed_clients.DataFileUtilClient import DataFileUtil
 from installed_clients.WorkspaceClient import Workspace
@@ -56,6 +57,7 @@ class AssociationUtils:
 
         if not os.path.exists(plink_bim):
             raise FileNotFoundError('Plink bim doesn\'t exist')
+
 
         if os.path.exists(plink_fam):
             self.plink_fam_template = shutil.move(plink_fam, os.path.join(self.scratch, 'plink_fam_template.fam'))
@@ -174,16 +176,17 @@ class AssociationUtils:
 
             if kinship not in kinship_files:
                 raise FileNotFoundError(f'Kinship file: {kinship} does not exist.')
-
-
+                
             assoc_args = ['-bfile', plink_prefix, '-k', kinship, '-lmm', '1', '-o',
                           self.assoc_base_file_prefix + '_' + pheno]
             assoc_cmd = ['gemma']
 
             for arg in assoc_args:
                 assoc_cmd.append(arg)
+          
             try:
-                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                #proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
                 proc.wait()
                 out, err = proc.communicate()
             except Exception as e:
