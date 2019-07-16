@@ -182,7 +182,6 @@ class AssociationUtils:
 
             for arg in assoc_args:
                 assoc_cmd.append(arg)
-
             try:
                 proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
                 proc.wait()
