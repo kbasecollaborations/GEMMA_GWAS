@@ -121,8 +121,8 @@ class GEMMA_GWASTest(unittest.TestCase):
 
             # Arabidopsis T. FLC GWAS
             'workspace_name': 'rmr:narrative_1552612680986',
-            'variation': '/kb/module/test/sample_data/vcf/LFC_arabidopsis.vcf',
-            #'variation': '26322/20/1',
+            #'variation': '/kb/module/test/sample_data/vcf/LFC_arabidopsis.vcf',
+            'variation': '26322/20/1',
             'trait_matrix': '26322/28/1',
             'model': 0
 

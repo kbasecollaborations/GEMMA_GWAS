@@ -13,7 +13,7 @@ from installed_clients.WorkspaceClient import Workspace
 
 
 class AssociationUtils:
-    def __init__(self, config, varfiles, plink_prefix = 'plink_vcf'):
+    def __init__(self, config, varfile, plink_prefix = 'plink_vcf'):
         self.dfu = DataFileUtil(config['SDK_CALLBACK_URL'])
         # TODO: input variable for workspace url
         self.wsc = Workspace("https://appdev.kbase.us/services/ws")
@@ -23,21 +23,17 @@ class AssociationUtils:
         self._process_varfiles(varfiles)
 
     def _process_varfiles(self, files):
-        if not isinstance(files, (list,)):
-            # get extension from single file
-            file_name, file_ext = os.path.splitext(files)
-            if file_ext == '.vcf':
-                if os.path.exists(files):
-                    self.varfile = files
-                    self.state['vcf'] = {}
-                    self.state['vcf']['file'] = self.varfile
-                    self.state['vcf']['md5'] = hashlib.md5(open(self.varfile, 'rb').read()).hexdigest()
-                else:
-                    raise IOError('Variation file provided does not exist or is not readable.')
+        file_name, file_ext = os.path.splitext(files)
+        if file_ext == '.vcf' or file_ext == '.vcf.gz':
+            if os.path.exists(files):
+                self.varfile = files
+                self.state['vcf'] = {}
+                self.state['vcf']['file'] = self.varfile
+                self.state['vcf']['md5'] = hashlib.md5(open(self.varfile, 'rb').read()).hexdigest()
             else:
-                raise ValueError('Only supporting VCF variation as input right now.')
+                raise IOError('Variation file provided does not exist or is not readable.')
         else:
-            raise ValueError('Not accepting list of files as variation input yet!')
+            raise ValueError('Only supporting VCF variation as input right now.')
 
     def _mk_plink_bin_uni(self):
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-no-sex','--allow-extra-chr', '--out', self.plink_pref]
