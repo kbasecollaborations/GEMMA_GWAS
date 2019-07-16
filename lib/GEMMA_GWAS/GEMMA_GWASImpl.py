@@ -69,6 +69,7 @@ class GEMMA_GWAS:
         # return variables are: output
         #BEGIN run_gemma_association
 
+        # TODO: add this segment to InputUtils
         if 'variation' not in params:
             raise ValueError('Variation KBase reference not set.')
         if 'model' not in params:
@@ -85,11 +86,15 @@ class GEMMA_GWAS:
 
         # Get Variation file
         logging.info("Downloading variation data from shock.")
-        variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
-        variation_info = variations.get_variation_as_vcf({
-            'variation_ref': params['variation'],
-            'filename': os.path.join(self.config['scratch'], 'variation.vcf.gz')
-        })
+        if os.path.exists(params['variation']):
+            variation_info = { 'path': params['variation'] }
+        else:
+            variations = VariationUtil(self.config['SDK_CALLBACK_URL'])
+            variation_info = variations.get_variation_as_vcf({
+                'variation_ref': params['variation'],
+                'filename': os.path.join(self.config['scratch'], 'variation.vcf')
+            })
+            
         logging.info("Download variation end")
 
         # Run association tests
