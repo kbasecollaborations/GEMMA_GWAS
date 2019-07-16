@@ -20,13 +20,13 @@ class AssociationUtils:
         self.scratch = config["scratch"]
         self.plink_pref = plink_prefix
         self.state = {}
-        self._process_varfiles(varfiles)
+        self._process_varfiles(varfile)
 
-    def _process_varfiles(self, files):
-        file_name, file_ext = os.path.splitext(files)
-        if file_ext == '.vcf' or file_ext == '.vcf.gz':
-            if os.path.exists(files):
-                self.varfile = files
+    def _process_varfiles(self, file):
+        file_name, file_ext = os.path.splitext(file)
+        if file_ext == '.vcf' or file_ext == '.gz':
+            if os.path.exists(file):
+                self.varfile = file
                 self.state['vcf'] = {}
                 self.state['vcf']['file'] = self.varfile
                 self.state['vcf']['md5'] = hashlib.md5(open(self.varfile, 'rb').read()).hexdigest()
