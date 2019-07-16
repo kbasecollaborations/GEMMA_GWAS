@@ -19,6 +19,7 @@ class AssociationUtils:
         self.wsc = Workspace("https://appdev.kbase.us/services/ws")
         self.scratch = config["scratch"]
         self.plink_pref = plink_prefix
+        self.state = {}
         self._process_varfiles(varfiles)
 
     def _process_varfiles(self, files):
@@ -28,6 +29,9 @@ class AssociationUtils:
             if file_ext == '.vcf':
                 if os.path.exists(files):
                     self.varfile = files
+                    self.state['vcf'] = {}
+                    self.state['vcf']['file'] = self.varfile
+                    self.state['vcf']['md5'] = hashlib.md5(open(self.varfile, 'rb').read()).hexdigest()
                 else:
                     raise IOError('Variation file provided does not exist or is not readable.')
             else:
@@ -52,15 +56,26 @@ class AssociationUtils:
         plink_bim = os.path.join(self.scratch, self.plink_pref + '.bim')
         plink_fam = os.path.join(self.scratch, self.plink_pref + '.fam')
 
+        self.state['plink'], self.state['plink']['plink_bed'], self.state['plink']['plink_bim'], \
+            self.state['plink']['plink_fam'] = {}, {}, {}, {}
+
         if not os.path.exists(plink_bed):
             raise FileNotFoundError('Plink bed doesn\'t exist')
+        else:
+            self.state['plink']['plink_bed']['file'] = plink_bed
+            self.state['plink']['plink_bed']['md5'] = hashlib.md5(open(plink_bed, 'rb').read()).hexdigest()
 
         if not os.path.exists(plink_bim):
             raise FileNotFoundError('Plink bim doesn\'t exist')
+        else:
+            self.state['plink']['plink_bim']['file'] = plink_bim
+            self.state['plink']['plink_bim']['md5'] = hashlib.md5(open(plink_bim, 'rb').read()).hexdigest()
 
 
         if os.path.exists(plink_fam):
             self.plink_fam_template = shutil.move(plink_fam, os.path.join(self.scratch, 'plink_fam_template.fam'))
+            self.state['plink']['plink_fam']['file'] = self.plink_fam_template
+            self.state['plink']['plink_fam']['md5'] = hashlib.md5(open(self.plink_fam_template, 'rb').read()).hexdigest()
         else:
             raise FileNotFoundError('Plink fam doesn\'t exist')
 
@@ -86,6 +101,7 @@ class AssociationUtils:
                 for x in range(0, len(fids)):
                     phenodict[fids[x]] = values[x]
                 phenosdict[pheno] = phenodict
+
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
                              ').  Supported types is KBaseMatrices.TraitMatrix')
@@ -113,6 +129,9 @@ class AssociationUtils:
             new_fam_path = os.path.join(self.fam_directory, pheno + '.fam')
             new_fam.fillna(value='NA', inplace=True)
             new_fam.to_csv(new_fam_path, sep=' ', header=None, index=False)
+            self.state[pheno], self.state[pheno]['fam'] = {}, {}
+            self.state[pheno]['fam']['file'] = new_fam_path
+            self.state[pheno]['fam']['md5'] = hashlib.md5(open(new_fam_path, 'rb').read()).hexdigest()
             fam_files.append(new_fam_path)
 
         return fam_files
@@ -141,7 +160,13 @@ class AssociationUtils:
                 logging.error('Centered kinship generation failed')
                 raise ChildProcessError(e)
 
-            if not os.path.exists(os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt')):
+            kinship_file = os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt')
+
+            self.state[pheno]['kinship'] = {}
+            self.state[pheno]['kinship']['file'] = kinship_file
+            self.state[pheno]['kinship']['md5'] = hashlib.md5(open(kinship_file, 'rb').read()).hexdigest()
+
+            if not os.path.exists(kinship_file):
                 raise FileNotFoundError("Kinship file does not exist: " +
                     os.path.join(self.scratch, 'output', self.kinship_base_prefix + '_' + pheno + '.cXX.txt'))
             else:
@@ -185,8 +210,7 @@ class AssociationUtils:
                 assoc_cmd.append(arg)
           
             try:
-                #proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
-                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch)
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
                 proc.wait()
                 out, err = proc.communicate()
             except Exception as e:
@@ -201,6 +225,11 @@ class AssociationUtils:
             gemma_out_file = os.path.join(self.scratch, 'output',
                                           self.assoc_base_file_prefix + '_' + pheno + '.assoc.txt')
             gemma_files[pheno] = gemma_out_file
+
+            self.state[pheno]['gemma'] = {}
+            self.state[pheno]['gemma']['file'] = gemma_out_file
+            self.state[pheno]['gemma']['md5'] = hashlib.md5(open(gemma_out_file, 'rb').read()).hexdigest()
+            self.state[pheno]['gemma']['stats'] = decode_out
 
             if not os.path.exists(gemma_out_file):
                 raise FileNotFoundError(f'GEMMA association output not found: {gemma_out_file}')
@@ -238,4 +267,4 @@ class AssociationUtils:
         else:
             raise NotImplementedError('Only univariate analysis are supported right now.')
 
-        return gemma, gemma_output
+        return self.state

@@ -99,11 +99,11 @@ class GEMMA_GWAS:
 
         # Run association tests
         associations = AssociationUtils(self.config, variation_info['path'])
-        assoc_file, assoc_stats = associations.run_assoc_exp(params)
+        assoc_info = associations.run_assoc_exp(params)
 
         # Generate association report
         assoc_report = GWASReportUtils(self.config)
-        report_obj = assoc_report.mk_output(params, assoc_file, assoc_stats)
+        report_obj = assoc_report.mk_output(params, assoc_info)
 
         # Send report
         report_client = KBaseReport(self.config['SDK_CALLBACK_URL'])
