@@ -120,7 +120,7 @@ class AssociationUtils:
             # pheno is the phenotype name
             # values is a dictionary with keys of sampleid and values of phenotypic value
             for sample, value in values.items():
-                new_fam.loc[new_fam['fid'] == int(sample)] = sample, sample, 0, 0, 0, value
+                new_fam.loc[new_fam['fid'] == sample] = sample, sample, 0, 0, 0, value
 
             new_fam_path = os.path.join(self.fam_directory, pheno + '.fam')
             new_fam.fillna(value='NA', inplace=True)
