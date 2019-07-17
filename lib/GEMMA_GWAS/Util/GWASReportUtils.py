@@ -255,6 +255,31 @@ class GWASReportUtils:
 
         return file_links
 
+    def create_html_outputs(self):
+        phenojs = 'var inputs = ['
+        i = 0
+
+        for pheno in self.state:
+            if i == 0:
+                phenojs += '"' + os.path.basename(self.state[pheno]['gemma']['filtered_file']) + '"'
+            else:
+                phenojs += ',"' + os.path.basename(self.state[pheno]['gemma']['filtered_file']) + '"'
+            i += 1
+
+        phenojs += '];'
+
+        with open(os.path.join(self.htmldir, 'pheno.js'), 'w') as jsf:
+            jsf.write(phenojs)
+            jsf.close()
+
+        html_dir = [{
+            'path': self.htmldir,
+            'name': "index.html",
+            'description': 'Manhattan plot of GEMMA GWAS association tests'
+        }]
+
+        return html_dir
+
     def mk_output(self, params, assoc_info):
         plink_info = assoc_info.pop('plink', None)
 
@@ -264,18 +289,12 @@ class GWASReportUtils:
         self.filter_gemma_results(assoc_info)
         obj_ref = self.save_assoc_obj(params)
 
-        html_info = [{
-            'path': self.htmldir,
-            'name': "index.html",
-            'description': 'Manhattan plot of GEMMA GWAS association tests'
-        }]
-
         reportobj = {
             'message': self.create_report_msg(plink_info, vcf_info),
             'objects_created': [{'ref': obj_ref, 'description': 'Association GWAS object from GEMMA algorithm.'}],
             'direct_html': None,
             'direct_html_link_index': 0,
-            'html_links': html_info,
+            'html_links': self.create_html_outputs(),
             'file_links': self.create_file_links(),
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']

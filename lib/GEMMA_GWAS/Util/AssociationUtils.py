@@ -149,9 +149,9 @@ class AssociationUtils:
             self._stage_fam_file(famfile)
 
             try:
-                proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc = subprocess.Popen(kin_cmd, cwd=self.scratch)
                 proc.wait()
-                out, err = proc.communicate()
+                #out, err = proc.communicate()
             except Exception as e:
                 logging.error('Centered kinship generation failed')
                 raise ChildProcessError(e)
