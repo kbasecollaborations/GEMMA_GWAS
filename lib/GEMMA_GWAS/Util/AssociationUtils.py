@@ -149,7 +149,7 @@ class AssociationUtils:
             self._stage_fam_file(famfile)
 
             try:
-                proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
                 # proc.wait()
                 out, err = proc.communicate()
             except Exception as e:
@@ -206,7 +206,7 @@ class AssociationUtils:
                 assoc_cmd.append(arg)
           
             try:
-                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE)
+                proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
                 # proc.wait()
                 out, err = proc.communicate()
             except Exception as e:
