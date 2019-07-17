@@ -43,8 +43,12 @@ class AssociationUtils:
             plinkcmd.append(arg)
 
         try:
-            proc = subprocess.Popen(plinkcmd, cwd=self.scratch)
-            proc.wait()
+            proc = subprocess.Popen(plinkcmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
+            # do not use proc.wait(): https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
+            # proc.wait()
+            # use proc.communicate() instead:
+            # and close_fds=True
+            out, err = proc.communicate()
         except Exception as e:
             exit(e)
 
@@ -150,7 +154,10 @@ class AssociationUtils:
 
             try:
                 proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
+                # do not use proc.wait() : https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
                 # proc.wait()
+                # use proc.communicate() instead:
+                # and close_fds=True
                 out, err = proc.communicate()
             except Exception as e:
                 logging.error('Centered kinship generation failed')
@@ -182,6 +189,7 @@ class AssociationUtils:
         return True
 
     def run_gemma_assoc_uni(self, kinship_files, famfiles, phenotypes, plink_prefix):
+        logging.info("Running GEMMA Univariate lmm association tests")
         self.assoc_base_file_prefix = 'gemma_assoc'
         gemma_stats = {}
         gemma_files = {}
@@ -207,7 +215,10 @@ class AssociationUtils:
           
             try:
                 proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
+                # do not use proc.wait() : https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
                 # proc.wait()
+                # use proc.communicate() instead:
+                # and close_fds=True
                 out, err = proc.communicate()
             except Exception as e:
                 logging.error('Unspecified subprocess execution error' + str(err.decode('UTF-8')))
@@ -230,6 +241,7 @@ class AssociationUtils:
             if not os.path.exists(gemma_out_file):
                 raise FileNotFoundError(f'GEMMA association output not found: {gemma_out_file}')
 
+        logging.info("GEMMA association testing done")
         return gemma_files, gemma_stats
 
     def process_gemma_out(self, output):

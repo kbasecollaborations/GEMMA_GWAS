@@ -30,7 +30,7 @@ class GEMMA_GWAS:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.2"
+    VERSION = "0.0.3"
     GIT_URL = "https://github.com/rroutsong/GEMMA_GWAS.git"
     GIT_COMMIT_HASH = "8050c6b68bc8248777501cc97ba4cde31a85aa74"
 
