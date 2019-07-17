@@ -49,9 +49,6 @@ class GWASReportUtils:
         elif chr in self.assembly_info['contigs'].keys():
             k = chr
             length = int(self.assembly_info['contigs'][k])
-        elif int(chr) in self.assembly_info['contigs'].keys():
-            k = str(chr)
-            length = int(self.assembly_info['contigs'][k])
         else:
             length = fail_safe_contig_baselength
 
