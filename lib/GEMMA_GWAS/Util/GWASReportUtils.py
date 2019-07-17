@@ -54,7 +54,7 @@ class GWASReportUtils:
 
         return length + row['POS']
 
-    def filter_gemma_results(self, assoc_info):
+    def filter_gemma_results(self, assoc_info, params):
         # gemma assoc results columns:
         # 0 - chr - chromosome numbers
         # 1 - rs - snp ids
@@ -71,6 +71,13 @@ class GWASReportUtils:
         # 12 - p_wald - p value from the Wald test
         # 13 - p_lrt - likelihood ratio test
         # 14 - p_score - p score test
+        if os.path.exists(params['variation']):
+            var_obj = self.dfu.get_objects({'object_refs': ['26322/20/1']})['data'][0]
+        else:
+            var_obj = self.dfu.get_objects({'object_refs': [params['variation']]})['data'][0]
+
+        genome_ref = var_obj['data']['genome_ref']
+
         self.state = assoc_info
 
         for pheno in assoc_info:
@@ -84,6 +91,18 @@ class GWASReportUtils:
                                         sep='\t', index=False)
             self.state[pheno]['gemma']['filtered_file'] = filtered_gemma_file
             self.state[pheno]['gemma']['filtered_md5'] = hashlib.md5(open(filtered_gemma_file, 'rb').read()).hexdigest()
+
+            annotated_file = self.snp2gene.annotate_gwas_results({
+                'genome_obj': genome_ref,
+                'gwas_result_file': filtered_gemma_file
+            })
+
+            if os.path.exists(annotated_file['snp_to_gene_list']):
+                self.state[pheno]['gemma']['annotated_file'] = annotated_file['snp_to_gene_list']
+                self.state[pheno]['gemma']['annotated_md5'] = \
+                    hashlib.md5(open(annotated_file['snp_to_gene_list'], 'rb').read()).hexdigest()
+            else:
+                raise FileNotFoundError(f'Annotated snp2gene results not found at: {annotated_file}')
 
         return True
 
@@ -111,6 +130,8 @@ class GWASReportUtils:
         for id in contig_ids:
             contig_baselengths[id] = prev_len
             prev_len += contigs[id]['length']
+
+        self.contig_baselengths = contig_baselengths
 
         assembly_info = {
             'ref': assembly_ref,
@@ -238,8 +259,8 @@ class GWASReportUtils:
                 'name': 'Raw GEMMA results'
             })
             file_links.append({
-                'path': self.state[pheno]['gemma']['filtered_file'],
-                'name': 'Top 5000 GEMMA results, sorted by Wald pvalue'
+                'path': self.state[pheno]['gemma']['annotated_file'],
+                'name': 'Top 5000 GEMMA results, sorted by Wald pvalue, annotated for genes'
             })
             file_links.append({
                 'path': self.state[pheno]['kinship']['file'],
@@ -258,12 +279,22 @@ class GWASReportUtils:
 
         for pheno in self.state:
             if i == 0:
-                phenojs += '"' + os.path.basename(self.state[pheno]['gemma']['filtered_file']) + '"'
+                phenojs += '"' + os.path.basename(self.state[pheno]['gemma']['annotated_file']) + '"'
             else:
-                phenojs += ',"' + os.path.basename(self.state[pheno]['gemma']['filtered_file']) + '"'
+                phenojs += ',"' + os.path.basename(self.state[pheno]['gemma']['annotated_file']) + '"'
             i += 1
 
-        phenojs += '];'
+        phenojs += '];\n'
+
+        phenojs += 'var contig_lengths = {\n'
+
+        list_contigs = self.assembly_info['contigs'].keys()
+        list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
+
+        for contig in list_contigs:
+            phenojs += '\t'+str(contig)+': '+str(self.contig_baselengths[contig])+',\n'
+
+        phenojs = phenojs[:-2] + '\n};'
 
         with open(os.path.join(self.htmldir, 'pheno.js'), 'w') as jsf:
             jsf.write(phenojs)
@@ -283,7 +314,7 @@ class GWASReportUtils:
         vcf_info = assoc_info.pop('vcf', None)
 
         self.assembly_info = self.get_assembly_info(params)
-        self.filter_gemma_results(assoc_info)
+        self.filter_gemma_results(assoc_info, params)
         obj_ref = self.save_assoc_obj(params)
 
         reportobj = {
@@ -296,5 +327,7 @@ class GWASReportUtils:
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']
         }
+
+        pp(self.state)
 
         return reportobj
