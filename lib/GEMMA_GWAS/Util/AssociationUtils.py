@@ -36,6 +36,7 @@ class AssociationUtils:
             raise ValueError('Only supporting VCF variation as input right now.')
 
     def _mk_plink_bin_uni(self):
+        logging.info("Generating PLINK binary files.")
         plinkvars = ['--make-bed', '--vcf', self.varfile, '--allow-no-sex','--allow-extra-chr', '--out', self.plink_pref]
         plinkcmd = ['plink']
 
@@ -45,7 +46,6 @@ class AssociationUtils:
         try:
             proc = subprocess.Popen(plinkcmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
             # do not use proc.wait(): https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
-            # proc.wait()
             # use proc.communicate() instead:
             # and close_fds=True
             out, err = proc.communicate()
@@ -79,6 +79,8 @@ class AssociationUtils:
         else:
             raise FileNotFoundError('Plink fam doesn\'t exist')
 
+        logging.info("Done making PLINK binaries")
+
         return self.plink_pref
 
     def _mk_phenos_from_trait_matrix_uni(self, trait_matrix_ref):
@@ -106,9 +108,12 @@ class AssociationUtils:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
                              ').  Supported types is KBaseMatrices.TraitMatrix')
 
+        logging.info('Done parsing trait matrix')
+
         return phenosdict
 
     def mk_fam_files_from_phenos(self, phenovals):
+        logging.info('Making .fam files from phenotype values')
         self.fam_directory = os.path.join(self.scratch, 'fams')
 
         if not os.path.isdir(self.fam_directory):
@@ -134,6 +139,7 @@ class AssociationUtils:
             self.state[pheno]['fam']['md5'] = hashlib.md5(open(new_fam_path, 'rb').read()).hexdigest()
             fam_files.append(new_fam_path)
 
+        logging.info('Done making fam files from phenotype values')
         return fam_files
 
     def mk_centered_kinship_uni(self, phenovalues, famfiles):
@@ -155,7 +161,6 @@ class AssociationUtils:
             try:
                 proc = subprocess.Popen(kin_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
                 # do not use proc.wait() : https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
-                # proc.wait()
                 # use proc.communicate() instead:
                 # and close_fds=True
                 out, err = proc.communicate()
@@ -216,7 +221,6 @@ class AssociationUtils:
             try:
                 proc = subprocess.Popen(assoc_cmd, cwd=self.scratch, stdout=subprocess.PIPE, close_fds=True)
                 # do not use proc.wait() : https://docs.python.org/3/library/subprocess.html#subprocess.Popen.wait
-                # proc.wait()
                 # use proc.communicate() instead:
                 # and close_fds=True
                 out, err = proc.communicate()
