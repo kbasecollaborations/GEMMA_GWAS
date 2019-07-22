@@ -24,19 +24,29 @@ class GWASReportUtils:
         shutil.copytree('/kb/module/lib/GEMMA_GWAS/Util/Report/mhplot/', os.path.join(self.scratch,'mhplot'))
         self.htmldir = os.path.join(self.scratch,'mhplot')
         self.assembly_info = ''
+        self.map = {}
 
     def find_contig_length(self, row):
         list_contigs = self.assembly_info['contigs'].keys()
         list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
-        list_contigs = [x.replace('r0', 'r') for x in list_contigs]
+        # list_contigs = [x.replace('r0', 'r') for x in list_contigs]
 
         fail_safe_contig_baselength = self.assembly_info['contigs'][list_contigs[-1]]
 
         chr = str(row['CHR'])
+        map = pd.read_csv(self.map['file'], sep='\t')
 
+        try:
+            contig = str(map.loc[map['assembly'] == chr]['plink'])
+            length = self.assembly_info['contigs'][contig] + row['POS']
+        except KeyError:
+            length = fail_safe_contig_baselength
+
+
+        """
         if ('Chr' + chr) in self.assembly_info['contigs'].keys():
             k = 'Chr' + chr
-            length = int(self.assembly_info['contigs'][k])
+            length = int(self.assembly_info['contigs'][contig]) + row['POS']
         elif ('chr' + chr) in self.assembly_info['contigs'].keys():
             k = 'chr' + chr
             length = int(self.assembly_info['contigs'][k])
@@ -53,6 +63,10 @@ class GWASReportUtils:
             length = fail_safe_contig_baselength
 
         return length + row['POS']
+        """
+
+        return length
+
 
     def filter_gemma_results(self, assoc_info, params):
         # gemma assoc results columns:
@@ -81,8 +95,20 @@ class GWASReportUtils:
         self.state = assoc_info
 
         for pheno in assoc_info:
+            # read gemma results
             gemma_results = pd.read_csv(assoc_info[pheno]['gemma']['file'], sep='\t')
+            # sort by lowest p-value
             gemma_results = gemma_results.sort_values(by='p_wald')
+
+            # relabel contig to match assembly
+            gemma_results['chr'] = gemma_results.apply(self.get_real_contig_id, axis=1)
+            relabeled_gemma_results = os.path.join(self.scratch, 'output',
+                                                   'relabeled_' + os.path.basename(self.state[pheno]['gemma']['file']))
+            gemma_results.to_csv(path_or_buf=relabeled_gemma_results, sep='\t', index=False)
+            self.state[pheno]['gemma']['file'] = relabeled_gemma_results
+            self.state[pheno]['gemma']['md5'] = hashlib.md5(open(relabeled_gemma_results, 'rb').read()).hexdigest()
+
+            # filter gemma_results, save to filtered file
             filtered_gemma_file = os.path.join(self.htmldir, pheno + '_filtered_results.txt')
             gemma_results = gemma_results[['chr', 'rs', 'ps', 'p_wald']]
             gemma_results.columns = ['CHR', 'SNP', 'POS', 'P']
@@ -106,6 +132,28 @@ class GWASReportUtils:
 
         return True
 
+    def mk_mapping_file(self, contigs):
+        # map assembly contigs to plink integers
+        map_file = "assembly\tplink\n"
+        for contig in contigs:
+            plink = int(''.join(filter(str.isdigit, contig)))
+            map_file += contig + '\t' + str(plink) + '\n'
+
+        map_file_out = os.path.join(self.scratch, 'assembly_to_plink_map.txt')
+
+        with open(map_file_out, 'w') as map:
+            map.write(map_file)
+            map.close()
+
+        if os.path.exists(map_file_out):
+            self.map['file'] = map_file_out
+            self.map['md5'] = hashlib.md5(open(map_file_out, 'rb').read()).hexdigest()
+            self.map['shock'] = self.dfu.file_to_shock({ 'file_path': map_file_out })
+        else:
+            raise FileNotFoundError(f'Map file not created: {map_file_out}')
+
+        return self.map['file']
+
     def get_assembly_info(self, params):
         # if testing, variation is a flat file
         # so let's hardcode the reference for the variation object
@@ -123,6 +171,12 @@ class GWASReportUtils:
 
         contig_ids = list(contigs.keys())
         contig_ids.sort()
+
+        list_contigs = contigs.keys()
+        list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
+        # list_contigs = [x.replace('r0', 'r') for x in list_contigs]
+
+        self.mk_mapping_file(list_contigs)
 
         contig_baselengths = {}
         prev_len = 0
@@ -143,21 +197,17 @@ class GWASReportUtils:
 
     def get_real_contig_id(self, row):
         chr = str(row['chr'])
-
-        if ('Chr' + chr) in self.assembly_info['contigs'].keys():
-            return 'Chr' + chr
-        elif ('chr' + chr) in self.assembly_info['contigs'].keys():
-            return 'chr' + chr
-        elif ('Chr0' + chr) in self.assembly_info['contigs'].keys():
-            return 'Chr0' + chr
-        elif ('chr0' + chr) in self.assembly_info['contigs'].keys():
-            return 'chr0' + chr
-        elif chr in self.assembly_info['contigs'].keys():
-            return chr
-        elif str(chr) in self.assembly_info['contigs'].keys():
+        map = {}
+    
+        with open(self.map['file'], 'r') as f:
+            next(f)  # ignore tsv header row
+            for line in f:
+                sp_line = line.strip('\n').split('\t')
+                map[sp_line[1]] = sp_line[0]
+        try:
+            return str(map[chr])
+        except KeyError:
             return str(chr)
-        else:
-            return 'NA'
 
     def save_assoc_obj(self, params):
         if os.path.exists(params['variation']):
@@ -266,10 +316,10 @@ class GWASReportUtils:
                 'path': self.state[pheno]['kinship']['file'],
                 'name': f'Kinship matrix file generated for phenotype: {pheno}'
             })
-            file_links.append({
-                'path': self.state[pheno]['fam']['file'],
-                'name': f'Phenotype value file generated for phenotype: {pheno}'
-            })
+            # file_links.append({
+            #     'path': self.state[pheno]['fam']['file'],
+            #     'name': f'Phenotype value file generated for phenotype: {pheno}'
+            # })
 
         return file_links
 
