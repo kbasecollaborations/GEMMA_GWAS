@@ -26,44 +26,19 @@ class GWASReportUtils:
         self.assembly_info = ''
         self.map = {}
 
-    def find_contig_length(self, row):
+    def find_global_contig_length(self, row):
         list_contigs = self.assembly_info['contigs'].keys()
         list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
-        # list_contigs = [x.replace('r0', 'r') for x in list_contigs]
 
         fail_safe_contig_baselength = self.assembly_info['contigs'][list_contigs[-1]]
 
         chr = str(row['CHR'])
-        map = pd.read_csv(self.map['file'], sep='\t')
+        assembly_id = self.get_real_contig_id({'chr': chr})
 
         try:
-            contig = str(map.loc[map['assembly'] == chr]['plink'])
-            length = self.assembly_info['contigs'][contig] + row['POS']
+            length = int(row['POS']) + int(self.contig_baselengths[assembly_id])
         except KeyError:
             length = fail_safe_contig_baselength
-
-
-        """
-        if ('Chr' + chr) in self.assembly_info['contigs'].keys():
-            k = 'Chr' + chr
-            length = int(self.assembly_info['contigs'][contig]) + row['POS']
-        elif ('chr' + chr) in self.assembly_info['contigs'].keys():
-            k = 'chr' + chr
-            length = int(self.assembly_info['contigs'][k])
-        elif ('Chr0' + chr) in self.assembly_info['contigs'].keys():
-            k = 'Chr0' + chr
-            length = int(self.assembly_info['contigs'][k])
-        elif ('chr0' + chr) in self.assembly_info['contigs'].keys():
-            k = 'chr0' + chr
-            length = int(self.assembly_info['contigs'][k])
-        elif chr in self.assembly_info['contigs'].keys():
-            k = chr
-            length = int(self.assembly_info['contigs'][k])
-        else:
-            length = fail_safe_contig_baselength
-
-        return length + row['POS']
-        """
 
         return length
 
@@ -85,6 +60,7 @@ class GWASReportUtils:
         # 12 - p_wald - p value from the Wald test
         # 13 - p_lrt - likelihood ratio test
         # 14 - p_score - p score test
+        logging.info('Filering and scrubbing GEMMA results')
         if os.path.exists(params['variation']):
             var_obj = self.dfu.get_objects({'object_refs': ['26322/20/1']})['data'][0]
         else:
@@ -112,16 +88,19 @@ class GWASReportUtils:
             filtered_gemma_file = os.path.join(self.htmldir, pheno + '_filtered_results.txt')
             gemma_results = gemma_results[['chr', 'rs', 'ps', 'p_wald']]
             gemma_results.columns = ['CHR', 'SNP', 'POS', 'P']
-            gemma_results['BP'] = gemma_results.apply(self.find_contig_length, axis=1)
+            gemma_results['BP'] = gemma_results.apply(self.find_global_contig_length, axis=1)
             gemma_results[:5000].to_csv(path_or_buf=filtered_gemma_file,
                                         sep='\t', index=False)
             self.state[pheno]['gemma']['filtered_file'] = filtered_gemma_file
             self.state[pheno]['gemma']['filtered_md5'] = hashlib.md5(open(filtered_gemma_file, 'rb').read()).hexdigest()
+            logging.info(f'Filering and scrubbing GEMMA results done for phenotype {pheno}')
 
+            logging.info(f'Annotating GEMMA results for phenotype {pheno}')
             annotated_file = self.snp2gene.annotate_gwas_results({
                 'genome_obj': genome_ref,
                 'gwas_result_file': filtered_gemma_file
             })
+            logging.info(f'Finished GEMMA result annotation for phenotype {pheno}')
 
             if os.path.exists(annotated_file['snp_to_gene_list']):
                 self.state[pheno]['gemma']['annotated_file'] = annotated_file['snp_to_gene_list']
@@ -133,6 +112,7 @@ class GWASReportUtils:
         return True
 
     def mk_mapping_file(self, contigs):
+        logging.info('Creating mapping files for plink -> assembly ids')
         # map assembly contigs to plink integers
         map_file = "assembly\tplink\n"
         for contig in contigs:
@@ -152,9 +132,12 @@ class GWASReportUtils:
         else:
             raise FileNotFoundError(f'Map file not created: {map_file_out}')
 
+        logging.info('Mapping file created')
+
         return self.map['file']
 
     def get_assembly_info(self, params):
+        logging.info('Pulling assembly data on contigs')
         # if testing, variation is a flat file
         # so let's hardcode the reference for the variation object
         if os.path.exists(params['variation']):
@@ -193,6 +176,8 @@ class GWASReportUtils:
             'contigs': contig_baselengths
         }
 
+        logging.info('Assembly data collected')
+
         return assembly_info
 
     def get_real_contig_id(self, row):
@@ -210,6 +195,7 @@ class GWASReportUtils:
             return str(chr)
 
     def save_assoc_obj(self, params):
+        logging.info('Creating association KBase object')
         if os.path.exists(params['variation']):
             var_ref = '26322/20/1'
         else:
@@ -271,6 +257,7 @@ class GWASReportUtils:
         })[0]
 
         assoc_obj_ref = str(assoc_obj_saved[6]) + "/" + str(assoc_obj_saved[0]) + "/" + str(assoc_obj_saved[4])
+        logging.info(f'Association object {assoc_obj_ref} created.')
 
         return assoc_obj_ref
 
@@ -301,29 +288,33 @@ class GWASReportUtils:
         return reportmsg
 
     def create_file_links(self):
+        logging.info('Creating File output links.')
         file_links = []
 
         for pheno in self.state:
             file_links.append({
                 'path': self.state[pheno]['gemma']['file'],
-                'name': 'Raw GEMMA results'
+                'name': 'Raw_GEMMA_results.txt'
             })
             file_links.append({
                 'path': self.state[pheno]['gemma']['annotated_file'],
-                'name': 'Top 5000 GEMMA results, sorted by Wald pvalue, annotated for genes'
+                'name': 'Filtered_GEMMA_results.txt'
             })
+            #file_links.append({
+            #    'path': self.state[pheno]['kinship']['file'],
+            #    'name': f'Kinship matrix file generated for phenotype: {pheno}'
+            #})
             file_links.append({
-                'path': self.state[pheno]['kinship']['file'],
-                'name': f'Kinship matrix file generated for phenotype: {pheno}'
+                 'path': self.state[pheno]['fam']['file'],
+                 'name': f'{pheno}.fam'
             })
-            # file_links.append({
-            #     'path': self.state[pheno]['fam']['file'],
-            #     'name': f'Phenotype value file generated for phenotype: {pheno}'
-            # })
+
+        logging.info('File output links created.')
 
         return file_links
 
     def create_html_outputs(self):
+        logging.info('Creating HTML outputs.')
         phenojs = 'var inputs = ['
         i = 0
 
@@ -355,6 +346,7 @@ class GWASReportUtils:
             'name': "index.html",
             'description': 'Manhattan plot of GEMMA GWAS association tests'
         }]
+        logging.info("Finished creating HTML outputs")
 
         return html_dir
 
@@ -367,6 +359,8 @@ class GWASReportUtils:
         self.filter_gemma_results(assoc_info, params)
         obj_ref = self.save_assoc_obj(params)
 
+        logging.info("Report object creation started")
+
         reportobj = {
             'message': self.create_report_msg(plink_info, vcf_info),
             'objects_created': [{'ref': obj_ref, 'description': 'Association GWAS object from GEMMA algorithm.'}],
@@ -377,6 +371,8 @@ class GWASReportUtils:
             'report_object_name': 'GEMMA_GWAS_report_' + str(uuid.uuid4()),
             'workspace_name': params['workspace_name']
         }
+
+        logging.info("Report object created.")
 
         pp(self.state)
 
