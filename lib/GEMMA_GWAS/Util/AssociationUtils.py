@@ -6,6 +6,7 @@ import csv
 import logging
 from pprint import pprint as pp
 import pandas as pd
+import numpy as np
 import hashlib
 
 from installed_clients.DataFileUtilClient import DataFileUtil
@@ -120,7 +121,9 @@ class AssociationUtils:
             os.mkdir(os.path.join(self.scratch, 'fams'))
 
         fam_template = pd.read_csv(self.plink_fam_template, sep=' ',
-                                   names=['fid', 'iid', 'iidf', 'iidm', 'sex', 'value'], index_col=False)
+                                   names=['fid', 'iid', 'iidf', 'iidm', 'sex', 'value'], index_col=False,
+                                   dtype={'fid': object, 'iid': object, 'iidf': np.int64,
+                                          'iidm': np.int64, 'sex': np.int64, 'value': np.int64})
         fam_template = fam_template.replace(-9, 'NA')
         fam_files = []
 

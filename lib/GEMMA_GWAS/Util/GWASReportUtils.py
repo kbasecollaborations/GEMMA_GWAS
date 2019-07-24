@@ -26,6 +26,20 @@ class GWASReportUtils:
         self.assembly_info = ''
         self.map = {}
 
+        self.gemma_dtypes = {
+            'chr': str,
+            'rs': str,
+            'ps': int,
+            'n_miss': int,
+            'allele1': str,
+            'allele2': str,
+            'af': float,
+            'se': float,
+            'logl_H1': float,
+            'l_remle': float,
+            'p_wald': float
+        }
+
     def find_global_contig_length(self, row):
         list_contigs = self.assembly_info['contigs'].keys()
         list_contigs = [x for x in list_contigs if x.lower().startswith('chr')]
@@ -60,7 +74,7 @@ class GWASReportUtils:
         # 12 - p_wald - p value from the Wald test
         # 13 - p_lrt - likelihood ratio test
         # 14 - p_score - p score test
-        logging.info('Filering and scrubbing GEMMA results')
+        logging.info('Filtering and scrubbing GEMMA results')
         if os.path.exists(params['variation']):
             var_obj = self.dfu.get_objects({'object_refs': ['26322/20/1']})['data'][0]
         else:
@@ -72,7 +86,7 @@ class GWASReportUtils:
 
         for pheno in assoc_info:
             # read gemma results
-            gemma_results = pd.read_csv(assoc_info[pheno]['gemma']['file'], sep='\t')
+            gemma_results = pd.read_csv(assoc_info[pheno]['gemma']['file'], sep='\t', dtype=self.gemma_dtypes)
             # sort by lowest p-value
             gemma_results = gemma_results.sort_values(by='p_wald')
 
@@ -206,7 +220,7 @@ class GWASReportUtils:
         assoc_details = []
 
         for pheno in self.state:
-            df_filtered = pd.read_csv(self.state[pheno]['gemma']['file'], sep='\t')
+            df_filtered = pd.read_csv(self.state[pheno]['gemma']['file'], sep='\t', dtype=self.gemma_dtypes)
             df_filtered = df_filtered[['chr', 'rs', 'ps', 'p_wald']]
             df_filtered.sort_values(by='p_wald')
             if len(df_filtered.index) > 5000:
