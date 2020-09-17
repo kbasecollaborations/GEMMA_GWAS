@@ -104,35 +104,15 @@ class GEMMA_GWASTest(unittest.TestCase):
 
         pp(contig_baselengths)
     """
-    def test_GEMMA_GWAS_single_uni(self):
-        # Prepare test objects in workspace if needed using
-        # self.getWsClient().save_objects({'workspace': self.getWsName(),
-        #                                  'objects': []})
-        #
-        # Run your method by
-        # ret = self.getImpl().your_method(self.getContext(), parameters...)
-        #
-        # Check returned data with
-        # self.assertEqual(ret[...], ...) or other unittest methods
 
+    def test_GEMMA_GWAS_two_multi(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
-            # Single trait testing narrative
-            # Univariate analysis
-
-            # Arabidopsis T. FLC GWAS
-            #'workspace_name': 'rmr:narrative_1552612680986',
-            #'variation': '/kb/module/test/sample_data/vcf/LFC_arabidopsis.vcf',
-            #'variation': '26322/20/1',
-            #'trait_matrix': '26322/28/1',
-            #'model': 0
-
-            'workspace_name': 'rmr:narrative_1559592440406',
-            'variation': '29104/39/1',
-            'trait_matrix': '29104/12/1',
-            'model': 0,
-            'assoc_obj_name': 'part3_1000vcf_test_gwas'
+            # Two trait testing narrative
+            'workspace_name': 'rmr:narrative_1550791707920',
+            'variation': '25488/26/1',
+            'trait_matrix': '25488/6/1',
+            'model': 0
         })
-
     """
     def test_GEMMA_GWAS_two_uni(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {

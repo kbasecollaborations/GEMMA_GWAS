@@ -129,9 +129,11 @@ class GWASReportUtils:
         logging.info('Creating mapping files for plink -> assembly ids')
         # map assembly contigs to plink integers
         map_file = "assembly\tplink\n"
+
+        contig_number = 0
         for contig in contigs:
-            plink = int(''.join(filter(str.isdigit, contig)))
-            map_file += contig + '\t' + str(plink) + '\n'
+            contig_number = contig_number + 1
+            map_file += contig + '\t' + str(contig_number) + '\n'
 
         map_file_out = os.path.join(self.scratch, 'assembly_to_plink_map.txt')
 

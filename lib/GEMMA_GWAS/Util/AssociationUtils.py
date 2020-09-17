@@ -105,12 +105,14 @@ class AssociationUtils:
                     phenodict[fids[x]] = values[x]
                 phenosdict[pheno] = phenodict
 
+
         else:
             raise ValueError('Cannot write data to VCF; invalid WS type (' + ws_type +
                              ').  Supported types is KBaseMatrices.TraitMatrix')
 
         logging.info('Done parsing trait matrix')
 
+        print(phenosdict)
         return phenosdict
 
     def mk_fam_files_from_phenos(self, phenovals):
