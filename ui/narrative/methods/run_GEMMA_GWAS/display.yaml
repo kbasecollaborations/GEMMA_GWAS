@@ -5,7 +5,6 @@ name: GEMMA GWAS
 
 tooltip: |
     Perform genome-wide association study on genomes with coresponding phenotype data
-
 screenshots:
     - ss1.jpg
     - ss2.jpg
@@ -36,7 +35,6 @@ parameters :
             KBase variation object to use for GWAS.
         long-hint  : |
             KBase variation object to use for GWAS, containing references to the original variant format file.
-
     Trait Matrix :
         ui-name: |
             Trait Matrix
@@ -44,7 +42,6 @@ parameters :
             The first parameter
         long-hint: |
             The first parameter that needs to be entered to drive the method. This might be the first of many.
-
     assoc_obj_name :
         ui-name: |
             Output name
@@ -52,7 +49,6 @@ parameters :
             Name for the created association object
         long-hint: |
             Output name for the association object that is created by running GEMMA_GWAS.
-
     Model :
         ui-name: |
             GEMMA Mixed model algorithm selection
@@ -60,7 +56,6 @@ parameters :
             Select either linear univariate mixed model or linear multivariate mixed model
         long-hint: |
             For multiple phenotypes you can select either one, with a single phenotype you must select univariate.
-
 description : |
     <p>GEMMA_GWAS is the KBase wrapper application for the poplar Genome-wide association study application GEMMA
     (<a href="https://github.com/genetics-statistics/GEMMA">github</a>.</p>
@@ -68,7 +63,6 @@ description : |
     <a href="http://www.xzlab.org/software/GEMMAmanual.pdf">here</a>. Please contact the <a href="gemma-discussion">
     GEMMA mailing list</a> for any
     issues.</p>
-
 publications :
     -
         display-text: |
@@ -108,4 +102,3 @@ publications :
         display-text: |
             Li, H. (2011). A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. Bioinformatics, 27(21), 2987-2993.
         link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3198575/
-
