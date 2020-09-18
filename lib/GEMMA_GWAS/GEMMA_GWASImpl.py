@@ -71,6 +71,8 @@ class GEMMA_GWAS:
         # return variables are: output
         #BEGIN run_gemma_association
 
+        print (params)
+
         # TODO: add this segment to InputUtils
         if 'variation' not in params:
             raise ValueError('Variation KBase reference not set.')
