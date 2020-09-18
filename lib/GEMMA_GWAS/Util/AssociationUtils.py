@@ -115,12 +115,34 @@ class AssociationUtils:
         print(phenosdict)
         return phenosdict
 
+    def _mk_phenos_from_am(self, trait_matrix_ref):
+        #TODO: Add object type check and few other checks for the structure of the object
+        #config = self.cfg
+        #self.scratch = config["scratch"]
+        #self.callback_url = config["SDK_CALLBACK_URL"]
+        #self.dfu = DataFileUtil(self.callback_url)
+        trait_matrix_obj = self.dfu.get_objects({'object_refs': [trait_matrix_ref]})['data'][0]['data']
+        attributes = trait_matrix_obj['attributes']
+        instances = trait_matrix_obj['instances']
+
+        phenosdict = {}
+        for count, trait in enumerate(attributes):
+            phenodict = {}
+            trait_label = trait['attribute']
+            for key in instances:
+                phenodict[key] = instances[key][count]
+            phenosdict[trait_label] = phenodict
+        print(phenosdict)
+        return (phenosdict)
+
     def mk_fam_files_from_phenos(self, phenovals):
         logging.info('Making .fam files from phenotype values')
         self.fam_directory = os.path.join(self.scratch, 'fams')
 
         if not os.path.isdir(self.fam_directory):
             os.mkdir(os.path.join(self.scratch, 'fams'))
+
+        print ("Osdddddddddddddddddddddddddddddddddddddddddddddddddddddd")
 
         fam_template = pd.read_csv(self.plink_fam_template, sep=' ',
                                    names=['fid', 'iid', 'iidf', 'iidm', 'sex', 'value'], index_col=False,
@@ -134,6 +156,8 @@ class AssociationUtils:
             # pheno is the phenotype name
             # values is a dictionary with keys of sampleid and values of phenotypic value
             for sample, value in values.items():
+                if not value:
+                    value = "NA"
                 new_fam.loc[new_fam['fid'] == sample] = sample, sample, 0, 0, 0, value
 
             new_fam_path = os.path.join(self.fam_directory, pheno + '.fam')
@@ -156,6 +180,7 @@ class AssociationUtils:
         for pheno in phenovalues:
             kin_cmd = ['gemma', '-bfile', self.plink_pref, '-gk', '1', '-o', self.kinship_base_prefix + '_' + pheno]
 
+            print (kin_cmd)
             famfile = os.path.join(self.fam_directory, pheno + '.fam')
 
             if famfile not in famfiles:
@@ -277,7 +302,8 @@ class AssociationUtils:
         if params['model'] is 0:
             # univariate analysis
             plink = self._mk_plink_bin_uni()
-            phenovals = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
+            #phenovals = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
+            phenovals = self._mk_phenos_from_am(params['trait_matrix'])
             famfiles = self.mk_fam_files_from_phenos(phenovals)
             kinmatricies = self.mk_centered_kinship_uni(phenovals, famfiles)
             gemma, gemma_output = self.run_gemma_assoc_uni(kinmatricies, famfiles, phenovals, plink)

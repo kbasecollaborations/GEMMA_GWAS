@@ -53,6 +53,8 @@ class GEMMA_GWAS:
         #END_CONSTRUCTOR
         pass
 
+
+
     def run_gemma_association(self, ctx, params):
         """
         :param params: instance of type "GemmaGwasInput" -> structure:

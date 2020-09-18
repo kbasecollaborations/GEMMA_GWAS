@@ -14,6 +14,11 @@ class InputUtils:
     def validate(self, params):
         if params['model'] is 0:
             # univariate linear mixed model
+            #TODO This is the place where trait data format validation should be done
+            return True
+
+        """
+            
             trait_matrix = self.dfu.get_objects({'object_refs': [params['trait_matrix']]})['data'][0]['data']['data']
             phenos = trait_matrix["row_ids"]
 
@@ -48,3 +53,5 @@ class InputUtils:
         else:
             logging.error("Model is " + params['model'] + ", of type: " + str(type(params['model'])))
             raise ValueError('Model selected is not either multivariate or univariate. Contact Module maintainer. ')
+            
+        """
