@@ -161,7 +161,7 @@ class GWASReportUtils:
         else:
             var_obj = self.dfu.get_objects({'object_refs': [params['variation']]})['data'][0]
 
-        assembly_ref = var_obj['data']['assemby_ref']
+        assembly_ref = var_obj['data']['assembly_ref']
         genome_ref = var_obj['data']['genome_ref']
 
         assembly_obj = self.dfu.get_objects({'object_refs': [assembly_ref]})['data'][0]
