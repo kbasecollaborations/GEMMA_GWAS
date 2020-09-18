@@ -104,6 +104,15 @@ class GEMMA_GWASTest(unittest.TestCase):
 
         pp(contig_baselengths)
     """
+    def test_GEMMA_GWAS_two_multi1_ci(self):
+        ret = self.serviceImpl.run_gemma_association(self.getContext(), {
+            # Two trait testing narrative
+            'workspace_name': 'pranjan77:narrative_1600437602567',
+            'variation': '54068/6/1',
+            'trait_matrix': '54068/8/1',
+            'model': 0
+        })
+
     @unittest.skip
     def test_GEMMA_GWAS_two_multi1(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
@@ -113,6 +122,7 @@ class GEMMA_GWASTest(unittest.TestCase):
             'trait_matrix': '25488/6/1',
             'model': 0
         })
+    @unittest.skip
     def test_GEMMA_GWAS_two_multi(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Two trait testing narrative

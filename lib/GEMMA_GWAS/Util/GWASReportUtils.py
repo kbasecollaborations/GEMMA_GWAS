@@ -255,7 +255,7 @@ class GWASReportUtils:
         #TODO: Need to update it to attribute mapping object once the gwas stuff is updated
         associations_obj = {
             'description' : 'GEMMA Linear mixed models Univariate association analysis on phenotypes',
-            'trait_ref': "25488/6/1",
+            'trait_ref': trait_ref,
             'variation_id': var_ref,
             'association_details': assoc_details
         }
