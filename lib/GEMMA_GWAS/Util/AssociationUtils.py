@@ -115,7 +115,7 @@ class AssociationUtils:
         print(phenosdict)
         return phenosdict
 
-    def _mk_phenos_from_am(self, trait_matrix_ref):
+    def _mk_phenos_from_am(self, trait_matrix_ref, selected_traits):
         #TODO: Add object type check and few other checks for the structure of the object
         #config = self.cfg
         #self.scratch = config["scratch"]
@@ -125,8 +125,13 @@ class AssociationUtils:
         attributes = trait_matrix_obj['attributes']
         instances = trait_matrix_obj['instances']
 
+
+
         phenosdict = {}
         for count, trait in enumerate(attributes):
+            if (trait['attribute'] not in selected_traits):
+                continue
+                
             phenodict = {}
             trait_label = trait['attribute']
             for key in instances:
@@ -303,7 +308,7 @@ class AssociationUtils:
             # univariate analysis
             plink = self._mk_plink_bin_uni()
             #phenovals = self._mk_phenos_from_trait_matrix_uni(params['trait_matrix'])
-            phenovals = self._mk_phenos_from_am(params['trait_matrix'])
+            phenovals = self._mk_phenos_from_am(params['trait_matrix'], params['selected_traits'])
             famfiles = self.mk_fam_files_from_phenos(phenovals)
             kinmatricies = self.mk_centered_kinship_uni(phenovals, famfiles)
             gemma, gemma_output = self.run_gemma_assoc_uni(kinmatricies, famfiles, phenovals, plink)

@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: GEMMA GWAS
+name: Genome Wide Association Analysis (GWAS) with GEMMA
 
 tooltip: |
-    Perform genome-wide association study on genomes with coresponding phenotype data
+    Perform genome-wide association study on genomes with coresponding trait data
 screenshots:
     - ss1.jpg
     - ss2.jpg
@@ -42,7 +42,7 @@ parameters :
             The first parameter
         long-hint: |
             The first parameter that needs to be entered to drive the method. This might be the first of many.
-    Trait :
+    selected_traits :
         ui-name: |
             Trait
         short-hint: |

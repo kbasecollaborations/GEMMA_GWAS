@@ -4,7 +4,7 @@
         "rmr"
     ],
     "contact": "",
-    "categories": ["active", "annotation"],
+    "categories": ["active"],
     "widgets": {
         "input": "kbaseNarrativeMethodInput",
         "output" : "no-display"
@@ -32,14 +32,26 @@
                 "valid_ws_types": [ "KBaseExperiments.AttributeMapping" ]
             }
         },
+
         {
-            "id": "Trait",
-            "optional": false,
-            "advanced": false,
-            "allow_multiple": false,
-            "default_values": [ "" ],
-            "field_type": "text"
-        },
+            "id" : "selected_traits",
+            "optional" : false,
+            "advanced" : false,
+            "allow_multiple" : false,
+            "default_values" : [ "" ],
+            "field_type" : "textsubdata",
+            "textsubdata_options" : {
+                "subdata_selection": {
+                "parameter_id" : "Trait Matrix",
+                "subdata_included" : ["attributes/[*]/attribute"],
+        "path_to_subdata": ["attributes"],
+        "selection_id" : "attribute"
+      },
+      "multiselection": false,
+      "show_src_obj":true,
+      "allow_custom":false
+    }
+  },
         {
             "id": "assoc_obj_name",
             "optional": false,
@@ -53,29 +65,29 @@
             }
         },
         {
-			"id": "Model",
-			"optional": true,
-			"advanced": false,
-			"allow_multiple": false,
-			"default_values": [ 0 ],
-			"field_type": "dropdown",
-				"dropdown_options": {
-					"options": [
-						{
-							"value": 0,
-							"display": "Univariate",
-							"id": "model_uni",
-							"ui-name": "model_uni"
-						},
-						{
-							"value": 1,
-							"display": "Multivariate",
-							"id": "model_multi",
-							"ui-name": "model_multi"
-						}
-					]
-				}
-		}
+            "id": "Model",
+            "optional": true,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ 0 ],
+            "field_type": "dropdown",
+            "dropdown_options": {
+                "options": [
+                    {
+                        "value": 0,
+                        "display": "Univariate",
+                        "id": "model_uni",
+                        "ui-name": "model_uni"
+                    },
+                    {
+                        "value": 1,
+                        "display": "Multivariate",
+                        "id": "model_multi",
+                        "ui-name": "model_multi"
+                     }
+            ]
+          }
+      }
     ],
     "behavior": {
         "service-mapping": {
@@ -94,6 +106,9 @@
                     "input_parameter": "Trait Matrix",
                     "target_property": "trait_matrix",
                     "target_type_transform": "resolved-ref"
+                },{
+                    "input_parameter": "selected_traits",
+                    "target_property": "selected_traits"
                 },{
                     "input_parameter": "assoc_obj_name",
                     "target_property": "assoc_obj_name"

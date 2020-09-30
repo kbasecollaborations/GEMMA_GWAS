@@ -107,9 +107,11 @@ class GEMMA_GWASTest(unittest.TestCase):
     def test_GEMMA_GWAS_two_multi1_ci(self):
         ret = self.serviceImpl.run_gemma_association(self.getContext(), {
             # Two trait testing narrative
-            'workspace_name': 'pranjan77:narrative_1600437602567',
-            'variation': '54068/6/1',
-            'trait_matrix': '54068/8/1',
+            'workspace_name': 'pranjan77:narrative_1600765146921',
+            'variation': '47506/6/1',
+            'trait_matrix': '47506/25/1',
+            "selected_traits": ["FLC"],
+            "assoc_obj_name": "FLC",
             'model': 0
         })
 
